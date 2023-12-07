@@ -1,7 +1,7 @@
 package com.pszumanski.libraryregister.strategy.bookSearch;
 
 import com.pszumanski.libraryregister.data.Book;
-import com.pszumanski.libraryregister.managers.BookManager;
+import com.pszumanski.libraryregister.managers.dataManagers.BookManager;
 
 import java.util.List;
 import java.util.stream.Collectors;

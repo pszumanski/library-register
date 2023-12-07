@@ -1,7 +1,7 @@
 package com.pszumanski.libraryregister.strategy.authorSearch;
 
 import com.pszumanski.libraryregister.data.Author;
-import com.pszumanski.libraryregister.managers.AuthorManager;
+import com.pszumanski.libraryregister.managers.dataManagers.AuthorManager;
 
 import java.util.List;
 import java.util.stream.Collectors;

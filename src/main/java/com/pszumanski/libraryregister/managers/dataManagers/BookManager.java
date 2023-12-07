@@ -1,4 +1,4 @@
-package com.pszumanski.libraryregister.managers;
+package com.pszumanski.libraryregister.managers.dataManagers;
 
 import com.pszumanski.libraryregister.data.Book;
 import com.pszumanski.libraryregister.strategy.bookSearch.BookSearch;
@@ -19,6 +19,7 @@ public class BookManager implements BookManagerService {
 
     @Override
     public void add(Book book) {
+        //TODO: add book id
         books.add(book);
     }
 

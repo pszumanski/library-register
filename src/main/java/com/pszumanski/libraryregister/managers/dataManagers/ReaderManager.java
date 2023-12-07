@@ -1,4 +1,4 @@
-package com.pszumanski.libraryregister.managers;
+package com.pszumanski.libraryregister.managers.dataManagers;
 
 import com.pszumanski.libraryregister.data.Reader;
 import com.pszumanski.libraryregister.strategy.readerSearch.ReaderSearch;
@@ -19,6 +19,7 @@ public class ReaderManager implements ReaderManagerService {
 
     @Override
     public void add(Reader reader) {
+        //TODO: add reader id
         readers.add(reader);
     }
 

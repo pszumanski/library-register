@@ -1,9 +1,8 @@
-package com.pszumanski.libraryregister.managers;
+package com.pszumanski.libraryregister.managers.dataManagers;
 
 import com.pszumanski.libraryregister.repositories.AuthorRepository;
 import com.pszumanski.libraryregister.repositories.BookRepository;
 import com.pszumanski.libraryregister.repositories.ReaderRepository;
-import lombok.AllArgsConstructor;
 
 
 public class FileManager implements FileManagerService {

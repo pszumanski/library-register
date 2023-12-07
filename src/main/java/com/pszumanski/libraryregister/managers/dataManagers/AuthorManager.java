@@ -1,4 +1,4 @@
-package com.pszumanski.libraryregister.managers;
+package com.pszumanski.libraryregister.managers.dataManagers;
 
 import com.pszumanski.libraryregister.data.Author;
 import com.pszumanski.libraryregister.strategy.authorSearch.AuthorSearch;
@@ -12,6 +12,7 @@ public class AuthorManager implements AuthorManagerService {
 
     @Override
     public void add(Author author) {
+        //TODO: set author id
         authors.add(author);
     }
 

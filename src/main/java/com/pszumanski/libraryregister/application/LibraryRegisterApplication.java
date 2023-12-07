@@ -1,8 +1,7 @@
 package com.pszumanski.libraryregister.application;
 
 import com.github.spring.boot.javafx.SpringJavaFXApplication;
-import com.pszumanski.libraryregister.data.Author;
-import com.pszumanski.libraryregister.managers.*;
+import com.pszumanski.libraryregister.managers.dataManagers.*;
 import com.pszumanski.libraryregister.repositories.AuthorRepository;
 import com.pszumanski.libraryregister.repositories.BookRepository;
 import com.pszumanski.libraryregister.repositories.ReaderRepository;
