@@ -14,9 +14,9 @@ public class AuthorFindByName implements AuthorSearch {
 
         return new AuthorManager().get().stream()
                 .filter(author -> {
-                    List<String> authorName = Arrays.stream(author.getName().split(" ")).toList();
+                    List<String> authorName = Arrays.stream(author.getName().toLowerCase().split(" ")).toList();
                     for (String word: queries) {
-                        if (!authorName.contains(word)) {
+                        if (!authorName.contains(word.toLowerCase())) {
                             return false;
                         }
                     }
