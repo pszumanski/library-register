@@ -12,7 +12,7 @@ import lombok.*;
 public class Author {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @NonNull
     private Integer id;
 
     @NonNull

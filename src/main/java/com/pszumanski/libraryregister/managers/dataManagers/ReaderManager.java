@@ -1,6 +1,8 @@
 package com.pszumanski.libraryregister.managers.dataManagers;
 
+import com.pszumanski.libraryregister.data.Book;
 import com.pszumanski.libraryregister.data.Reader;
+import com.pszumanski.libraryregister.strategy.bookSearch.BookFindByReaderId;
 import com.pszumanski.libraryregister.strategy.readerSearch.ReaderSearch;
 import lombok.Getter;
 
@@ -19,7 +21,6 @@ public class ReaderManager implements ReaderManagerService {
 
     @Override
     public void add(Reader reader) {
-        //TODO: add reader id
         readers.add(reader);
     }
 
@@ -41,5 +42,12 @@ public class ReaderManager implements ReaderManagerService {
     @Override
     public void load(List<Reader> readers) {
         ReaderManager.readers = readers;
+    }
+
+    @Override
+    public List<Book> fetchBooks(Reader reader) {
+        BookManager bookManager = new BookManager();
+        bookManager.setSearch(new BookFindByReaderId());
+        return bookManager.search(reader.getId().toString());
     }
 }

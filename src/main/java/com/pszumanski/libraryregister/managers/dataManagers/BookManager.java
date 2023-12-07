@@ -19,7 +19,6 @@ public class BookManager implements BookManagerService {
 
     @Override
     public void add(Book book) {
-        //TODO: add book id
         books.add(book);
     }
 

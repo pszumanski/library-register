@@ -1,9 +1,14 @@
 package com.pszumanski.libraryregister.managers.dataManagers;
 
 import com.pszumanski.libraryregister.data.Author;
+import com.pszumanski.libraryregister.data.Book;
 import com.pszumanski.libraryregister.strategy.authorSearch.AuthorSearch;
+import com.pszumanski.libraryregister.strategy.bookSearch.BookFindByAuthorId;
+import com.pszumanski.libraryregister.strategy.bookSearch.BookFindByAuthorName;
 
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 public class AuthorManager implements AuthorManagerService {
 
@@ -12,7 +17,6 @@ public class AuthorManager implements AuthorManagerService {
 
     @Override
     public void add(Author author) {
-        //TODO: set author id
         authors.add(author);
     }
 
@@ -39,5 +43,19 @@ public class AuthorManager implements AuthorManagerService {
     @Override
     public List<Author> get() {
         return AuthorManager.authors;
+    }
+
+    @Override
+    public List<String> fetchTitles(Author author) {
+        BookManager bookManager = new BookManager();
+        bookManager.setSearch(new BookFindByAuthorId());
+        List<Book> books = bookManager.search(author.getId().toString());
+        Set<String> titles = new TreeSet<>();
+        books.forEach(book -> {
+            if (book.getAuthorId().equals(author.getId())) {
+                titles.add(book.getTitle());
+            }
+        });
+        return titles.stream().toList();
     }
 }

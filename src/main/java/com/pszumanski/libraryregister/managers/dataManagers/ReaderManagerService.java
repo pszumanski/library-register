@@ -1,5 +1,6 @@
 package com.pszumanski.libraryregister.managers.dataManagers;
 
+import com.pszumanski.libraryregister.data.Book;
 import com.pszumanski.libraryregister.data.Reader;
 import com.pszumanski.libraryregister.strategy.readerSearch.ReaderSearch;
 
@@ -18,5 +19,7 @@ public interface ReaderManagerService {
     void setSearch(ReaderSearch readerSearch);
 
     void load(List<Reader> readers);
+
+    List<Book> fetchBooks(Reader reader);
 
 }

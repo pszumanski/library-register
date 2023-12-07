@@ -15,11 +15,14 @@ import lombok.*;
 public class Book {
 
     @Id
+    @NonNull
     private Integer id;
     @NonNull
     private Integer authorId;
+    @Setter
     private Integer currentReaderId;
     //TODO: Date of sql?
+    @Setter
     private String deadline;
     @NonNull
     private String title;

@@ -19,4 +19,6 @@ public interface AuthorManagerService {
 
     void load(List<Author> authors);
 
+    List<String> fetchTitles(Author author);
+
 }

@@ -14,6 +14,7 @@ import lombok.*;
 public class Reader {
 
     @Id
+    @NonNull
     private Integer id;
     @NonNull
     private String name;

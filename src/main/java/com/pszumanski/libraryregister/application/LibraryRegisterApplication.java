@@ -1,10 +1,19 @@
 package com.pszumanski.libraryregister.application;
 
 import com.github.spring.boot.javafx.SpringJavaFXApplication;
+import com.pszumanski.libraryregister.data.Author;
+import com.pszumanski.libraryregister.data.Book;
+import com.pszumanski.libraryregister.data.Reader;
 import com.pszumanski.libraryregister.managers.dataManagers.*;
 import com.pszumanski.libraryregister.repositories.AuthorRepository;
 import com.pszumanski.libraryregister.repositories.BookRepository;
 import com.pszumanski.libraryregister.repositories.ReaderRepository;
+import com.pszumanski.libraryregister.strategy.authorSearch.AuthorFindById;
+import com.pszumanski.libraryregister.strategy.authorSearch.AuthorFindByName;
+import com.pszumanski.libraryregister.strategy.bookSearch.BookFindById;
+import com.pszumanski.libraryregister.strategy.bookSearch.BookSearch;
+import com.pszumanski.libraryregister.strategy.readerSearch.ReaderFindById;
+import com.pszumanski.libraryregister.strategy.readerSearch.ReaderSearch;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import lombok.extern.slf4j.Slf4j;
@@ -46,23 +55,43 @@ public class LibraryRegisterApplication extends SpringJavaFXApplication {
 
             FileManagerService fileManager = new FileManager(authorRepository, bookRepository, readerRepository);
             fileManager.loadDatabase();
-
-            log.info(authorManager.get().toString());
-            log.info(boookManager.get().toString());
-            log.info(readerManager.get().toString());
+            log.info("Database loaded");
 
 //            authorManager.add(new Author("Marek", "123", "123"));
-
-            fileManager.saveDatabase();
-            log.info("Database saved");
-
-//            repository.deleteAll();
 //
-//            repository.save(new Author("Jack", "1324", "1412"));
-//            repository.save(new Author("Chloe", "2413", "5212"));
-//            repository.save(new Author("Kim", "4123", "4214"));
-//            repository.save(new Author("David", "9120", "1424"));
-//            repository.save(new Author("Michelle", "1323", "1240"));
+//            authorRepository.save(new Author("Jack", "1324", "1412"));
+//            authorRepository.save(new Author("Chloe", "2413", "5212"));
+//            authorRepository.save(new Author("Kim", "4123", "4214"));
+//            authorRepository.save(new Author("David", "9120", "1424"));
+//            authorRepository.save(new Author("Michelle", "1323", "1240"));
+
+//            bookRepository.save(new Book(1,602, "Wiedźmin", "SuperNowa", "1990", "123", "fantasy", "polski"));
+
+//            readerRepository.save(new Reader(1, "Maciek Szczypior", "2001", 123, "Bananowa 19",
+//                    "Wrocław", "maciek@gmail.com", 123));
+
+            authorManager.setSearch(new AuthorFindByName());
+            Author author = authorManager.search("David David").get(0);
+            log.info("Result of search 'David David': " + author.toString());
+
+            readerManager.setSearch(new ReaderFindById());
+            Reader reader = readerManager.search("1").get(0);
+            log.info("Result of search reader id=1: " + reader.toString());
+
+
+            boookManager.setSearch(new BookFindById());
+            Book book = boookManager.search("1").get(0);
+            book.setCurrentReaderId(reader.getId());
+            log.info("Result of search book id=1: " + book.toString());
+
+            log.info("Fetched books of reader: " + reader.getName() + ": " + readerManager.fetchBooks(reader).toString());
+
+            authorManager.setSearch(new AuthorFindById());
+            author = authorManager.search("602").get(0);
+            log.info("Fethced books titles of author: " + author.getName() + ":" + authorManager.fetchTitles(author).toString());
+
+//            fileManager.saveDatabase();
+//            log.info("Database saved");
         };
     }
 
