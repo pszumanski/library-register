@@ -5,7 +5,7 @@ import com.pszumanski.libraryregister.strategy.authorSearch.AuthorSearch;
 
 import java.util.List;
 
-public class AuthorManager implements AuthorManagerInterface {
+public class AuthorManager implements AuthorManagerService {
 
     private static List<Author> authors;
     private static AuthorSearch authorSearch;

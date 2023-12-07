@@ -1,11 +1,11 @@
 package com.pszumanski.libraryregister.application;
 
 import com.github.spring.boot.javafx.SpringJavaFXApplication;
-import com.github.spring.boot.javafx.stage.BorderlessStage;
-import com.github.spring.boot.javafx.stage.BorderlessStageWrapper;
 import com.pszumanski.libraryregister.data.Author;
 import com.pszumanski.libraryregister.managers.*;
 import com.pszumanski.libraryregister.repositories.AuthorRepository;
+import com.pszumanski.libraryregister.repositories.BookRepository;
+import com.pszumanski.libraryregister.repositories.ReaderRepository;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import lombok.extern.slf4j.Slf4j;
@@ -24,6 +24,10 @@ public class LibraryRegisterApplication extends SpringJavaFXApplication {
 
     @Autowired
     AuthorRepository authorRepository;
+    @Autowired
+    BookRepository bookRepository;
+    @Autowired
+    ReaderRepository readerRepository;
 
     public static void main(String[] args) {
         Application.launch(LibraryRegisterApplication.class, args);
@@ -33,12 +37,25 @@ public class LibraryRegisterApplication extends SpringJavaFXApplication {
     public CommandLineRunner loadDatabase(AuthorRepository authorRepository) {
         return (args) -> {
             log.info("Database loading");
-            log.info(authorRepository.toString());
+            log.info(authorRepository.toString() + " loaded");
+            log.info(bookRepository.toString() + " loaded");
+            log.info(readerRepository.toString() + " loaded");
 
-            AuthorManagerInterface authorManager = new AuthorManager();
-            FileManageInterface fileManager = new FileManager(authorRepository, authorManager, new BookManager(), new ReaderManager());
+            AuthorManagerService authorManager = new AuthorManager();
+            BookManagerService boookManager = new BookManager();
+            ReaderManagerService readerManager = new ReaderManager();
+
+            FileManagerService fileManager = new FileManager(authorRepository, bookRepository, readerRepository);
             fileManager.loadDatabase();
+
             log.info(authorManager.get().toString());
+            log.info(boookManager.get().toString());
+            log.info(readerManager.get().toString());
+
+//            authorManager.add(new Author("Marek", "123", "123"));
+
+            fileManager.saveDatabase();
+            log.info("Database saved");
 
 //            repository.deleteAll();
 //

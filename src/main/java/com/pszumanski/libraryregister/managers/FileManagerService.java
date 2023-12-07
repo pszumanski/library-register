@@ -1,7 +1,9 @@
 package com.pszumanski.libraryregister.managers;
 
-public interface FileManageInterface {
+public interface FileManagerService {
 
     void loadDatabase();
+
+    void saveDatabase();
 
 }
