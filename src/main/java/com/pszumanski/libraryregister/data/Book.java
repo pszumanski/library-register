@@ -6,6 +6,9 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.*;
 
+import java.time.LocalDate;
+import java.time.Year;
+
 @Entity
 @Table(name = "books", schema = "LIBRARY_REGISTER")
 @Getter
@@ -21,16 +24,14 @@ public class Book {
     private Integer authorId;
     @Setter
     private Integer currentReaderId;
-    //TODO: Date of sql?
     @Setter
-    private String deadline;
+    private LocalDate deadline;
     @NonNull
     private String title;
     @NonNull
     private String publisher;
-    //TODO: Year
     @NonNull
-    private String publishYear;
+    private Year publishYear;
     @NonNull
     private String isbn;
     @NonNull

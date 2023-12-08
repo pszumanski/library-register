@@ -18,4 +18,8 @@ public interface BookManagerService {
     void setSearch(BookSearch bookSearch);
 
     void load(List<Book> books);
+
+    boolean isLent(Book book);
+
+    boolean isOverDue(Book book);
 }

@@ -4,7 +4,7 @@ import java.util.Map;
 
 public class ReaderValidator implements ValidatorService {
     @Override
-    public Map<String, String> validate(Map<String, String> fields) {
-        return null;
+    public boolean validate(Map<String, String> fields) {
+        return false;
     }
 }

@@ -5,6 +5,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.*;
 
+import java.time.LocalDate;
+
 @Entity
 @Table(name = "readers", schema = "LIBRARY_REGISTER")
 @Getter
@@ -18,9 +20,8 @@ public class Reader {
     private Integer id;
     @NonNull
     private String name;
-    //TODO: Date util/sql?
     @NonNull
-    private String bornDate;
+    private LocalDate bornDate;
     @NonNull
     private Integer personalId;
     @NonNull
@@ -32,4 +33,6 @@ public class Reader {
     private String email;
     @NonNull
     private Integer phoneNumber;
+    @Setter
+    private Integer penalty;
 }

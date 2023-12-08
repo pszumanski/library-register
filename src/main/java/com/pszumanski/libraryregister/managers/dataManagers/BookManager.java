@@ -41,4 +41,15 @@ public class BookManager implements BookManagerService {
     public void load(List<Book> books) {
         BookManager.books = books;
     }
+
+    @Override
+    public boolean isLent(Book book) {
+        return book.getCurrentReaderId() != null;
+    }
+
+    @Override
+    public boolean isOverDue(Book book) {
+        return TimeManager.getInstance().isBefore(book.getDeadline());
+    }
+
 }

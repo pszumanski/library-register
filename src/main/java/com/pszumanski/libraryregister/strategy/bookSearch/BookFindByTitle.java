@@ -1,12 +1,15 @@
 package com.pszumanski.libraryregister.strategy.bookSearch;
 
 import com.pszumanski.libraryregister.data.Book;
+import com.pszumanski.libraryregister.managers.dataManagers.BookManager;
 
 import java.util.List;
 
 public class BookFindByTitle implements BookSearch {
     @Override
     public List<Book> search(String query) {
-        return null;
+        return new BookManager().get().stream()
+                .filter(book -> query.equalsIgnoreCase(book.getTitle()))
+                .toList();
     }
 }

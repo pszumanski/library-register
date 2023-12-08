@@ -4,6 +4,6 @@ import java.util.Map;
 
 public interface ValidatorService {
 
-    Map<String, String> validate(Map<String, String> fields);
+    boolean validate(Map<String, String> fields);
 
 }

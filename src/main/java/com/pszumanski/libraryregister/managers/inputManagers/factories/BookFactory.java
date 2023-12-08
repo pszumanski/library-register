@@ -4,6 +4,8 @@ import com.pszumanski.libraryregister.data.Book;
 import com.pszumanski.libraryregister.managers.dataManagers.BookManagerService;
 import lombok.AllArgsConstructor;
 
+import java.time.Year;
+import java.util.List;
 import java.util.Map;
 
 @AllArgsConstructor
@@ -13,13 +15,12 @@ public class BookFactory implements BookFactoryService {
 
     @Override
     public Book create(Map<String, String> attributes) {
-        //        log.info("Next index: " + (getMaxIndex() + 1));
         return new Book(
                 (getMaxIndex() + 1),
                 Integer.parseInt(attributes.get("authorId")),
                 attributes.get("title"),
                 attributes.get("publisher"),
-                attributes.get("publishYear"),
+                Year.parse(attributes.get("publishYear")),
                 attributes.get("isbn"),
                 attributes.get("genre"),
                 attributes.get("language")
@@ -27,12 +28,11 @@ public class BookFactory implements BookFactoryService {
     }
 
     private Integer getMaxIndex() {
-        return bookManager.get().stream()
+        List<Book> books = bookManager.get().stream()
                 .sorted((book1, book2) -> {
                     return book2.getId() - book1.getId();
                 })
-                .toList()
-                .getFirst()
-                .getId();
+                .toList();
+        return books.isEmpty() ? 0 : books.getFirst().getId();
     }
 }

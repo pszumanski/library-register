@@ -7,11 +7,18 @@ import com.pszumanski.libraryregister.data.Reader;
 import com.pszumanski.libraryregister.managers.dataManagers.*;
 import com.pszumanski.libraryregister.managers.inputManagers.factories.AuthorFactory;
 import com.pszumanski.libraryregister.managers.inputManagers.factories.AuthorFactoryService;
+import com.pszumanski.libraryregister.managers.inputManagers.factories.BookFactory;
+import com.pszumanski.libraryregister.managers.inputManagers.factories.BookFactoryService;
+import com.pszumanski.libraryregister.managers.inputManagers.validators.AuthorValidator;
+import com.pszumanski.libraryregister.managers.inputManagers.validators.ValidatorService;
 import com.pszumanski.libraryregister.repositories.AuthorRepository;
 import com.pszumanski.libraryregister.repositories.BookRepository;
 import com.pszumanski.libraryregister.repositories.ReaderRepository;
 import com.pszumanski.libraryregister.strategy.authorSearch.AuthorFindById;
 import com.pszumanski.libraryregister.strategy.authorSearch.AuthorFindByName;
+import com.pszumanski.libraryregister.strategy.bookFilter.BookFilter;
+import com.pszumanski.libraryregister.strategy.bookFilter.BookFilterAvailable;
+import com.pszumanski.libraryregister.strategy.bookSearch.BookFindByAuthorName;
 import com.pszumanski.libraryregister.strategy.bookSearch.BookFindById;
 import com.pszumanski.libraryregister.strategy.readerSearch.ReaderFindById;
 import javafx.application.Application;
@@ -24,6 +31,7 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
+import java.util.HashMap;
 import java.util.Map;
 
 @SpringBootApplication(scanBasePackages = "com.pszumanski.libraryregister")
@@ -52,51 +60,65 @@ public class LibraryRegisterApplication extends SpringJavaFXApplication {
             log.info(readerRepository.toString() + " loaded");
 
             AuthorManagerService authorManager = new AuthorManager();
-            BookManagerService boookManager = new BookManager();
+            BookManagerService bookManager = new BookManager();
             ReaderManagerService readerManager = new ReaderManager();
 
             FileManagerService fileManager = new FileManager(authorRepository, bookRepository, readerRepository);
             fileManager.loadDatabase();
             log.info("Database loaded");
 
-//            authorManager.add(new Author("Marek", "123", "123"));
+
+//            authorManager.setSearch(new AuthorFindByName());
+//            Author author = authorManager.search("David daVId").get(0);
+//            log.info("Result of search 'David David': " + author.toString());
 //
-//            authorRepository.save(new Author("Jack", "1324", "1412"));
-//            authorRepository.save(new Author("Chloe", "2413", "5212"));
-//            authorRepository.save(new Author("Kim", "4123", "4214"));
-//            authorRepository.save(new Author("David", "9120", "1424"));
-//            authorRepository.save(new Author("Michelle", "1323", "1240"));
+//            readerManager.setSearch(new ReaderFindById());
+//            Reader reader = readerManager.search("1").getFirst();
+//            log.info("Result of search reader id=1: " + reader.toString());
+//
+//            boookManager.setSearch(new BookFindById());
+//            Book book = boookManager.search("1").getFirst();
+//            book.setCurrentReaderId(reader.getId());
+//            log.info("Result of search book id=1: " + book);
+//
+//            log.info("Fetched books of reader: " + reader.getName() + ": " + readerManager.fetchBooks(reader).toString());
+//
+//            authorManager.setSearch(new AuthorFindById());
+//            author = authorManager.search("602").get(0);
+//            log.info("Fethced books titles of author: " + author.getName() + ":" + authorManager.fetchTitles(author).toString());
 
-//            bookRepository.save(new Book(1,602, "Wiedźmin", "SuperNowa", "1990", "123", "fantasy", "polski"));
+//            AuthorFactoryService authorFactory = new AuthorFactory(authorManager);
+//            Author author = authorFactory.create(Map.of("name", "Charmander", "bornDate", "2115", "deathDate", "2225"));
+//            log.info(author.toString());
+//            authorManager.add(author);
 
-//            readerRepository.save(new Reader(1, "Maciek Szczypior", "2001", 123, "Bananowa 19",
-//                    "Wrocław", "maciek@gmail.com", 123));
+            BookFactoryService bookFactory = new BookFactory(bookManager);
+            Book book = bookFactory.create(Map.of("authorId", "1", "title", "Wiedźmin", "publisher", "SuperNowa", "publishYear", "1999", "isbn", "123", "genre", "fantasy", "language", "polish"));
+            log.info(book.toString());
+            bookManager.add(book);
 
-            authorManager.setSearch(new AuthorFindByName());
-            Author author = authorManager.search("David daVId").get(0);
-            log.info("Result of search 'David David': " + author.toString());
+            TimeManager timeManager = TimeManager.getInstance();
+            log.info("Current date: " + timeManager.getDate());
 
-            readerManager.setSearch(new ReaderFindById());
-            Reader reader = readerManager.search("1").getFirst();
-            log.info("Result of search reader id=1: " + reader.toString());
+            Map<String, String> testMap = new HashMap<>();
+            testMap.put("name", "Stefannn");
+            testMap.put("bornDate", "");
+            testMap.put("deathDate", "-");
+            ValidatorService authorValidator = new AuthorValidator();
+            if (authorValidator.validate(testMap)) {
+                log.info("author values valid");
+            } else {
+                log.info("author values invalid");
+            }
+            log.info(testMap.toString());
 
+            log.info("Books: " + bookManager.get().toString());
 
-            boookManager.setSearch(new BookFindById());
-            Book book = boookManager.search("1").getFirst();
-            book.setCurrentReaderId(reader.getId());
-            log.info("Result of search book id=1: " + book);
+            BookFilter bookFilter = new BookFilterAvailable();
+            log.info("Books available: " + bookFilter.filter(bookManager.get()).toString());
 
-            log.info("Fetched books of reader: " + reader.getName() + ": " + readerManager.fetchBooks(reader).toString());
-
-            authorManager.setSearch(new AuthorFindById());
-            author = authorManager.search("602").get(0);
-            log.info("Fethced books titles of author: " + author.getName() + ":" + authorManager.fetchTitles(author).toString());
-
-            AuthorFactoryService authorFactory = new AuthorFactory(authorManager);
-            author = authorFactory.create(Map.of("name", "Charmander", "bornDate", "2115", "deathDate", "2225"));
-            log.info(author.toString());
-            authorManager.add(author);
-
+            bookManager.setSearch(new BookFindByAuthorName());
+            log.info("Books of author 'Jack': " + bookManager.search("jACk").toString());
             fileManager.saveDatabase();
             log.info("Database saved");
         };
