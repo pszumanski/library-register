@@ -1,30 +1,40 @@
 package com.pszumanski.libraryregister.managers.dataManagers;
 
+import com.pszumanski.libraryregister.data.Author;
+import com.pszumanski.libraryregister.data.Book;
+import com.pszumanski.libraryregister.data.Reader;
 import com.pszumanski.libraryregister.repositories.AuthorRepository;
 import com.pszumanski.libraryregister.repositories.BookRepository;
 import com.pszumanski.libraryregister.repositories.ReaderRepository;
 
+import java.util.ArrayList;
 
 public class FileManager implements FileManagerService {
 
-    private static AuthorRepository authorRepository;
-    private static BookRepository bookRepository;
-    private static ReaderRepository readerRepository;
-
+    private AuthorRepository authorRepository;
+    private BookRepository bookRepository;
+    private ReaderRepository readerRepository;
     private final AuthorManagerService authorManager;
     private final BookManagerService bookManager;
     private final ReaderManagerService readerManager;
 
-    public FileManager() {
-        this.authorManager = new AuthorManager();
-        this.bookManager = new BookManager();
-        this.readerManager = new ReaderManager();
+    private static FileManager fileManager;
+
+    public static FileManager getInstance() {
+        if (fileManager == null) {
+            fileManager = new FileManager();
+        }
+
+        return fileManager;
     }
 
-    public FileManager(AuthorRepository authorRepository, BookRepository bookRepository, ReaderRepository readerRepository) {
-        FileManager.authorRepository = authorRepository;
-        FileManager.bookRepository = bookRepository;
-        FileManager.readerRepository = readerRepository;
+    public void setRepos(AuthorRepository authorRepository, BookRepository bookRepository, ReaderRepository readerRepository) {
+        this.authorRepository = authorRepository;
+        this.bookRepository = bookRepository;
+        this.readerRepository = readerRepository;
+    }
+
+    private FileManager() {
         this.authorManager = new AuthorManager();
         this.bookManager = new BookManager();
         this.readerManager = new ReaderManager();
@@ -35,6 +45,13 @@ public class FileManager implements FileManagerService {
         authorManager.load(authorRepository.findAll());
         bookManager.load(bookRepository.findAll());
         readerManager.load(readerRepository.findAll());
+    }
+
+    @Override
+    public void createNew() {
+        authorManager.load(new ArrayList<>());
+        bookManager.load(new ArrayList<>());
+        readerManager.load(new ArrayList<>());
     }
 
     @Override

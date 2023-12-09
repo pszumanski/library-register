@@ -2,14 +2,12 @@ package com.pszumanski.libraryregister.ui;
 
 
 import com.github.spring.boot.javafx.stereotype.ViewController;
-import com.github.spring.boot.javafx.view.ViewLoader;
+import javafx.fxml.FXML;
 
 @ViewController
 public class MenuController {
-    private ViewLoader viewLoader;
+//    @FXML
 
 
-    public void loadView() {
-        viewLoader.load("mainView.fmxl");
-    }
+
 }
