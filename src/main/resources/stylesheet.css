@@ -1,3 +1,16 @@
 .anchor-pane {
-    -fx-background-color: blue;
+    -fx-background-color: #000000;
+}
+
+.label {
+    -fx-font-family: 'Ubuntu';
+    -fx-font-weight: 400;
+    -fx-font-size: 20;
+    -fx-text-fill: #fcf3ff;
+}
+
+.html {
+    --primary: #7540dd;
+    --secondary: #c1c2c2;
+    --accent: #b37fdd;
 }

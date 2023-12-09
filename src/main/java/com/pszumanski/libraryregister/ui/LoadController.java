@@ -5,16 +5,17 @@ import com.pszumanski.libraryregister.managers.dataManagers.FileManager;
 import com.pszumanski.libraryregister.managers.dataManagers.FileManagerService;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 
 @ViewController
 public class LoadController {
+
+    public static final String MAIN_FXML = "/views/main.fxml";
 
     public void load(ActionEvent event) throws IOException {
         FileManagerService fileManager = FileManager.getInstance();
@@ -29,9 +30,11 @@ public class LoadController {
     }
 
     private void switchToMenu(ActionEvent event) throws IOException{
-        Parent root = FXMLLoader.load(getClass().getResource("/views/main.fxml"));
+        Pane pane = FxmlUtils.fmxlLoader(MAIN_FXML);
+
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root, stage.getWidth(), stage.getHeight());
+        Scene scene = new Scene(pane, stage.getWidth(), stage.getHeight());
+
         String css = this.getClass().getResource("/stylesheet.css").toExternalForm();
         scene.getStylesheets().add(css);
         stage.setScene(scene);
@@ -39,7 +42,7 @@ public class LoadController {
         stage.show();
     }
 
-    public void exit(ActionEvent event) {
+    public void exit() {
         Platform.exit();
     }
 

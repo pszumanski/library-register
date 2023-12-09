@@ -6,11 +6,12 @@ import com.pszumanski.libraryregister.managers.dataManagers.FileManagerService;
 import com.pszumanski.libraryregister.repositories.AuthorRepository;
 import com.pszumanski.libraryregister.repositories.BookRepository;
 import com.pszumanski.libraryregister.repositories.ReaderRepository;
+import com.pszumanski.libraryregister.ui.FxmlUtils;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
-import javafx.stage.Screen;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,12 +21,16 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
+import java.util.Locale;
+import java.util.ResourceBundle;
+
 @SpringBootApplication(scanBasePackages = "com.pszumanski.libraryregister")
 @EntityScan("com.pszumanski.libraryregister.data")
 @EnableJpaRepositories(basePackages = "com.pszumanski.libraryregister.repositories")
 @Slf4j
 public class LibraryRegisterApplication extends SpringJavaFXApplication {
 
+    public static final String LOAD_FXML = "/views/load.fxml";
     @Autowired
     AuthorRepository authorRepository;
     @Autowired
@@ -121,13 +126,17 @@ public class LibraryRegisterApplication extends SpringJavaFXApplication {
 
     @Override
     public void start(Stage stage) throws Exception {
+        Locale.setDefault(new Locale.Builder().setLanguage("pl").build());
         log.info("Started stage loading");
 
-        Parent root = new FXMLLoader(getClass().getResource("/views/load.fxml")).load();
-        Scene scene = new Scene(root);
+        Pane pane = FxmlUtils.fmxlLoader(LOAD_FXML);
+        Scene scene = new Scene(pane);
+
+        // Set language options
+        ResourceBundle bundle = FxmlUtils.getResourceBundle();
 
         Image icon = new Image(getClass().getResource("/images/libraryRegisterLogo.png").toExternalForm());
-        stage.setTitle("Library register");
+        stage.setTitle(bundle.getString("application.title"));
         stage.getIcons().add(icon);
 
         stage.setMaximized(true);
