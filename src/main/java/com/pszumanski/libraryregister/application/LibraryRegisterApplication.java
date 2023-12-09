@@ -10,6 +10,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,8 +19,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-
-import java.awt.*;
 
 @SpringBootApplication(scanBasePackages = "com.pszumanski.libraryregister")
 @EntityScan("com.pszumanski.libraryregister.data")
@@ -131,12 +130,7 @@ public class LibraryRegisterApplication extends SpringJavaFXApplication {
         stage.setTitle("Library register");
         stage.getIcons().add(icon);
 
-        Toolkit toolkit = Toolkit.getDefaultToolkit();
-        Dimension screenSize = toolkit.getScreenSize();
-        int screenWidth = (int) screenSize.getWidth();
-        int screenHeight = (int) screenSize.getHeight();
-        stage.setWidth(screenWidth);
-        stage.setHeight(screenHeight);
+        stage.setMaximized(true);
         stage.setResizable(false);
 
         String css = this.getClass().getResource("/stylesheet.css").toExternalForm();
@@ -144,6 +138,7 @@ public class LibraryRegisterApplication extends SpringJavaFXApplication {
 
         stage.setScene(scene);
         stage.show();
+        stage.setMaximized(true);
         log.info("Stage loaded");
     }
 

@@ -6,7 +6,6 @@ import javafx.fxml.FXML;
 
 @ViewController
 public class MenuController {
-//    @FXML
 
 
 

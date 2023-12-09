@@ -5,12 +5,10 @@ import com.pszumanski.libraryregister.managers.dataManagers.FileManager;
 import com.pszumanski.libraryregister.managers.dataManagers.FileManagerService;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -33,8 +31,11 @@ public class LoadController {
     private void switchToMenu(ActionEvent event) throws IOException{
         Parent root = FXMLLoader.load(getClass().getResource("/views/main.fxml"));
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root);
+        Scene scene = new Scene(root, stage.getWidth(), stage.getHeight());
+        String css = this.getClass().getResource("/stylesheet.css").toExternalForm();
+        scene.getStylesheets().add(css);
         stage.setScene(scene);
+        stage.setMaximized(true);
         stage.show();
     }
 
