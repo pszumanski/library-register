@@ -1,10 +1,9 @@
 package com.pszumanski.libraryregister.managers.dataManagers;
 
-import com.pszumanski.libraryregister.data.Author;
-import com.pszumanski.libraryregister.data.Book;
+import com.pszumanski.libraryregister.data.objects.Author;
+import com.pszumanski.libraryregister.data.objects.Book;
 import com.pszumanski.libraryregister.strategy.authorSearch.AuthorSearch;
 import com.pszumanski.libraryregister.strategy.bookSearch.BookFindByAuthorId;
-import com.pszumanski.libraryregister.strategy.bookSearch.BookFindByAuthorName;
 
 import java.util.List;
 import java.util.Set;

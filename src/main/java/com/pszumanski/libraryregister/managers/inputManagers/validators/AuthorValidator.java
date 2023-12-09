@@ -1,12 +1,11 @@
 package com.pszumanski.libraryregister.managers.inputManagers.validators;
 
-import com.pszumanski.libraryregister.data.Author;
+import com.pszumanski.libraryregister.data.objects.Author;
 import com.pszumanski.libraryregister.managers.dataManagers.AuthorManager;
 import com.pszumanski.libraryregister.managers.dataManagers.AuthorManagerService;
 import com.pszumanski.libraryregister.managers.dataManagers.TimeManager;
 import com.pszumanski.libraryregister.strategy.authorSearch.AuthorFindByName;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 

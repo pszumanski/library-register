@@ -1,8 +1,5 @@
 package com.pszumanski.libraryregister.managers.dataManagers;
 
-import com.pszumanski.libraryregister.data.Author;
-import com.pszumanski.libraryregister.data.Book;
-import com.pszumanski.libraryregister.data.Reader;
 import com.pszumanski.libraryregister.repositories.AuthorRepository;
 import com.pszumanski.libraryregister.repositories.BookRepository;
 import com.pszumanski.libraryregister.repositories.ReaderRepository;

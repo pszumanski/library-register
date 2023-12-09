@@ -1,6 +1,6 @@
 package com.pszumanski.libraryregister.managers.inputManagers.factories;
 
-import com.pszumanski.libraryregister.data.Author;
+import com.pszumanski.libraryregister.data.objects.Author;
 
 import java.util.Map;
 

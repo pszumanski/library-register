@@ -1,6 +1,6 @@
 package com.pszumanski.libraryregister.managers.inputManagers.factories;
 
-import com.pszumanski.libraryregister.data.Book;
+import com.pszumanski.libraryregister.data.objects.Book;
 import com.pszumanski.libraryregister.managers.dataManagers.BookManagerService;
 import lombok.AllArgsConstructor;
 

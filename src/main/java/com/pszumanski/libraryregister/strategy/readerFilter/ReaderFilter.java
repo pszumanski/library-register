@@ -1,6 +1,6 @@
 package com.pszumanski.libraryregister.strategy.readerFilter;
 
-import com.pszumanski.libraryregister.data.Reader;
+import com.pszumanski.libraryregister.data.objects.Reader;
 
 import java.util.List;
 

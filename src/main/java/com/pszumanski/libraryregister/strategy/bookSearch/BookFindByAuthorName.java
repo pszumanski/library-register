@@ -1,18 +1,14 @@
 package com.pszumanski.libraryregister.strategy.bookSearch;
 
-import com.pszumanski.libraryregister.data.Author;
-import com.pszumanski.libraryregister.data.Book;
+import com.pszumanski.libraryregister.data.objects.Author;
+import com.pszumanski.libraryregister.data.objects.Book;
 import com.pszumanski.libraryregister.managers.dataManagers.AuthorManager;
 import com.pszumanski.libraryregister.managers.dataManagers.AuthorManagerService;
 import com.pszumanski.libraryregister.managers.dataManagers.BookManager;
-import com.pszumanski.libraryregister.managers.dataManagers.BookManagerService;
-import com.pszumanski.libraryregister.strategy.authorSearch.AuthorFindByName;
-import com.pszumanski.libraryregister.strategy.authorSearch.AuthorSearch;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class BookFindByAuthorName implements BookSearch {
     @Override

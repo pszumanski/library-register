@@ -13,7 +13,7 @@ public class FxmlUtils {
         try {
             return loader.load();
         } catch (Exception e) {
-            e.printStackTrace();
+            DialogUtils.error(e.getMessage());
         }
         return null;
     }

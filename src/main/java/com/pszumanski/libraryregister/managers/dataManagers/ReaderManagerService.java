@@ -1,7 +1,7 @@
 package com.pszumanski.libraryregister.managers.dataManagers;
 
-import com.pszumanski.libraryregister.data.Book;
-import com.pszumanski.libraryregister.data.Reader;
+import com.pszumanski.libraryregister.data.objects.Book;
+import com.pszumanski.libraryregister.data.objects.Reader;
 import com.pszumanski.libraryregister.strategy.readerSearch.ReaderSearch;
 
 import java.util.List;

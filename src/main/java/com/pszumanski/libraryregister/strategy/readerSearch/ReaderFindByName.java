@@ -1,6 +1,6 @@
 package com.pszumanski.libraryregister.strategy.readerSearch;
 
-import com.pszumanski.libraryregister.data.Reader;
+import com.pszumanski.libraryregister.data.objects.Reader;
 import com.pszumanski.libraryregister.managers.dataManagers.ReaderManager;
 
 import java.util.Arrays;

@@ -1,6 +1,6 @@
 package com.pszumanski.libraryregister.strategy.bookFilter;
 
-import com.pszumanski.libraryregister.data.Book;
+import com.pszumanski.libraryregister.data.objects.Book;
 
 import java.util.List;
 

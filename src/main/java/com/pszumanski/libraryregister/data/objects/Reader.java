@@ -1,4 +1,4 @@
-package com.pszumanski.libraryregister.data;
+package com.pszumanski.libraryregister.data.objects;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;

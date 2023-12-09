@@ -1,6 +1,6 @@
 package com.pszumanski.libraryregister.managers.dataManagers;
 
-import com.pszumanski.libraryregister.data.Book;
+import com.pszumanski.libraryregister.data.objects.Book;
 import com.pszumanski.libraryregister.strategy.bookSearch.BookSearch;
 import lombok.Getter;
 

@@ -31,6 +31,7 @@ import java.util.ResourceBundle;
 public class LibraryRegisterApplication extends SpringJavaFXApplication {
 
     public static final String LOAD_FXML = "/views/load.fxml";
+    public static final String LIBRARY_REGISTER_LOGO_PNG = "/images/libraryRegisterLogo.png";
     @Autowired
     AuthorRepository authorRepository;
     @Autowired
@@ -132,10 +133,9 @@ public class LibraryRegisterApplication extends SpringJavaFXApplication {
         Pane pane = FxmlUtils.fmxlLoader(LOAD_FXML);
         Scene scene = new Scene(pane);
 
-        // Set language options
         ResourceBundle bundle = FxmlUtils.getResourceBundle();
 
-        Image icon = new Image(getClass().getResource("/images/libraryRegisterLogo.png").toExternalForm());
+        Image icon = new Image(getClass().getResource(LIBRARY_REGISTER_LOGO_PNG).toExternalForm());
         stage.setTitle(bundle.getString("application.title"));
         stage.getIcons().add(icon);
 

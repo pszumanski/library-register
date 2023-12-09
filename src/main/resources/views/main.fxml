@@ -50,7 +50,7 @@
          <children>
             <MenuBar>
               <menus>
-                <Menu mnemonicParsing="false" text="%help">
+                <Menu mnemonicParsing="false" text="%file">
                      <items>
                         <MenuItem mnemonicParsing="false" onAction="#save" text="%save" />
                         <MenuItem mnemonicParsing="false" onAction="#load" text="%load" />
@@ -84,7 +84,7 @@
                         </RadioMenuItem>
                         <RadioMenuItem mnemonicParsing="false" onAction="#setPolish" text="Polski" toggleGroup="$language" />
                         <SeparatorMenuItem mnemonicParsing="false" />
-                      <MenuItem mnemonicParsing="false" text="Report a bug" />
+                      <MenuItem mnemonicParsing="false" onAction="#about" text="About application" />
                     </items>
                   </Menu>
               </menus>
@@ -93,7 +93,7 @@
       </HBox>
       <TabPane prefHeight="879.0" prefWidth="1328.0" tabClosingPolicy="UNAVAILABLE" VBox.vgrow="ALWAYS">
         <tabs>
-            <Tab text="%books">
+            <Tab fx:id="booksTab" onSelectionChanged="#showBooks" text="%books">
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="838.0" prefWidth="1328.0">
                      <children>
@@ -102,12 +102,12 @@
                   </AnchorPane>
               </content>
             </Tab>
-          <Tab text="%authors">
+          <Tab fx:id="authorsTab" onSelectionChanged="#showAuthors" text="%authors">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
             </content>
           </Tab>
-            <Tab text="%readers">
+            <Tab fx:id="readersTab" onSelectionChanged="#showReaders" text="%readers">
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
               </content>

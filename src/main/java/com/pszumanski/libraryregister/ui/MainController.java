@@ -5,8 +5,14 @@ import com.github.spring.boot.javafx.stereotype.ViewController;
 import com.pszumanski.libraryregister.managers.dataManagers.FileManager;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.ButtonBar;
+import javafx.scene.control.Tab;
+import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
 
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -14,33 +20,42 @@ import java.util.ResourceBundle;
 @ViewController
 public class MainController {
 
+
+
     @FXML
-    void addDay(ActionEvent event) {
+    Tab booksTab;
+    @FXML
+    Tab authorsTab;
+    @FXML
+    Tab readersTab;
+
+    @FXML
+    void addDay() {
 
     }
 
     @FXML
-    void addMonth(ActionEvent event) {
+    void addMonth() {
 
     }
 
     @FXML
-    void addWeek(ActionEvent event) {
+    void addWeek() {
 
     }
 
     @FXML
-    void chooseDate(ActionEvent event) {
+    void chooseDate() {
 
     }
 
     @FXML
-    void darkmode(ActionEvent event) {
+    void darkmode() {
 
     }
 
     @FXML
-    void lightmode(ActionEvent event) {
+    void lightmode() {
 
     }
 
@@ -63,25 +78,42 @@ public class MainController {
     }
 
     @FXML
-    void load(ActionEvent event) {
+    void load() {
         FileManager.getInstance().loadDatabase();
     }
 
     @FXML
-    void save(ActionEvent event) {
+    void save() {
         FileManager.getInstance().saveDatabase();
     }
 
     @FXML
-    void setEnglish(ActionEvent event) {
+    void setEnglish() {
         //TODO: Change language
         Locale.setDefault(new Locale.Builder().setLanguage("en").build());
     }
 
     @FXML
-    void setPolish(ActionEvent event) {
+    void setPolish() {
         //TODO: Change langauge
         Locale.setDefault(new Locale.Builder().setLanguage("pl").build());
     }
 
+    public void showBooks() {
+        if (booksTab.isSelected()) {
+
+        }
+    }
+
+    public void showAuthors() {
+        if (authorsTab.isSelected()) {
+
+        }
+    }
+
+    public void showReaders() {
+        if (readersTab.isSelected()) {
+
+        }
+    }
 }

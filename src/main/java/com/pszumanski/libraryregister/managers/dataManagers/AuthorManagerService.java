@@ -1,6 +1,6 @@
 package com.pszumanski.libraryregister.managers.dataManagers;
 
-import com.pszumanski.libraryregister.data.Author;
+import com.pszumanski.libraryregister.data.objects.Author;
 import com.pszumanski.libraryregister.strategy.authorSearch.AuthorSearch;
 
 import java.util.List;

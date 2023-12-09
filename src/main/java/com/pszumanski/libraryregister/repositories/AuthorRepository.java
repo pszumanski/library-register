@@ -1,6 +1,6 @@
 package com.pszumanski.libraryregister.repositories;
 
-import com.pszumanski.libraryregister.data.Author;
+import com.pszumanski.libraryregister.data.objects.Author;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
