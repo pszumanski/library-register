@@ -28,11 +28,14 @@ public class Reader {
     private String addressFirst;
     @NonNull
     private String addressSecond;
-    //TODO: Email?
     @NonNull
     private String email;
     @NonNull
     private Integer phoneNumber;
     @Setter
     private Integer penalty;
+
+    public String getAddress() {
+        return addressFirst + ", " + addressSecond;
+    }
 }

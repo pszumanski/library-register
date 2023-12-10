@@ -14,7 +14,6 @@ public class Author {
     @Id
     @NonNull
     private Integer id;
-
     @NonNull
     private String name;
     @NonNull

@@ -22,4 +22,8 @@ public interface BookManagerService {
     boolean isLent(Book book);
 
     boolean isOverDue(Book book);
+
+    List<String> fetchLanguages();
+
+    List<String> fetchGenres();
 }

@@ -4,7 +4,9 @@ import com.pszumanski.libraryregister.data.objects.Book;
 import com.pszumanski.libraryregister.strategy.bookSearch.BookSearch;
 import lombok.Getter;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Getter
 public class BookManager implements BookManagerService {
@@ -52,4 +54,19 @@ public class BookManager implements BookManagerService {
         return TimeManager.getInstance().isBefore(book.getDeadline());
     }
 
+    @Override
+    public List<String> fetchLanguages() {
+        Set<String> languages = new HashSet<>();
+        books.forEach(book ->
+                languages.add(book.getLanguage()));
+        return languages.stream().toList();
+    }
+
+    @Override
+    public List<String> fetchGenres() {
+        Set<String> genres = new HashSet<>();
+        books.forEach(book ->
+                genres.add(book.getGenre()));
+        return genres.stream().toList();
+    }
 }

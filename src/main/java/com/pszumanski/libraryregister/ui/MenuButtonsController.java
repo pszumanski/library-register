@@ -9,7 +9,6 @@ public class MenuButtonsController {
     @FXML
     private void showBooks() {
         mainController.setCenter("/views/books.fxml");
-        BooksController.refresh();
     }
 
     @FXML

@@ -6,18 +6,29 @@ import com.pszumanski.libraryregister.data.objects.Reader;
 import com.pszumanski.libraryregister.managers.dataManagers.*;
 import com.pszumanski.libraryregister.managers.inputManagers.factories.BookFactory;
 import com.pszumanski.libraryregister.managers.inputManagers.factories.BookFactoryService;
+import com.pszumanski.libraryregister.managers.inputManagers.factories.ReaderFactory;
+import com.pszumanski.libraryregister.managers.inputManagers.factories.ReaderFactoryService;
 import com.pszumanski.libraryregister.strategy.authorSearch.AuthorFindById;
+import com.pszumanski.libraryregister.strategy.bookFilter.BookFilter;
+import com.pszumanski.libraryregister.strategy.bookFilter.BookFilterAvailable;
+import com.pszumanski.libraryregister.strategy.bookFilter.BookFilterGenre;
+import com.pszumanski.libraryregister.strategy.bookFilter.BookFilterLanguage;
 import com.pszumanski.libraryregister.strategy.bookSearch.BookFindByAuthorName;
 import com.pszumanski.libraryregister.strategy.bookSearch.BookFindByTitle;
 import com.pszumanski.libraryregister.strategy.bookSearch.BookSearch;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleListProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -28,6 +39,7 @@ public class BooksController {
     private Reader selectedReader;
     String[] searchOptions = {"Search all", "Search by title", "Search by author"};
     private BookSearch searchType;
+    private List<BookFilter> filterList;
     private boolean valid;
 
     private static BooksController booksController;
@@ -39,7 +51,9 @@ public class BooksController {
     @FXML
     private ChoiceBox<String> languageList;
     @FXML
-    private CheckBox availableFilter;
+    private ChoiceBox<String> genreList;
+    @FXML
+    private CheckBox filterCheckBox;
     @FXML
     private Label date;
     @FXML
@@ -73,6 +87,22 @@ public class BooksController {
     @FXML
     private TableColumn<Author, Integer> authorTitlesColumn;
     @FXML
+    private TableView<Reader> readerTable;
+    @FXML
+    private TableColumn<Reader, String> readerAddressColumn;
+    @FXML
+    private TableColumn<Reader, String> readerDateColumn;
+    @FXML
+    private TableColumn<Reader, String> readerEmailColumn;
+    @FXML
+    private TableColumn<Reader, Integer> readerIdColumn;
+    @FXML
+    private TableColumn<Reader, String> readerNameColumn;
+    @FXML
+    private TableColumn<Reader, Integer> readerPenaltyColumn;
+    @FXML
+    private TableColumn<Reader, Integer> readerPhoneNumberColumn;
+    @FXML
     private Button addBookButton;
     @FXML
     private TextField addBookGenre;
@@ -89,6 +119,24 @@ public class BooksController {
     @FXML
     private TextField selectedAuthorField;
     @FXML
+    private TextField selectedReaderField;
+    @FXML
+    private TextField lendBookTitle;
+    @FXML
+    private TextField lendBookAuthor;
+    @FXML
+    private TextField lendBookPublisher;
+    @FXML
+    private TextField lendBookPublishYear;
+    @FXML
+    private TextField lendBookLanguage;
+    @FXML
+    private TextField lendBookGenre;
+    @FXML
+    private TextField lendBookIsbn;
+    @FXML
+    private TextField lendBookId;
+    @FXML
     private Tab searchTab;
     @FXML
     private Tab addTab;
@@ -98,59 +146,91 @@ public class BooksController {
     @FXML
     private void initialize() {
         BooksController.booksController = this;
+        filterList = new ArrayList<>();
         searchList.getItems().addAll(searchOptions);
         searchList.setValue(searchOptions[0]);
         searchList.setOnAction(e -> setSearchOption());
+
+        languageList.getItems().clear();
+        languageList.getItems().add("Show all");
+        languageList.getItems().addAll(new BookManager().fetchLanguages());
+        languageList.setValue("Show all");
+        languageList.setOnAction(e -> setLanguageFilter());
+
+        genreList.getItems().clear();
+        genreList.getItems().add("Any genre");
+        genreList.getItems().addAll(new BookManager().fetchGenres());
+        genreList.setValue("Any genre");
+        genreList.setOnAction(e -> setGenreFilter());
+
         searchQuery.setDisable(true);
         searchQuery.setOnKeyTyped(e -> loadBooks());
         addBookButton.setDisable(true);
+
         addBookTitle.setOnKeyTyped(e -> validate());
         addBookPublisher.setOnKeyTyped(e -> validate());
         addBookPublishYear.setOnKeyTyped(e -> validate());
         addBookGenre.setOnKeyTyped(e -> validate());
         addBookLanguage.setOnKeyTyped(e -> validate());
+
+        manageTab.setDisable(true);
+
+        loadBooks();
     }
 
     public void loadBooks() {
-        BookManagerService bookManager = new BookManager();
-        List<Book> allBooks;
-
-        if (searchType != null && !searchQuery.getText().isEmpty()) {
-            bookManager.setSearch(searchType);
-            allBooks = bookManager.search(searchQuery.getText());
-        } else {
-            allBooks = bookManager.get();
-        }
-
-        //TODO: FILTER
-
-        ObservableList<Book> books = FXCollections.observableArrayList(allBooks);
-
-
         try {
+            BookManagerService bookManager = new BookManager();
+            List<Book> allBooks;
+
+            String currentLanguage = languageList.getValue();
+            languageList.getItems().clear();
+            languageList.getItems().add("Show all");
+            languageList.getItems().addAll(new BookManager().fetchLanguages());
+            languageList.setValue(currentLanguage);
+
+            String currentGenre = genreList.getValue();
+            genreList.getItems().clear();
+            genreList.getItems().add("Any genre");
+            genreList.getItems().addAll(new BookManager().fetchGenres());
+            genreList.setValue(currentGenre);
+
+            if (searchType != null && !searchQuery.getText().isEmpty()) {
+                bookManager.setSearch(searchType);
+                allBooks = bookManager.search(searchQuery.getText());
+            } else {
+                allBooks = bookManager.get();
+            }
+
+            for (BookFilter filter: filterList) {
+                allBooks = filter.filter(allBooks);
+            }
+
+            ObservableList<Book> books = FXCollections.observableArrayList(allBooks);
+
             elementsFound.setText(String.valueOf(books.size()));
             objectFound.setText(FxmlUtils.getResourceBundle().getString("books"));
+
+            //TODO: Adaptive book/books
+
+            AuthorManager authorManager = new AuthorManager();
+            authorManager.setSearch(new AuthorFindById());
+
+            this.bookTable.setItems(books);
+            this.idColumn.setCellValueFactory(bookData -> new SimpleIntegerProperty(bookData.getValue().getId()).asObject());
+            this.titleColumn.setCellValueFactory(bookData -> new ReadOnlyStringWrapper(bookData.getValue().getTitle()));
+            this.authorColumn.setCellValueFactory(bookData -> {
+                int authorId = bookData.getValue().getAuthorId();
+                Author author = authorManager.search(String.valueOf(authorId)).getFirst();
+                return new ReadOnlyStringWrapper(author.getName());
+            });
+            this.genreColumn.setCellValueFactory(bookData -> new ReadOnlyStringWrapper(bookData.getValue().getGenre()));
+            this.languageColumn.setCellValueFactory(bookData -> new ReadOnlyStringWrapper(bookData.getValue().getLanguage()));
+            this.publisherColumn.setCellValueFactory(bookData -> new ReadOnlyStringWrapper(bookData.getValue().getPublisher()));
+
+            this.bookTable.getSelectionModel().selectedItemProperty().addListener(((observable, oldValue, newValue) -> selectBook(newValue)));
         } catch (Exception e) {}
 
-
-        //TODO: Adaptive book/books
-
-        AuthorManager authorManager = new AuthorManager();
-        authorManager.setSearch(new AuthorFindById());
-
-        this.bookTable.setItems(books);
-        this.idColumn.setCellValueFactory(bookData -> new SimpleIntegerProperty(bookData.getValue().getId()).asObject());
-        this.titleColumn.setCellValueFactory(bookData -> new ReadOnlyStringWrapper(bookData.getValue().getTitle()));
-        this.authorColumn.setCellValueFactory(bookData -> {
-            int authorId = bookData.getValue().getAuthorId();
-            Author author = authorManager.search(String.valueOf(authorId)).getFirst();
-            return new ReadOnlyStringWrapper(author.getName());
-        });
-        this.genreColumn.setCellValueFactory(bookData -> new ReadOnlyStringWrapper(bookData.getValue().getGenre()));
-        this.languageColumn.setCellValueFactory(bookData -> new ReadOnlyStringWrapper(bookData.getValue().getLanguage()));
-        this.publisherColumn.setCellValueFactory(bookData -> new ReadOnlyStringWrapper(bookData.getValue().getPublisher()));
-
-        this.bookTable.getSelectionModel().selectedItemProperty().addListener(((observable, oldValue, newValue) -> selectBook(newValue)));
     }
 
     public void loadAuthors() {
@@ -176,6 +256,27 @@ public class BooksController {
     }
 
     public void loadReaders() {
+        ReaderManagerService readerManager = new ReaderManager();
+
+        ObservableList<Reader> readers = FXCollections.observableArrayList(readerManager.get());
+
+        elementsFound.setText(String.valueOf(readers.size()));
+
+        //TODO: Adaptive author
+        objectFound.setText(FxmlUtils.getResourceBundle().getString("readers"));
+
+        this.readerTable.setItems(readers);
+        this.readerIdColumn.setCellValueFactory(readerData -> new SimpleIntegerProperty(readerData.getValue().getId()).asObject());
+        this.readerNameColumn.setCellValueFactory(readerData -> new ReadOnlyStringWrapper(readerData.getValue().getName()));
+        this.readerDateColumn.setCellValueFactory(readerData -> {
+            return new SimpleStringProperty(readerData.getValue().getBornDate().toString());
+        });
+        this.readerAddressColumn.setCellValueFactory(readerData -> new ReadOnlyStringWrapper(readerData.getValue().getAddress()));
+        this.readerPhoneNumberColumn.setCellValueFactory(readerData -> new SimpleIntegerProperty(readerData.getValue().getPhoneNumber()).asObject());
+        this.readerEmailColumn.setCellValueFactory(readerData -> new ReadOnlyStringWrapper(readerData.getValue().getEmail()));
+        this.readerPenaltyColumn.setCellValueFactory(readerData -> new SimpleIntegerProperty(readerData.getValue().getPenalty()).asObject());
+
+        this.readerTable.getSelectionModel().selectedItemProperty().addListener(((observable, oldValue, newValue) -> selectReader(newValue)));
     }
 
     public static void refresh() {
@@ -186,6 +287,9 @@ public class BooksController {
     public void selectBook(Book book) {
         if (book != null) {
             selectedBook = book;
+            manageTab.setDisable(false);
+        } else {
+            manageTab.setDisable(true);
         }
     }
 
@@ -202,12 +306,8 @@ public class BooksController {
     public void selectReader(Reader reader) {
         if (reader != null) {
             selectedReader = reader;
+            selectedReaderField.setText(reader.getName());
         }
-    }
-
-    @FXML
-    public void manage() {
-
     }
 
     @FXML
@@ -241,6 +341,7 @@ public class BooksController {
         } else if (addTab.isSelected()) {
             loadAuthors();
         } else if (manageTab.isSelected()) {
+            loadBookInfo();
             loadReaders();
         }
     }
@@ -265,7 +366,41 @@ public class BooksController {
     public void search(ActionEvent event) {
     }
 
-    public void filterAvailable(ActionEvent event) {
+    @FXML
+    private void filterAvailable(ActionEvent event) {
+        if (filterCheckBox.isSelected()) {
+            filterList.add(new BookFilterAvailable());
+        } else {
+            for (BookFilter filter: filterList) {
+                if (filter instanceof BookFilterAvailable) {
+                    filterList.remove(filter);
+                    break;
+                }
+            }
+        }
+        loadBooks();
+    }
+
+    private void setLanguageFilter() {
+        if(languageList.getValue() == null) {
+            return;
+        }
+        filterList.removeIf(filter -> filter instanceof BookFilterLanguage);
+        if (!languageList.getValue().equals("Show all")) {
+            filterList.add(new BookFilterLanguage(languageList.getValue()));
+        }
+        loadBooks();
+    }
+
+    private void setGenreFilter() {
+        if(genreList.getValue() == null) {
+            return;
+        }
+        filterList.removeIf(filter -> filter instanceof BookFilterGenre);
+        if (!genreList.getValue().equals("Any genre")) {
+            filterList.add(new BookFilterGenre(genreList.getValue()));
+        }
+        loadBooks();
     }
 
     private void validate() {
@@ -301,4 +436,28 @@ public class BooksController {
         addBookButton.setDisable(!valid);
     }
 
+    private void loadBookInfo() {
+        lendBookTitle.setText(selectedBook.getTitle());
+        int authorId = selectedBook.getAuthorId();
+        AuthorManager authorManager = new AuthorManager();
+        authorManager.setSearch(new AuthorFindById());
+        lendBookAuthor.setText(authorManager.search(String.valueOf(authorId)).getFirst().getName());
+        lendBookPublisher.setText(selectedBook.getPublisher());
+        lendBookPublishYear.setText(String.valueOf(selectedBook.getPublishYear()));
+        lendBookLanguage.setText(selectedBook.getLanguage());
+        lendBookGenre.setText(selectedBook.getGenre());
+        lendBookIsbn.setText(selectedBook.getIsbn());
+        lendBookId.setText(selectedBook.getId().toString());
+    }
+
+    public void lendBook() {
+
+    }
 }
+
+/*
+ReaderManagerService readerManager = new ReaderManager();
+        ReaderFactoryService readerFactory = new ReaderFactory(readerManager);
+        Reader reader = readerFactory.create(Map.of("name", "Maciej", "bornDate", "23-03-1989", "personalId", "58912734", "addressFirst", "Coconut Street 51/D", "addressSecond", "Gdansk", "email", "maciejunio@outlook.com", "phoneNumber", "589712341"));
+        readerManager.add(reader);
+ */

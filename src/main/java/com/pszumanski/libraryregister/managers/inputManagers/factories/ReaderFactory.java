@@ -5,6 +5,7 @@ import com.pszumanski.libraryregister.managers.dataManagers.ReaderManagerService
 import lombok.AllArgsConstructor;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
 
@@ -15,10 +16,12 @@ public class ReaderFactory implements ReaderFactoryService {
 
     @Override
     public Reader create(Map<String, String> attributes) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+
         Reader reader = new Reader(
                 (getMaxIndex() + 1),
                 attributes.get("name"),
-                LocalDate.parse(attributes.get("bornDate")),
+                LocalDate.parse(attributes.get("bornDate"), formatter),
                 Integer.parseInt(attributes.get("personalId")),
                 attributes.get("addressFirst"),
                 attributes.get("addressSecond"),

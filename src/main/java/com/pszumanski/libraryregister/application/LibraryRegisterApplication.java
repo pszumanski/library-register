@@ -1,8 +1,13 @@
 package com.pszumanski.libraryregister.application;
 
 import com.github.spring.boot.javafx.SpringJavaFXApplication;
+import com.pszumanski.libraryregister.data.objects.Reader;
 import com.pszumanski.libraryregister.managers.dataManagers.FileManager;
 import com.pszumanski.libraryregister.managers.dataManagers.FileManagerService;
+import com.pszumanski.libraryregister.managers.dataManagers.ReaderManager;
+import com.pszumanski.libraryregister.managers.dataManagers.ReaderManagerService;
+import com.pszumanski.libraryregister.managers.inputManagers.factories.ReaderFactory;
+import com.pszumanski.libraryregister.managers.inputManagers.factories.ReaderFactoryService;
 import com.pszumanski.libraryregister.repositories.AuthorRepository;
 import com.pszumanski.libraryregister.repositories.BookRepository;
 import com.pszumanski.libraryregister.repositories.ReaderRepository;
@@ -24,6 +29,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 import java.util.Locale;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 @SpringBootApplication(scanBasePackages = "com.pszumanski.libraryregister")
