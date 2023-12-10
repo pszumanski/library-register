@@ -13,18 +13,23 @@ import java.util.List;
 public class BookFindByAuthorName implements BookSearch {
     @Override
     public List<Book> search(String query) {
-        List<String> queries = Arrays.stream(query.split(" ")).toList();
+        List<String> queries = Arrays.stream(query.toLowerCase().split(" ")).toList();
         AuthorManagerService authorManager = new AuthorManager();
+        int numberOfWords = queries.size();
 
         List<Author> authors = authorManager.get().stream()
                 .filter(author -> {
                     List<String> authorName = Arrays.stream(author.getName().toLowerCase().split(" ")).toList();
+                    int matches = 0;
                     for (String word: queries) {
-                        if (!authorName.contains(word.toLowerCase())) {
-                            return false;
+                        for (String authorSubName : authorName) {
+                            if (authorSubName.contains(word)) {
+                                matches++;
+                                break;
+                            }
                         }
                     }
-                    return true;
+                    return matches >= numberOfWords;
                 })
                 .toList();
         List<Integer> authorIds = new ArrayList<>();

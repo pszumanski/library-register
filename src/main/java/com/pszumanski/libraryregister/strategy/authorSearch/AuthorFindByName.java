@@ -10,17 +10,22 @@ import java.util.stream.Collectors;
 public class AuthorFindByName implements AuthorSearch {
     @Override
     public List<Author> search(String query) {
-        List<String> queries = Arrays.stream(query.split(" ")).toList();
+        List<String> queries = Arrays.stream(query.toLowerCase().split(" ")).toList();
+        int numberOfWords = queries.size();
 
         return new AuthorManager().get().stream()
                 .filter(author -> {
                     List<String> authorName = Arrays.stream(author.getName().toLowerCase().split(" ")).toList();
+                    int matches = 0;
                     for (String word: queries) {
-                        if (!authorName.contains(word.toLowerCase())) {
-                            return false;
+                        for (String authorSubName: authorName) {
+                            if (authorSubName.contains(word)) {
+                                matches++;
+                                break;
+                            }
                         }
                     }
-                    return true;
+                    return matches >= numberOfWords;
                 })
                 .collect(Collectors.toList());
     }

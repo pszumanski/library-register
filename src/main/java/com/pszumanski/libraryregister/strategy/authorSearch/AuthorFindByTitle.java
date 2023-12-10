@@ -7,11 +7,13 @@ import com.pszumanski.libraryregister.managers.dataManagers.BookManager;
 
 import java.util.*;
 
+import static java.util.stream.Collectors.toList;
+
 public class AuthorFindByTitle implements AuthorSearch {
     @Override
     public List<Author> search(String query) {
         List<Book> booksOfTitle = new BookManager().get().stream()
-                .filter(book -> query.equalsIgnoreCase(book.getTitle()))
+                .filter(book -> book.getTitle().toLowerCase().contains(query.toLowerCase()))
                 .toList();
 
         Set<Author> authors = new HashSet<>();

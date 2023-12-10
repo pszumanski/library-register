@@ -15,12 +15,9 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
-import javax.swing.event.ListSelectionEvent;
-import java.awt.event.MouseEvent;
 import java.util.List;
 import java.util.Map;
 
@@ -129,10 +126,14 @@ public class BooksController {
 
         ObservableList<Book> books = FXCollections.observableArrayList(allBooks);
 
-        elementsFound.setText(String.valueOf(books.size()));
+
+        try {
+            elementsFound.setText(String.valueOf(books.size()));
+            objectFound.setText(FxmlUtils.getResourceBundle().getString("books"));
+        } catch (Exception e) {}
+
 
         //TODO: Adaptive book/books
-        objectFound.setText(FxmlUtils.getResourceBundle().getString("books"));
 
         AuthorManager authorManager = new AuthorManager();
         authorManager.setSearch(new AuthorFindById());
@@ -214,12 +215,12 @@ public class BooksController {
         BookManagerService bookManager = new BookManager();
         BookFactoryService bookFactory = new BookFactory(bookManager);
         Book book = bookFactory.create(Map.of(
-                "title", addBookTitle.getText(),
+                "title", addBookTitle.getText().substring(0,1).toUpperCase() + addBookTitle.getText().substring(1),
                 "authorId", selectedAuthor.getId().toString(),
-                "publisher", addBookPublisher.getText(),
+                "publisher", addBookPublisher.getText().substring(0,1).toUpperCase() + addBookPublisher.getText().substring(1),
                 "publishYear", addBookPublishYear.getText(),
-                "genre", addBookGenre.getText(),
-                "language", addBookLanguage.getText(),
+                "genre", addBookGenre.getText().toLowerCase(),
+                "language", addBookLanguage.getText().substring(0,1).toUpperCase() + addBookLanguage.getText().substring(1).toLowerCase(),
                 "isbn", addBookIsbn.getText()
                 ));
         bookManager.add(book);
@@ -268,6 +269,7 @@ public class BooksController {
     }
 
     private void validate() {
+        // validate komunikaty / kolor
         valid = true;
         if (addBookTitle.getText().isEmpty()) {
             valid = false;

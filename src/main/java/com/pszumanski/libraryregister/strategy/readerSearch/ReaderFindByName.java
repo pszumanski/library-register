@@ -11,17 +11,22 @@ public class ReaderFindByName implements ReaderSearch {
 
     @Override
     public List<Reader> search(String query) {
-        List<String> queries = Arrays.stream(query.split(" ")).toList();
+        List<String> queries = Arrays.stream(query.toLowerCase().split(" ")).toList();
+        int numberOfWords = queries.size();
 
         return new ReaderManager().get().stream()
                 .filter(reader -> {
-                    List<String> authorName = Arrays.stream(reader.getName().toLowerCase().split(" ")).toList();
+                    int matches = 0;
+                    List<String> readerName = Arrays.stream(reader.getName().toLowerCase().split(" ")).toList();
                     for (String word: queries) {
-                        if (!authorName.contains(word.toLowerCase())) {
-                            return false;
+                        for (String readerSubName : readerName) {
+                            if (readerSubName.contains(word)) {
+                                matches++;
+                                break;
+                            }
                         }
                     }
-                    return true;
+                    return matches >= numberOfWords;
                 })
                 .collect(Collectors.toList());
     }
