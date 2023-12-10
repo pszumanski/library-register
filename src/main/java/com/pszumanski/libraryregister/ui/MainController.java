@@ -32,16 +32,14 @@ public class MainController {
 
     private static Stage stage;
 
-    public static void setStage(Stage stage) {
-        MainController.stage = stage;
-    }
-
     @FXML
     private MenuButtonsController menuButtonsController;
 
     @FXML
+    private BooksController booksController;
+
+    @FXML
     private void initialize() {
-        System.out.println(menuButtonsController);
         menuButtonsController.setMainController(this);
     }
 
@@ -96,6 +94,7 @@ public class MainController {
     @FXML
     private void load() {
         FileManager.getInstance().loadDatabase();
+        BooksController.refresh();
     }
 
     @FXML
@@ -130,4 +129,7 @@ public class MainController {
         stage.setScene(scene);
     }
 
+    public static void setStage(Stage stage) {
+        MainController.stage = stage;
+    }
 }

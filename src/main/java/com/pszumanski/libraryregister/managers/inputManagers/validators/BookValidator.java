@@ -10,6 +10,11 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 
 public class BookValidator implements ValidatorService {
+
+    public boolean validateGenre(String genre) {
+        return !genre.isEmpty();
+    }
+
     @Override
     public boolean validate(Map<String, String> fields) {
         if (fields.get("title").isEmpty()) {

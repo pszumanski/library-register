@@ -7,6 +7,8 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
@@ -19,56 +21,261 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="830.0" prefWidth="1460.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.pszumanski.libraryregister.ui.BooksController">
    <children>
-      <SplitPane dividerPositions="0.29797979797979796" prefHeight="765.0" prefWidth="1326.0" AnchorPane.bottomAnchor="18.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-        <items>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
-               <children>
-                  <VBox prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                     <children>
-                        <Label text="%search" />
-                        <Separator prefWidth="200.0" />
-                        <HBox prefWidth="200.0">
+      <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="18.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <tabs>
+          <Tab fx:id="searchTab" onSelectionChanged="#tabChanged" text="%search">
+               <content>
+                  <SplitPane dividerPositions="0.2" prefHeight="765.0" prefWidth="1326.0">
+                    <items>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="783.0" prefWidth="600.0">
                            <children>
-                              <Label text="%searchOption" />
-                              <ChoiceBox prefWidth="150.0" />
+                              <VBox prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+                                 <children>
+                                    <Label text="%search" />
+                                    <HBox prefWidth="200.0" spacing="20.0">
+                                       <children>
+                                          <Label text="%searchOption" />
+                                          <ChoiceBox fx:id="searchList" prefWidth="150.0" />
+                                       </children>
+                                    </HBox>
+                                    <Separator prefWidth="200.0" />
+                                    <TextField fx:id="searchQuery" onAction="#search" promptText="%searchQuery" />
+                                    <HBox prefWidth="200.0">
+                                       <children>
+                                          <Label text="%booksLanguage" />
+                                          <ChoiceBox fx:id="languageList" prefWidth="150.0" />
+                                       </children>
+                                       <padding>
+                                          <Insets top="40.0" />
+                                       </padding>
+                                    </HBox>
+                                    <HBox>
+                                       <children>
+                                          <CheckBox fx:id="availableFilter" mnemonicParsing="false" onAction="#filterAvailable" text="%filterAvailable" />
+                                       </children>
+                                    </HBox>
+                                 </children>
+                              </VBox>
                            </children>
-                        </HBox>
-                        <TextField promptText="%searchQuery" />
-                        <HBox prefWidth="200.0">
+                        </AnchorPane>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                            <children>
-                              <Label text="%booksLanguage" />
-                              <ChoiceBox prefWidth="150.0" />
+                              <TableView fx:id="bookTable" layoutX="107.0" layoutY="87.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                <columns>
+                                  <TableColumn fx:id="idColumn" prefWidth="50.0" resizable="false" text="%id" />
+                                  <TableColumn fx:id="titleColumn" prefWidth="280.0" text="%title" />
+                                    <TableColumn fx:id="authorColumn" prefWidth="280.0" text="%author" />
+                                    <TableColumn fx:id="genreColumn" prefWidth="150.0" text="%genre" />
+                                    <TableColumn fx:id="publisherColumn" prefWidth="150.0" text="%publisher" />
+                                    <TableColumn fx:id="languageColumn" prefWidth="110.0" text="%language" />
+                                </columns>
+                              </TableView>
                            </children>
-                           <padding>
-                              <Insets top="40.0" />
-                           </padding>
-                        </HBox>
-                        <HBox>
+                        </AnchorPane>
+                    </items>
+                  </SplitPane>
+               </content>
+          </Tab>
+            <Tab fx:id="addTab" onSelectionChanged="#tabChanged" text="%addBook">
+               <content>
+                  <SplitPane dividerPositions="0.2" prefHeight="765.0" prefWidth="1326.0">
+                     <items>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="783.0" prefWidth="600.0">
                            <children>
-                              <CheckBox mnemonicParsing="false" text="%filterAvailable" />
+                              <VBox prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
+                                 <children>
+                                    <HBox alignment="BASELINE_RIGHT" spacing="10.0">
+                                       <children>
+                                          <Label text="%title" />
+                                          <TextField fx:id="addBookTitle" promptText="Title..." />
+                                       </children>
+                                       <padding>
+                                          <Insets left="10.0" top="20.0" />
+                                       </padding>
+                                       <opaqueInsets>
+                                          <Insets />
+                                       </opaqueInsets>
+                                       <VBox.margin>
+                                          <Insets right="30.0" />
+                                       </VBox.margin>
+                                    </HBox>
+                                    <HBox alignment="BASELINE_RIGHT" spacing="10.0">
+                                       <children>
+                                          <Label text="%author" />
+                                          <TextField fx:id="selectedAuthorField" editable="false" promptText="Select author..." />
+                                       </children>
+                                       <padding>
+                                          <Insets left="10.0" top="20.0" />
+                                       </padding>
+                                       <opaqueInsets>
+                                          <Insets />
+                                       </opaqueInsets>
+                                       <VBox.margin>
+                                          <Insets right="30.0" />
+                                       </VBox.margin>
+                                    </HBox>
+                                    <HBox alignment="BASELINE_RIGHT" spacing="10.0">
+                                       <children>
+                                          <Label text="%publisher" />
+                                          <TextField fx:id="addBookPublisher" promptText="Publisher..." />
+                                       </children>
+                                       <padding>
+                                          <Insets left="10.0" top="20.0" />
+                                       </padding>
+                                       <opaqueInsets>
+                                          <Insets />
+                                       </opaqueInsets>
+                                       <VBox.margin>
+                                          <Insets right="30.0" />
+                                       </VBox.margin>
+                                    </HBox>
+                                    <HBox alignment="BASELINE_RIGHT" spacing="10.0">
+                                       <children>
+                                          <Label text="%publishYear" />
+                                          <TextField fx:id="addBookPublishYear" promptText="Publish year..." />
+                                       </children>
+                                       <padding>
+                                          <Insets left="10.0" top="20.0" />
+                                       </padding>
+                                       <opaqueInsets>
+                                          <Insets />
+                                       </opaqueInsets>
+                                       <VBox.margin>
+                                          <Insets right="30.0" />
+                                       </VBox.margin>
+                                    </HBox>
+                                    <HBox alignment="BASELINE_RIGHT" spacing="10.0">
+                                       <children>
+                                          <Label text="%isbn" />
+                                          <TextField fx:id="addBookIsbn" promptText="ISBN number..." />
+                                       </children>
+                                       <padding>
+                                          <Insets left="10.0" top="20.0" />
+                                       </padding>
+                                       <opaqueInsets>
+                                          <Insets />
+                                       </opaqueInsets>
+                                       <VBox.margin>
+                                          <Insets right="30.0" />
+                                       </VBox.margin>
+                                    </HBox>
+                                    <HBox alignment="BASELINE_RIGHT" spacing="10.0">
+                                       <children>
+                                          <Label text="%genre" />
+                                          <TextField fx:id="addBookGenre" promptText="Genre..." />
+                                       </children>
+                                       <padding>
+                                          <Insets left="10.0" top="20.0" />
+                                       </padding>
+                                       <opaqueInsets>
+                                          <Insets />
+                                       </opaqueInsets>
+                                       <VBox.margin>
+                                          <Insets right="30.0" />
+                                       </VBox.margin>
+                                    </HBox>
+                                    <HBox alignment="BASELINE_RIGHT" spacing="10.0">
+                                       <children>
+                                          <Label text="%language" />
+                                          <TextField fx:id="addBookLanguage" promptText="Language..." />
+                                       </children>
+                                       <padding>
+                                          <Insets left="10.0" top="20.0" />
+                                       </padding>
+                                       <opaqueInsets>
+                                          <Insets />
+                                       </opaqueInsets>
+                                       <VBox.margin>
+                                          <Insets right="30.0" />
+                                       </VBox.margin>
+                                    </HBox>
+                                    <HBox alignment="CENTER" prefHeight="31.0" prefWidth="279.0" spacing="10.0">
+                                       <padding>
+                                          <Insets left="10.0" top="20.0" />
+                                       </padding>
+                                       <opaqueInsets>
+                                          <Insets />
+                                       </opaqueInsets>
+                                       <children>
+                                          <Button fx:id="addBookButton" mnemonicParsing="false" onAction="#addBook" text="%addBook" />
+                                       </children>
+                                    </HBox>
+                                 </children>
+                              </VBox>
                            </children>
-                        </HBox>
-                        <Button mnemonicParsing="false" onAction="#loadBooks" text="%addBook" />
-                     </children>
-                  </VBox>
-               </children>
-            </AnchorPane>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
-               <children>
-                  <TableView fx:id="booksTable" layoutX="107.0" layoutY="87.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                    <columns>
-                      <TableColumn fx:id="idColumn" prefWidth="50.0" resizable="false" text="%id" />
-                      <TableColumn fx:id="titleColumn" prefWidth="230.0" text="%title" />
-                        <TableColumn fx:id="authorColumn" prefWidth="200.0" text="%author" />
-                        <TableColumn fx:id="genreColumn" prefWidth="150.0" text="%genre" />
-                        <TableColumn fx:id="publisherColumn" prefWidth="150.0" text="%publisher" />
-                        <TableColumn fx:id="languageColumn" prefWidth="150.0" text="%language" />
-                    </columns>
-                  </TableView>
-               </children>
-            </AnchorPane>
-        </items>
-      </SplitPane>
+                        </AnchorPane>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                           <children>
+                              <TableView fx:id="authorTable" layoutX="107.0" layoutY="87.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <columns>
+                                    <TableColumn fx:id="authorIdColumn" prefWidth="50.0" resizable="false" text="%id" />
+                                    <TableColumn fx:id="authorNameColumn" prefWidth="280.0" text="%name" />
+                                    <TableColumn fx:id="authorTitlesColumn" prefWidth="280.0" text="%titleCount" />
+                                    <TableColumn fx:id="authorBornDateColumn" prefWidth="150.0" text="%bornDate" />
+                                    <TableColumn fx:id="authorDeathDateColumn" prefWidth="150.0" text="%deathDate" />
+                                 </columns>
+                              </TableView>
+                           </children>
+                        </AnchorPane>
+                     </items>
+                  </SplitPane>
+               </content>
+            </Tab>
+            <Tab fx:id="manageTab" onSelectionChanged="#tabChanged" text="%manage">
+               <content>
+                  <SplitPane dividerPositions="0.2" prefHeight="765.0" prefWidth="1326.0">
+                     <items>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="783.0" prefWidth="600.0">
+                           <children>
+                              <VBox prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+                                 <children>
+                                    <Label text="%search" />
+                                    <HBox prefWidth="200.0" spacing="20.0">
+                                       <children>
+                                          <Label text="%searchOption" />
+                                          <ChoiceBox fx:id="searchList2" prefWidth="150.0" />
+                                       </children>
+                                    </HBox>
+                                    <Separator prefWidth="200.0" />
+                                    <TextField fx:id="searchQuery2" onAction="#search" promptText="%searchQuery" />
+                                    <HBox prefWidth="200.0">
+                                       <children>
+                                          <Label text="%booksLanguage" />
+                                          <ChoiceBox fx:id="languageList2" prefWidth="150.0" />
+                                       </children>
+                                       <padding>
+                                          <Insets top="40.0" />
+                                       </padding>
+                                    </HBox>
+                                    <HBox>
+                                       <children>
+                                          <CheckBox fx:id="availableFilter2" mnemonicParsing="false" onAction="#filterAvailable" text="%filterAvailable" />
+                                       </children>
+                                    </HBox>
+                                 </children>
+                              </VBox>
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                           <children>
+                              <TableView fx:id="table2" layoutX="107.0" layoutY="87.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <columns>
+                                    <TableColumn fx:id="idColumn2" prefWidth="50.0" resizable="false" text="%id" />
+                                    <TableColumn fx:id="titleColumn2" prefWidth="280.0" text="%title" />
+                                    <TableColumn fx:id="authorColumn2" prefWidth="280.0" text="%author" />
+                                    <TableColumn fx:id="genreColumn2" prefWidth="150.0" text="%genre" />
+                                    <TableColumn fx:id="publisherColumn2" prefWidth="150.0" text="%publisher" />
+                                    <TableColumn fx:id="languageColumn2" prefWidth="110.0" text="%language" />
+                                 </columns>
+                              </TableView>
+                           </children>
+                        </AnchorPane>
+                     </items>
+                  </SplitPane>
+               </content>
+            </Tab>
+        </tabs>
+      </TabPane>
       <HBox prefHeight="18.0" prefWidth="1328.0" AnchorPane.bottomAnchor="1.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <children>
             <GridPane prefHeight="20.0" prefWidth="1328.0">
@@ -84,7 +291,7 @@
                      <children>
                         <Label text="%found" />
                         <Label fx:id="elementsFound" text="0" />
-                        <Label text="%foundBooks" />
+                        <Label fx:id="objectFound" text="%foundBooks" />
                      </children>
                   </HBox>
                   <HBox alignment="TOP_RIGHT" fillHeight="false" prefHeight="18.0" prefWidth="501.0" spacing="5.0" GridPane.columnIndex="1" GridPane.halignment="RIGHT">
