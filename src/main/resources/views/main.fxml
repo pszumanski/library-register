@@ -32,51 +32,50 @@
   OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 -->
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.RadioMenuItem?>
 <?import javafx.scene.control.SeparatorMenuItem?>
-<?import javafx.scene.control.Tab?>
-<?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
 
-<VBox prefHeight="830.0" prefWidth="1328.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.pszumanski.libraryregister.ui.MainController">
-  <children>
-      <HBox prefWidth="1328.0">
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="780.0" prefWidth="1326.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.pszumanski.libraryregister.ui.MainController">
+   <children>
+      <HBox prefWidth="1328.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <MenuBar>
-              <menus>
-                <Menu mnemonicParsing="false" text="%file">
+               <menus>
+                  <Menu mnemonicParsing="false" text="%file">
                      <items>
                         <MenuItem mnemonicParsing="false" onAction="#save" text="%save" />
                         <MenuItem mnemonicParsing="false" onAction="#load" text="%load" />
                         <MenuItem mnemonicParsing="false" onAction="#exit" text="%quit" />
                      </items>
-                </Menu>
+                  </Menu>
                   <Menu mnemonicParsing="false" text="%time">
-                    <items>
-                      <MenuItem mnemonicParsing="false" onAction="#addDay" text="%addDay" />
+                     <items>
+                        <MenuItem mnemonicParsing="false" onAction="#addDay" text="%addDay" />
                         <MenuItem mnemonicParsing="false" onAction="#addWeek" text="%addWeek" />
                         <MenuItem mnemonicParsing="false" onAction="#addMonth" text="%addMonth" />
                         <MenuItem mnemonicParsing="false" onAction="#chooseDate" text="%chooseDate" />
-                    </items>
+                     </items>
                   </Menu>
                   <Menu mnemonicParsing="false" text="%view">
-                    <items>
+                     <items>
                         <RadioMenuItem mnemonicParsing="false" onAction="#darkmode" selected="true" text="%dark">
                            <toggleGroup>
                               <ToggleGroup fx:id="style" />
                            </toggleGroup>
                         </RadioMenuItem>
                         <RadioMenuItem mnemonicParsing="false" onAction="#lightmode" text="%light" toggleGroup="$style" />
-                    </items>
+                     </items>
                   </Menu>
                   <Menu mnemonicParsing="false" text="%help">
-                    <items>
+                     <items>
                         <RadioMenuItem mnemonicParsing="false" onAction="#setEnglish" text="English">
                            <toggleGroup>
                               <ToggleGroup fx:id="language" />
@@ -84,35 +83,28 @@
                         </RadioMenuItem>
                         <RadioMenuItem mnemonicParsing="false" onAction="#setPolish" text="Polski" toggleGroup="$language" />
                         <SeparatorMenuItem mnemonicParsing="false" />
-                      <MenuItem mnemonicParsing="false" onAction="#about" text="About application" />
-                    </items>
+                        <MenuItem mnemonicParsing="false" onAction="#about" text="About application" />
+                     </items>
                   </Menu>
-              </menus>
+               </menus>
             </MenuBar>
+            <HBox>
+               <children>
+                  <fx:include fx:id="menuButtons" source="menuButtons.fxml" />
+               </children>
+               <padding>
+                  <Insets left="20.0" />
+               </padding>
+               <HBox.margin>
+                  <Insets left="60.0" />
+               </HBox.margin>
+            </HBox>
          </children>
       </HBox>
-      <TabPane prefHeight="879.0" prefWidth="1328.0" tabClosingPolicy="UNAVAILABLE" VBox.vgrow="ALWAYS">
-        <tabs>
-            <Tab fx:id="booksTab" onSelectionChanged="#showBooks" text="%books">
-              <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="838.0" prefWidth="1328.0">
-                     <children>
-                        <fx:include source="books.fxml" AnchorPane.bottomAnchor="-0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                     </children>
-                  </AnchorPane>
-              </content>
-            </Tab>
-          <Tab fx:id="authorsTab" onSelectionChanged="#showAuthors" text="%authors">
-            <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-            </content>
-          </Tab>
-            <Tab fx:id="readersTab" onSelectionChanged="#showReaders" text="%readers">
-              <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-              </content>
-            </Tab>
-        </tabs>
-      </TabPane>
-  </children>
-</VBox>
+      <AnchorPane prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="48.0">
+         <children>
+            <HBox fx:id="loadBox" prefHeight="100.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>

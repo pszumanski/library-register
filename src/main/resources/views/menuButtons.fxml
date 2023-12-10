@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.ToggleButton?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+
+<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" spacing="25.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.pszumanski.libraryregister.ui.MenuButtonsController">
+   <children>
+      <ToggleButton graphicTextGap="6.0" mnemonicParsing="false" onAction="#showBooks" text="%books">
+         <toggleGroup>
+            <ToggleGroup fx:id="menu" />
+         </toggleGroup>
+         <graphic>
+            <ImageView fitHeight="30.0" fitWidth="30.0" opacity="0.9" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/book.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </ToggleButton>
+      <ToggleButton graphicTextGap="5.0" mnemonicParsing="false" onAction="#showAuthors" text="%authors" toggleGroup="$menu">
+         <graphic>
+            <ImageView fitHeight="30.0" fitWidth="30.0" opacity="0.9" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/author.png" />
+               </image>
+            </ImageView>
+         </graphic></ToggleButton>
+      <ToggleButton graphicTextGap="5.0" mnemonicParsing="false" onAction="#showReaders" text="%readers" toggleGroup="$menu">
+         <graphic>
+            <ImageView fitHeight="30.0" fitWidth="30.0" opacity="0.9" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/reader.png" />
+               </image>
+            </ImageView>
+         </graphic></ToggleButton>
+   </children>
+   <padding>
+      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+   </padding>
+</HBox>

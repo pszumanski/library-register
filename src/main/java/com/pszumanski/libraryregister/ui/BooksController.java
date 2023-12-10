@@ -42,9 +42,6 @@ public class BooksController {
     private TableColumn<Book, String> languageColumn;
 
     @FXML
-    private TableColumn<Book, String> manageColumn;
-
-    @FXML
     private TableColumn<Book, String> publisherColumn;
 
     @FXML
@@ -75,7 +72,6 @@ public class BooksController {
         this.genreColumn.setCellValueFactory(bookData -> new ReadOnlyStringWrapper(bookData.getValue().getGenre()));
         this.languageColumn.setCellValueFactory(bookData -> new ReadOnlyStringWrapper(bookData.getValue().getLanguage()));
         this.publisherColumn.setCellValueFactory(bookData -> new ReadOnlyStringWrapper(bookData.getValue().getPublisher()));
-        this.manageColumn.setCellValueFactory(bookData -> new ReadOnlyStringWrapper(bookData.getValue().getPublisher()));
 
         this.booksTable.getSelectionModel().selectedItemProperty().addListener(((observable, oldValue, newValue) -> {
             select(newValue);

@@ -15,6 +15,12 @@ import java.io.IOException;
 @ViewController
 public class LoadController {
 
+    private static Stage stage;
+
+    public static void setStage(Stage stage) {
+        LoadController.stage = stage;
+    }
+
     public static final String MAIN_FXML = "/views/main.fxml";
 
     public void load(ActionEvent event) throws IOException {
@@ -32,14 +38,11 @@ public class LoadController {
     private void switchToMenu(ActionEvent event) throws IOException{
         Pane pane = FxmlUtils.fmxlLoader(MAIN_FXML);
 
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         Scene scene = new Scene(pane, stage.getWidth(), stage.getHeight());
 
         String css = this.getClass().getResource("/stylesheet.css").toExternalForm();
         scene.getStylesheets().add(css);
         stage.setScene(scene);
-        stage.setMaximized(true);
-        stage.show();
     }
 
     public void exit() {

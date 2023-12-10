@@ -7,6 +7,8 @@ import com.pszumanski.libraryregister.repositories.AuthorRepository;
 import com.pszumanski.libraryregister.repositories.BookRepository;
 import com.pszumanski.libraryregister.repositories.ReaderRepository;
 import com.pszumanski.libraryregister.ui.FxmlUtils;
+import com.pszumanski.libraryregister.ui.LoadController;
+import com.pszumanski.libraryregister.ui.MainController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -127,8 +129,10 @@ public class LibraryRegisterApplication extends SpringJavaFXApplication {
 
     @Override
     public void start(Stage stage) throws Exception {
-        Locale.setDefault(new Locale.Builder().setLanguage("pl").build());
         log.info("Started stage loading");
+
+        LoadController.setStage(stage);
+        MainController.setStage(stage);
 
         Pane pane = FxmlUtils.fmxlLoader(LOAD_FXML);
         Scene scene = new Scene(pane);
@@ -139,15 +143,13 @@ public class LibraryRegisterApplication extends SpringJavaFXApplication {
         stage.setTitle(bundle.getString("application.title"));
         stage.getIcons().add(icon);
 
-        stage.setMaximized(true);
-        stage.setResizable(false);
-
         String css = this.getClass().getResource("/stylesheet.css").toExternalForm();
         scene.getStylesheets().add(css);
 
         stage.setScene(scene);
-        stage.show();
+        stage.setResizable(true);
         stage.setMaximized(true);
+        stage.show();
         log.info("Stage loaded");
     }
 

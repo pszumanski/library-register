@@ -7,10 +7,15 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.ButtonBar;
+import javafx.scene.control.RadioMenuItem;
 import javafx.scene.control.Tab;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
@@ -20,47 +25,58 @@ import java.util.ResourceBundle;
 @ViewController
 public class MainController {
 
-
-
-    @FXML
-    Tab booksTab;
-    @FXML
-    Tab authorsTab;
-    @FXML
-    Tab readersTab;
+    public static final String MAIN_FXML = "/views/main.fxml";
 
     @FXML
-    void addDay() {
+    private HBox loadBox;
+
+    private static Stage stage;
+
+    public static void setStage(Stage stage) {
+        MainController.stage = stage;
+    }
+
+    @FXML
+    private MenuButtonsController menuButtonsController;
+
+    @FXML
+    private void initialize() {
+        System.out.println(menuButtonsController);
+        menuButtonsController.setMainController(this);
+    }
+
+    @FXML
+    private void addDay() {
 
     }
 
     @FXML
-    void addMonth() {
+    private void addMonth() {
 
     }
 
     @FXML
-    void addWeek() {
+    private void addWeek() {
 
     }
 
     @FXML
-    void chooseDate() {
+    private void chooseDate() {
 
     }
 
     @FXML
-    void darkmode() {
-
+    private void darkmode() {
+    //TODO: Set darkmode
     }
 
     @FXML
-    void lightmode() {
-
+    private void lightmode() {
+    //TODO: set light mode
     }
 
     @FXML
-    void exit() {
+    private void exit() {
         switch (DialogUtils.exitConfirmation().get().getButtonData()) {
             case ButtonBar.ButtonData.OK_DONE:
                 FileManager.getInstance().saveDatabase();
@@ -73,47 +89,45 @@ public class MainController {
     }
 
     @FXML
-    void about() {
+    private void about() {
         DialogUtils.about();
     }
 
     @FXML
-    void load() {
+    private void load() {
         FileManager.getInstance().loadDatabase();
     }
 
     @FXML
-    void save() {
+    private void save() {
         FileManager.getInstance().saveDatabase();
     }
 
     @FXML
-    void setEnglish() {
-        //TODO: Change language
+    private void setEnglish(ActionEvent event) {
         Locale.setDefault(new Locale.Builder().setLanguage("en").build());
+        reloadMain();
     }
 
     @FXML
-    void setPolish() {
-        //TODO: Change langauge
+    private void setPolish(ActionEvent event) {
         Locale.setDefault(new Locale.Builder().setLanguage("pl").build());
+        reloadMain();
     }
 
-    public void showBooks() {
-        if (booksTab.isSelected()) {
-
-        }
+    public void setCenter(String fxmlPath) {
+        loadBox.getChildren().removeAll();
+        loadBox.getChildren().add(FxmlUtils.fmxlLoader(fxmlPath));
     }
 
-    public void showAuthors() {
-        if (authorsTab.isSelected()) {
+    private void reloadMain() {
+        Pane pane = FxmlUtils.fmxlLoader(MAIN_FXML);
 
-        }
+        Scene scene = new Scene(pane, stage.getWidth(), stage.getHeight());
+
+        String css = this.getClass().getResource("/stylesheet.css").toExternalForm();
+        scene.getStylesheets().add(css);
+        stage.setScene(scene);
     }
 
-    public void showReaders() {
-        if (readersTab.isSelected()) {
-
-        }
-    }
 }

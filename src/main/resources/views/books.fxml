@@ -17,10 +17,9 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="790.0" prefWidth="1328.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.pszumanski.libraryregister.ui.BooksController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="830.0" prefWidth="1460.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.pszumanski.libraryregister.ui.BooksController">
    <children>
-      <SplitPane dividerPositions="0.29797979797979796" prefHeight="819.0" prefWidth="1000.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <SplitPane dividerPositions="0.29797979797979796" prefHeight="765.0" prefWidth="1326.0" AnchorPane.bottomAnchor="18.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <items>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                <children>
@@ -58,13 +57,12 @@
                <children>
                   <TableView fx:id="booksTable" layoutX="107.0" layoutY="87.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <columns>
-                      <TableColumn fx:id="idColumn" prefWidth="75.0" text="%id" />
-                      <TableColumn fx:id="titleColumn" prefWidth="75.0" text="%title" />
-                        <TableColumn fx:id="authorColumn" prefWidth="75.0" text="%author" />
-                        <TableColumn fx:id="genreColumn" prefWidth="75.0" text="%genre" />
-                        <TableColumn fx:id="publisherColumn" prefWidth="75.0" text="%publisher" />
-                        <TableColumn fx:id="languageColumn" prefWidth="75.0" text="%language" />
-                        <TableColumn fx:id="manageColumn" prefWidth="75.0" text="%manage" />
+                      <TableColumn fx:id="idColumn" prefWidth="50.0" resizable="false" text="%id" />
+                      <TableColumn fx:id="titleColumn" prefWidth="230.0" text="%title" />
+                        <TableColumn fx:id="authorColumn" prefWidth="200.0" text="%author" />
+                        <TableColumn fx:id="genreColumn" prefWidth="150.0" text="%genre" />
+                        <TableColumn fx:id="publisherColumn" prefWidth="150.0" text="%publisher" />
+                        <TableColumn fx:id="languageColumn" prefWidth="150.0" text="%language" />
                     </columns>
                   </TableView>
                </children>
