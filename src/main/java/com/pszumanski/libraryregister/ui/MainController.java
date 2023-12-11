@@ -3,6 +3,7 @@ package com.pszumanski.libraryregister.ui;
 
 import com.github.spring.boot.javafx.stereotype.ViewController;
 import com.pszumanski.libraryregister.managers.dataManagers.FileManager;
+import com.pszumanski.libraryregister.managers.dataManagers.TimeManager;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
@@ -19,48 +20,55 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
+import java.time.LocalDate;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
 @ViewController
 public class MainController {
 
-    public static final String MAIN_FXML = "/views/main.fxml";
+    private TimeManager timeManager;
+
+    private static Stage stage;
+    private static final String MAIN_FXML = "/views/main.fxml";
 
     @FXML
     private HBox loadBox;
-
-    private static Stage stage;
-
     @FXML
     private MenuButtonsController menuButtonsController;
-
     @FXML
     private BooksController booksController;
+
 
     @FXML
     private void initialize() {
         menuButtonsController.setMainController(this);
+        timeManager = TimeManager.getInstance();
     }
 
     @FXML
     private void addDay() {
-
-    }
-
-    @FXML
-    private void addMonth() {
-
+        timeManager.addDay();
+        BooksController.refresh();
     }
 
     @FXML
     private void addWeek() {
+        timeManager.addWeek();
+        BooksController.refresh();
+    }
 
+    @FXML
+    private void addMonth() {
+        timeManager.addMonth();
+        BooksController.refresh();
     }
 
     @FXML
     private void chooseDate() {
-
+        //TODO: dialog choose date
+        timeManager.chooseDate(LocalDate.now());
+        BooksController.refresh();
     }
 
     @FXML

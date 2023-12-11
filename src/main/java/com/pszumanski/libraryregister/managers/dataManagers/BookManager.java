@@ -1,9 +1,11 @@
 package com.pszumanski.libraryregister.managers.dataManagers;
 
 import com.pszumanski.libraryregister.data.objects.Book;
+import com.pszumanski.libraryregister.data.objects.Reader;
 import com.pszumanski.libraryregister.strategy.bookSearch.BookSearch;
 import lombok.Getter;
 
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -68,5 +70,11 @@ public class BookManager implements BookManagerService {
         books.forEach(book ->
                 genres.add(book.getGenre()));
         return genres.stream().toList();
+    }
+
+    @Override
+    public void lendBook(Book book, Reader reader, LocalDate date) {
+        book.setDeadline(date);
+        book.setCurrentReaderId(reader.getId());
     }
 }

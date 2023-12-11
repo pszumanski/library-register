@@ -92,12 +92,12 @@
                            <children>
                               <TableView fx:id="bookTable" layoutX="107.0" layoutY="87.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                 <columns>
-                                  <TableColumn fx:id="idColumn" prefWidth="50.0" resizable="false" text="%id" />
-                                  <TableColumn fx:id="titleColumn" prefWidth="280.0" text="%title" />
-                                    <TableColumn fx:id="authorColumn" prefWidth="280.0" text="%author" />
-                                    <TableColumn fx:id="genreColumn" prefWidth="150.0" text="%genre" />
-                                    <TableColumn fx:id="publisherColumn" prefWidth="150.0" text="%publisher" />
-                                    <TableColumn fx:id="languageColumn" prefWidth="110.0" text="%language" />
+                                  <TableColumn fx:id="idColumn" editable="false" prefWidth="50.0" resizable="false" text="%id" />
+                                  <TableColumn fx:id="titleColumn" editable="false" prefWidth="330.0" resizable="false" text="%title" />
+                                    <TableColumn fx:id="authorColumn" editable="false" prefWidth="330.0" resizable="false" text="%author" />
+                                    <TableColumn fx:id="genreColumn" editable="false" prefWidth="150.0" resizable="false" text="%genre" />
+                                    <TableColumn fx:id="publisherColumn" editable="false" prefWidth="180.0" resizable="false" text="%publisher" />
+                                    <TableColumn fx:id="languageColumn" editable="false" prefWidth="120.0" resizable="false" text="%language" />
                                 </columns>
                               </TableView>
                            </children>
@@ -238,11 +238,11 @@
                            <children>
                               <TableView fx:id="authorTable" layoutX="107.0" layoutY="87.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                  <columns>
-                                    <TableColumn fx:id="authorIdColumn" prefWidth="50.0" resizable="false" text="%id" />
-                                    <TableColumn fx:id="authorNameColumn" prefWidth="280.0" text="%name" />
-                                    <TableColumn fx:id="authorTitlesColumn" prefWidth="280.0" text="%titleCount" />
-                                    <TableColumn fx:id="authorBornDateColumn" prefWidth="150.0" text="%bornDate" />
-                                    <TableColumn fx:id="authorDeathDateColumn" prefWidth="150.0" text="%deathDate" />
+                                    <TableColumn fx:id="authorIdColumn" editable="false" prefWidth="50.0" resizable="false" text="%id" />
+                                    <TableColumn fx:id="authorNameColumn" editable="false" prefWidth="400.0" resizable="false" text="%name" />
+                                    <TableColumn fx:id="authorTitlesColumn" editable="false" prefWidth="240.0" resizable="false" text="%titleCount" />
+                                    <TableColumn fx:id="authorBornDateColumn" editable="false" prefWidth="235.0" resizable="false" text="%bornDate" />
+                                    <TableColumn fx:id="authorDeathDateColumn" editable="false" prefWidth="235.0" resizable="false" text="%deathDate" />
                                  </columns>
                               </TableView>
                            </children>
@@ -345,16 +345,26 @@
                                           <Insets right="30.0" top="20.0" />
                                        </padding>
                                     </HBox>
-                                    <HBox fx:id="datePicker" alignment="CENTER_RIGHT" prefWidth="200.0" spacing="10.0">
+                                    <HBox alignment="CENTER_RIGHT" prefWidth="200.0" spacing="10.0">
                                        <children>
                                           <Label text="%date" />
-                                          <DatePicker />
+                                          <DatePicker fx:id="datePicker" onAction="#getDate" prefWidth="149.0" promptText="Select date...." />
                                        </children>
                                        <padding>
                                           <Insets right="30.0" top="20.0" />
                                        </padding>
                                     </HBox>
-                                    <Button fx:id="lendBookButton" mnemonicParsing="false" onAction="#lendBook" text="%lend">
+                                    <Button fx:id="lendBookButton" mnemonicParsing="false" onAction="#lendBook" prefWidth="100.0" text="%lend">
+                                       <VBox.margin>
+                                          <Insets left="80.0" top="20.0" />
+                                       </VBox.margin>
+                                    </Button>
+                                    <Separator prefWidth="200.0">
+                                       <VBox.margin>
+                                          <Insets top="20.0" />
+                                       </VBox.margin>
+                                    </Separator>
+                                    <Button fx:id="deleteBookButton" mnemonicParsing="false" onAction="#deleteBook" prefWidth="100.0" text="%deleteBook">
                                        <VBox.margin>
                                           <Insets left="80.0" top="20.0" />
                                        </VBox.margin>
@@ -367,13 +377,13 @@
                            <children>
                               <TableView fx:id="readerTable" layoutX="107.0" layoutY="87.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                  <columns>
-                                    <TableColumn fx:id="readerIdColumn" prefWidth="50.0" resizable="false" text="%id" />
-                                    <TableColumn fx:id="readerNameColumn" prefWidth="280.0" text="%name" />
-                                    <TableColumn fx:id="readerDateColumn" prefWidth="140.0" text="%bornDate" />
-                                    <TableColumn fx:id="readerAddressColumn" prefWidth="300.0" text="%address" />
-                                    <TableColumn fx:id="readerPhoneNumberColumn" prefWidth="150.0" text="%phoneNumber" />
-                                    <TableColumn fx:id="readerEmailColumn" prefWidth="150.0" text="%email" />
-                                    <TableColumn fx:id="readerPenaltyColumn" prefWidth="100.0" text="%penalty" />
+                                    <TableColumn fx:id="readerIdColumn" editable="false" prefWidth="50.0" resizable="false" text="%id" />
+                                    <TableColumn fx:id="readerNameColumn" editable="false" prefWidth="280.0" resizable="false" text="%name" />
+                                    <TableColumn fx:id="readerDateColumn" editable="false" prefWidth="140.0" resizable="false" text="%bornDate" />
+                                    <TableColumn fx:id="readerAddressColumn" editable="false" prefWidth="300.0" resizable="false" text="%address" />
+                                    <TableColumn fx:id="readerPhoneNumberColumn" editable="false" prefWidth="150.0" resizable="false" text="%phoneNumber" />
+                                    <TableColumn fx:id="readerEmailColumn" editable="false" prefWidth="150.0" resizable="false" text="%email" />
+                                    <TableColumn fx:id="readerPenaltyColumn" editable="false" prefWidth="93.0" resizable="false" text="%penalty" />
                                  </columns>
                               </TableView>
                            </children>
@@ -386,7 +396,7 @@
       </TabPane>
       <HBox prefHeight="18.0" prefWidth="1328.0" AnchorPane.bottomAnchor="1.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <children>
-            <GridPane prefHeight="20.0" prefWidth="1328.0">
+            <GridPane alignment="CENTER" prefHeight="20.0" prefWidth="1400.0">
               <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                 <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -401,15 +411,15 @@
                         <Label fx:id="elementsFound" text="0" />
                         <Label fx:id="objectFound" text="%foundBooks" />
                      </children>
+                     <GridPane.margin>
+                        <Insets left="10.0" />
+                     </GridPane.margin>
                   </HBox>
-                  <HBox alignment="TOP_RIGHT" fillHeight="false" prefHeight="18.0" prefWidth="501.0" spacing="5.0" GridPane.columnIndex="1" GridPane.halignment="RIGHT">
+                  <HBox alignment="BASELINE_RIGHT" fillHeight="false" prefHeight="18.0" prefWidth="769.0" spacing="5.0" GridPane.columnIndex="1" GridPane.halignment="RIGHT">
                      <children>
                         <Label text="%date" />
-                        <Label fx:id="date" text="date" />
+                        <Label fx:id="dateField" text="date" />
                      </children>
-                     <padding>
-                        <Insets right="90.0" />
-                     </padding>
                   </HBox>
                </children>
             </GridPane>

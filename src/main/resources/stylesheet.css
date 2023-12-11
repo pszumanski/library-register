@@ -1,11 +1,15 @@
 .anchor-pane {
     /*-fx-background-color: #000000;*/
-}z
+}
+
+.table-cell {
+    -fx-alignment: CENTER;
+}
 
 .label {
     -fx-font-family: 'Ubuntu';
     -fx-font-weight: 400;
-    -fx-font-size: 20;
+    -fx-font-size: 14;
     /*-fx-text-fill: #fcf3ff;*/
 }
 

@@ -25,9 +25,15 @@ public class TimeManager {
         return currentDate;
     }
 
-    public void changeDate(int days) {
-        currentDate = currentDate.plusDays(days);
+    public void addDay() {
+        currentDate = currentDate.plusDays(1);
     }
+
+    public void addWeek() {currentDate = currentDate.plusWeeks(1);}
+
+    public void addMonth() {currentDate = currentDate.plusMonths(1);}
+
+    public void chooseDate(LocalDate date) {currentDate = date;}
 
     public LocalDate calculateDate(int days) {
         return currentDate.plusDays(days);

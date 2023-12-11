@@ -1,8 +1,10 @@
 package com.pszumanski.libraryregister.managers.dataManagers;
 
 import com.pszumanski.libraryregister.data.objects.Book;
+import com.pszumanski.libraryregister.data.objects.Reader;
 import com.pszumanski.libraryregister.strategy.bookSearch.BookSearch;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public interface BookManagerService {
@@ -26,4 +28,6 @@ public interface BookManagerService {
     List<String> fetchLanguages();
 
     List<String> fetchGenres();
+
+    public void lendBook(Book book, Reader reader, LocalDate date);
 }
