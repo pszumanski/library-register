@@ -1,12 +1,12 @@
 package com.pszumanski.libraryregister.ui;
 
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonBar;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.TextArea;
+import javafx.scene.control.*;
 
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.stream.Collectors;
 
 public class DialogUtils {
 
@@ -27,6 +27,26 @@ public class DialogUtils {
         confirmationAlert.getButtonTypes().set(1, new ButtonType(bundle.getString("exitSave"), ButtonBar.ButtonData.OK_DONE));
         confirmationAlert.getButtonTypes().add(new ButtonType(bundle.getString("exit"), ButtonBar.ButtonData.FINISH));
         return confirmationAlert.showAndWait();
+    }
+
+    public static LocalDate pickDate() {
+        Alert informationAlert = new Alert(Alert.AlertType.INFORMATION);
+        informationAlert.setTitle(bundle.getString("pickDate"));
+        informationAlert.setHeaderText(bundle.getString("pickDate"));
+        DatePicker datePicker = new DatePicker();
+        informationAlert.getDialogPane().setContent(datePicker);
+        informationAlert.showAndWait();
+        /*informationAlert.getDialogPane().setContent(new DatePicker());
+        informationAlert.showAndWait();
+        DatePicker datePicker;
+        datePicker = (DatePicker) informationAlert.getDialogPane().getChildren().stream()
+                .filter(e -> e instanceof DatePicker)
+                .toList()
+                .getFirst();
+        if (datePicker != null && datePicker.getValue() != null) {
+            date = datePicker.getValue();
+        }*/
+        return datePicker.getValue() != null ? datePicker.getValue() : LocalDate.now();
     }
 
     public static void error(String error) {

@@ -12,6 +12,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.ButtonBar;
+import javafx.scene.control.Label;
 import javafx.scene.control.RadioMenuItem;
 import javafx.scene.control.Tab;
 import javafx.scene.layout.AnchorPane;
@@ -36,9 +37,6 @@ public class MainController {
     private HBox loadBox;
     @FXML
     private MenuButtonsController menuButtonsController;
-    @FXML
-    private BooksController booksController;
-
 
     @FXML
     private void initialize() {
@@ -48,27 +46,46 @@ public class MainController {
 
     @FXML
     private void addDay() {
+        //TODO: Calcualte differnece and apply penalty
+        NotificationController.notification(FxmlUtils.getResourceBundle().getString("dateChanged"),
+                FxmlUtils.getResourceBundle().getString("addedDay"));
         timeManager.addDay();
         BooksController.refresh();
+        AuthorController.refresh();
     }
 
     @FXML
     private void addWeek() {
+        NotificationController.notification(FxmlUtils.getResourceBundle().getString("dateChanged"),
+                FxmlUtils.getResourceBundle().getString("addedWeek"));
         timeManager.addWeek();
         BooksController.refresh();
+        AuthorController.refresh();
     }
 
     @FXML
     private void addMonth() {
+        NotificationController.notification(FxmlUtils.getResourceBundle().getString("dateChanged"),
+                FxmlUtils.getResourceBundle().getString("addedMonth"));
         timeManager.addMonth();
         BooksController.refresh();
+        AuthorController.refresh();
     }
 
     @FXML
     private void chooseDate() {
-        //TODO: dialog choose date
-        timeManager.chooseDate(LocalDate.now());
-        BooksController.refresh();
+        LocalDate date = DialogUtils.pickDate();
+        if (date.isBefore(TimeManager.getInstance().getDate())) {
+            NotificationController.notification(FxmlUtils.getResourceBundle().getString("dateNotChanged"),
+                    date.toString() + " " + FxmlUtils.getResourceBundle().getString("dateNotBefore"));
+        } else {
+            BooksController.refresh();
+            NotificationController.notification(FxmlUtils.getResourceBundle().getString("dateChanged"),
+                    FxmlUtils.getResourceBundle().getString("dateChangedTo") + " " + date.toString());
+            timeManager.chooseDate(date);
+            BooksController.refresh();
+            AuthorController.refresh();
+        }
     }
 
     @FXML
@@ -103,6 +120,7 @@ public class MainController {
     private void load() {
         FileManager.getInstance().loadDatabase();
         BooksController.refresh();
+        AuthorController.refresh();
     }
 
     @FXML
@@ -113,21 +131,27 @@ public class MainController {
     @FXML
     private void setEnglish(ActionEvent event) {
         Locale.setDefault(new Locale.Builder().setLanguage("en").build());
+        NotificationController.notification("Language changed",
+                "Language changed to English");
         reloadMain();
     }
 
     @FXML
     private void setPolish(ActionEvent event) {
         Locale.setDefault(new Locale.Builder().setLanguage("pl").build());
+        NotificationController.notification("Zmieniono język",
+                "Zmieniono język na polski");
         reloadMain();
     }
 
     public void setCenter(String fxmlPath) {
-        loadBox.getChildren().removeAll();
-        loadBox.getChildren().add(FxmlUtils.fmxlLoader(fxmlPath));
+        if (loadBox.getChildren().isEmpty()) {
+            loadBox.getChildren().add(new Label());
+        }
+        loadBox.getChildren().set(0, FxmlUtils.fmxlLoader(fxmlPath));
     }
 
-    private void reloadMain() {
+    public void reloadMain() {
         Pane pane = FxmlUtils.fmxlLoader(MAIN_FXML);
 
         Scene scene = new Scene(pane, stage.getWidth(), stage.getHeight());

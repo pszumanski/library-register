@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="830.0" prefWidth="1460.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.pszumanski.libraryregister.ui.AuthorController">
+   <children>
+      <SplitPane dividerPositions="0.2" layoutX="10.0" layoutY="10.0" prefHeight="765.0" prefWidth="1326.0" AnchorPane.bottomAnchor="18.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <items>
+            <TabPane prefHeight="781.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE">
+               <tabs>
+                  <Tab fx:id="searchTab" text="%searchAndManage">
+                     <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="783.0" prefWidth="600.0">
+                           <children>
+                              <VBox prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+                                 <children>
+                                    <HBox alignment="BASELINE_LEFT" prefWidth="200.0" spacing="10.0">
+                                       <children>
+                                          <Label text="%searchOption" />
+                                          <ChoiceBox fx:id="searchList" prefWidth="150.0" />
+                                       </children>
+                                       <VBox.margin>
+                                          <Insets left="15.0" />
+                                       </VBox.margin>
+                                    </HBox>
+                                    <TextField fx:id="searchQuery" promptText="%searchQuery">
+                                       <VBox.margin>
+                                          <Insets top="20.0" />
+                                       </VBox.margin>
+                                    </TextField>
+                                    <Separator prefWidth="200.0">
+                                       <VBox.margin>
+                                          <Insets top="20.0" />
+                                       </VBox.margin>
+                                    </Separator>
+                                    <VBox prefHeight="200.0" prefWidth="100.0">
+                                       <children>
+                                          <HBox alignment="CENTER_RIGHT" prefWidth="200.0" spacing="10.0">
+                                             <children>
+                                                <Label text="%name" />
+                                                <TextField fx:id="selectedAuthorField" alignment="CENTER" editable="false" promptText="Select author..." />
+                                             </children>
+                                             <padding>
+                                                <Insets right="30.0" top="20.0" />
+                                             </padding>
+                                          </HBox>
+                                          <HBox alignment="CENTER_RIGHT" prefWidth="200.0" spacing="10.0">
+                                             <children>
+                                                <Label text="%bornDate" />
+                                                <TextField fx:id="infoAuthorBornDate" alignment="CENTER" editable="false" promptText="Select author..." />
+                                             </children>
+                                             <padding>
+                                                <Insets right="30.0" top="20.0" />
+                                             </padding>
+                                          </HBox>
+                                          <HBox alignment="CENTER_RIGHT" prefWidth="200.0" spacing="10.0">
+                                             <children>
+                                                <Label text="%deathDate" />
+                                                <TextField fx:id="infoAuthorDeathDate" alignment="CENTER" editable="false" promptText="Select author..." />
+                                             </children>
+                                             <padding>
+                                                <Insets right="30.0" top="20.0" />
+                                             </padding>
+                                          </HBox>
+                                          <HBox alignment="CENTER_RIGHT" prefWidth="200.0" spacing="10.0">
+                                             <children>
+                                                <Label text="%titles" />
+                                                <TextField fx:id="infoAuthorTitlesCount" alignment="CENTER" editable="false" promptText="Select author..." />
+                                             </children>
+                                             <padding>
+                                                <Insets right="30.0" top="20.0" />
+                                             </padding>
+                                          </HBox>
+                                          <Separator prefWidth="200.0">
+                                             <VBox.margin>
+                                                <Insets top="20.0" />
+                                             </VBox.margin>
+                                          </Separator>
+                                          <Button fx:id="deleteAuthorButton" mnemonicParsing="false" onAction="#deleteAuthor" prefWidth="100.0" text="%removeAuthor">
+                                             <VBox.margin>
+                                                <Insets left="80.0" top="20.0" />
+                                             </VBox.margin>
+                                          </Button>
+                                       </children>
+                                    </VBox>
+                                 </children>
+                              </VBox>
+                           </children>
+                        </AnchorPane>
+                     </content>
+                  </Tab>
+                  <Tab fx:id="addTab" text="%addAuthor">
+                     <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="783.0" prefWidth="600.0">
+                           <children>
+                              <VBox prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
+                                 <children>
+                                    <HBox alignment="BASELINE_RIGHT" spacing="10.0">
+                                       <children>
+                                          <Label text="%name" />
+                                          <TextField fx:id="addAuthorName" promptText="Name..." />
+                                       </children>
+                                       <padding>
+                                          <Insets left="10.0" top="20.0" />
+                                       </padding>
+                                       <opaqueInsets>
+                                          <Insets />
+                                       </opaqueInsets>
+                                       <VBox.margin>
+                                          <Insets right="30.0" />
+                                       </VBox.margin>
+                                    </HBox>
+                                    <HBox alignment="BASELINE_RIGHT" spacing="10.0">
+                                       <children>
+                                          <Label text="%bornDate" />
+                                          <TextField fx:id="addAuthorBornDate" promptText="Born date..." />
+                                       </children>
+                                       <padding>
+                                          <Insets left="10.0" top="20.0" />
+                                       </padding>
+                                       <opaqueInsets>
+                                          <Insets />
+                                       </opaqueInsets>
+                                       <VBox.margin>
+                                          <Insets right="30.0" />
+                                       </VBox.margin>
+                                    </HBox>
+                                    <HBox alignment="BASELINE_RIGHT" spacing="10.0">
+                                       <children>
+                                          <Label text="%deathDate" />
+                                          <TextField fx:id="addAuthorDeathDate" promptText="Death date..." />
+                                       </children>
+                                       <padding>
+                                          <Insets left="10.0" top="20.0" />
+                                       </padding>
+                                       <opaqueInsets>
+                                          <Insets />
+                                       </opaqueInsets>
+                                       <VBox.margin>
+                                          <Insets right="30.0" />
+                                       </VBox.margin>
+                                    </HBox>
+                                    <HBox alignment="CENTER" prefHeight="31.0" prefWidth="279.0" spacing="10.0">
+                                       <padding>
+                                          <Insets left="10.0" top="20.0" />
+                                       </padding>
+                                       <opaqueInsets>
+                                          <Insets />
+                                       </opaqueInsets>
+                                       <children>
+                                          <Button fx:id="addAuthorButton" mnemonicParsing="false" onAction="#addAuthor" text="%addAuthor" />
+                                       </children>
+                                    </HBox>
+                                 </children>
+                              </VBox>
+                           </children>
+                        </AnchorPane>
+                     </content>
+                  </Tab>
+               </tabs>
+            </TabPane>
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+               <children>
+                  <TableView fx:id="authorTable" layoutX="107.0" layoutY="87.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="27.0">
+                     <columns>
+                        <TableColumn fx:id="authorIdColumn" editable="false" prefWidth="50.0" resizable="false" text="%id" />
+                        <TableColumn fx:id="authorNameColumn" editable="false" prefWidth="400.0" resizable="false" text="%name" />
+                        <TableColumn fx:id="authorTitlesColumn" editable="false" prefWidth="240.0" resizable="false" text="%titleCount" />
+                        <TableColumn fx:id="authorBornDateColumn" editable="false" prefWidth="235.0" resizable="false" text="%bornDate" />
+                        <TableColumn fx:id="authorDeathDateColumn" editable="false" prefWidth="235.0" resizable="false" text="%deathDate" />
+                     </columns>
+                  </TableView>
+               </children>
+            </AnchorPane>
+         </items>
+      </SplitPane>
+      <HBox prefHeight="18.0" prefWidth="1328.0" AnchorPane.bottomAnchor="1.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+         <children>
+            <GridPane alignment="CENTER" prefHeight="20.0" prefWidth="1400.0">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints fillHeight="false" minHeight="10.0" prefHeight="20.0" valignment="CENTER" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <HBox fillHeight="false" prefHeight="18.0" prefWidth="200.0" spacing="5.0">
+                     <children>
+                        <Label text="%found" />
+                        <Label fx:id="elementsFound" text="0" />
+                        <Label fx:id="objectFound" text="%foundBooks" />
+                     </children>
+                     <GridPane.margin>
+                        <Insets left="10.0" />
+                     </GridPane.margin>
+                  </HBox>
+                  <HBox alignment="BASELINE_RIGHT" fillHeight="false" prefHeight="18.0" prefWidth="769.0" spacing="5.0" GridPane.columnIndex="1" GridPane.halignment="RIGHT">
+                     <children>
+                        <Label text="%date" />
+                        <Label fx:id="dateField" text="date" />
+                     </children>
+                  </HBox>
+               </children>
+            </GridPane>
+         </children>
+      </HBox>
+   </children>
+</AnchorPane>

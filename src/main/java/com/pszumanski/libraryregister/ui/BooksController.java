@@ -38,7 +38,6 @@ public class BooksController {
     String[] searchOptions = {"Search all", "Search by title", "Search by author"};
     private BookSearch searchType;
     private List<BookFilter> filterList;
-    private boolean valid;
     private BookManagerService bookManager;
     private AuthorManagerService authorManager;
     private ReaderManagerService readerManager;
@@ -186,6 +185,7 @@ public class BooksController {
         addBookTitle.setOnKeyTyped(e -> validateBook());
         addBookPublisher.setOnKeyTyped(e -> validateBook());
         addBookPublishYear.setOnKeyTyped(e -> validateBook());
+        addBookIsbn.setOnKeyTyped(e -> validateBook());
         addBookGenre.setOnKeyTyped(e -> validateBook());
         addBookLanguage.setOnKeyTyped(e -> validateBook());
 
@@ -233,7 +233,6 @@ public class BooksController {
                 objectFound.setText(FxmlUtils.getResourceBundle().getString("singleBook"));
             }
 
-            AuthorManager authorManager = new AuthorManager();
             authorManager.setSearch(new AuthorFindById());
 
             this.bookTable.setItems(books);
@@ -302,7 +301,9 @@ public class BooksController {
     }
 
     public static void refresh() {
-        booksController.tabChanged();
+        if (booksController != null) {
+            booksController.tabChanged();
+        }
     }
 
     @FXML
@@ -329,6 +330,7 @@ public class BooksController {
         if (reader != null) {
             selectedReader = reader;
             selectedReaderField.setText(reader.getName());
+            selectedReaderField.setStyle("");
         }
         validateManage();
     }
@@ -353,7 +355,7 @@ public class BooksController {
         addBookLanguage.clear();
         addBookIsbn.clear();
         NotificationController.notification(FxmlUtils.getResourceBundle().getString("bookAdded"),
-                book.getTitle() + " " +FxmlUtils.getResourceBundle().getString("gotAdded"));
+                book.getTitle() + " " +FxmlUtils.getResourceBundle().getString("bookGotAdded"));
         tabChanged();
     }
 
@@ -369,6 +371,7 @@ public class BooksController {
                 selectedDate = null;
                 datePicker.setValue(selectedDate);
                 datePicker.setDisable(false);
+                selectedReaderField.setStyle("");
             }
             loadBookInfo();
             loadReaders();
@@ -437,47 +440,49 @@ public class BooksController {
     }
 
     private void validateBook() {
-        //TODO: validate komunikaty / kolor
-        valid = true;
-        if (addBookTitle.getText().isEmpty()) {
-            valid = false;
-        }
-        if (selectedAuthor == null) {
-            valid = false;
-        }
-        if (addBookPublisher.getText().isEmpty()) {
-            valid = false;
-        }
-        if (addBookPublishYear.getText().isEmpty()) {
-            valid = false;
-        }
+        int errors = 0;
+        errors += checkEmpty(addBookTitle);
+        errors += checkEmpty(selectedAuthorField);
+        errors += checkEmpty(addBookPublisher);
+        errors += checkEmpty(addBookPublishYear);
         try {
             int currentYear = TimeManager.getInstance().getDate().getYear();
             if (Integer.parseInt(addBookPublishYear.getText()) > currentYear) {
-                valid = false;
+                addBookPublishYear.setStyle("-fx-background-color: darkred; -fx-text-fill: white");
+                errors++;
+            } else {
+                addBookPublishYear.setStyle("");
             }
         } catch (Exception ex) {
-            valid = false;
+            addBookPublishYear.setStyle("-fx-background-color: darkred; -fx-text-fill: white");
+            errors++;
         }
-        if (addBookGenre.getText().isEmpty()) {
-            valid = false;
-        }
-        if (addBookLanguage.getText().isEmpty()) {
-            valid = false;
-        }
+        errors += checkEmpty(addBookIsbn);
+        errors += checkEmpty(addBookGenre);
+        errors += checkEmpty(addBookLanguage);
 
-        addBookButton.setDisable(!valid);
+        addBookButton.setDisable(errors != 0);
     }
 
     private void validateManage() {
-        valid = true;
-        if (selectedReader == null) {
-            valid = false;
-        }
+        int errors = 0;
+        errors += checkEmpty(selectedReaderField);
         if (selectedDate == null || !selectedDate.isAfter(TimeManager.getInstance().getDate())) {
-            valid = false;
+            datePicker.setStyle("-fx-background-color: darkred; -fx-text-fill: white");
+            errors++;
+        } else {
+            datePicker.setStyle("");
         }
-        lendBookButton.setDisable(!valid);
+        if (selectedBook == null) {
+            selectedReaderField.setText("Book got deleted");
+            selectedReaderField.setStyle("-fx-background-color: darkred; -fx-text-fill: white");
+            errors++;
+        } else if (selectedBook.getDeadline() != null) {
+            selectedReaderField.setText("Book is already lent");
+            selectedReaderField.setStyle("-fx-background-color: darkred; -fx-text-fill: white");
+            errors++;
+        }
+        lendBookButton.setDisable(errors != 0);
     }
 
     private void loadBookInfo() {
@@ -500,24 +505,37 @@ public class BooksController {
         validateManage();
     }
 
+    private int checkEmpty(TextField textField) {
+        if (textField.getText().isEmpty()) {
+            textField.setStyle("-fx-background-color: darkred; -fx-text-fill: white");
+            return 1;
+        } else {
+            textField.setStyle("");
+            return 0;
+        }
+    }
+
     @FXML
     private void deleteBook() {
         deleteBookButton.setDisable(true);
         datePicker.setDisable(true);
         lendBookButton.setDisable(true);
         NotificationController.notification(FxmlUtils.getResourceBundle().getString("bookRemoved"),
-                selectedBook.getTitle() + " " +FxmlUtils.getResourceBundle().getString("gotRemoved"));
+                selectedBook.getTitle() + " " +FxmlUtils.getResourceBundle().getString("bookGotRemoved"));
         bookManager.remove(selectedBook);
         selectedBook = null;
+        validateManage();
     }
 
     @FXML
     private void lendBook() {
         bookManager.lendBook(selectedBook, selectedReader, selectedDate);
         lendBookButton.setDisable(true);
+        datePicker.setDisable(true);
         NotificationController.notification(FxmlUtils.getResourceBundle().getString("bookLent"),
                 selectedBook.getTitle() + " " + FxmlUtils.getResourceBundle().getString("bookLentTo") + " " + selectedReader.getName()
         + " " + FxmlUtils.getResourceBundle().getString("bookLentUpTo") + " " + selectedDate.toString());
+        validateManage();
     }
 }
 

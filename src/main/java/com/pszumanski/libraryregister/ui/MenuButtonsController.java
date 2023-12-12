@@ -13,7 +13,7 @@ public class MenuButtonsController {
 
     @FXML
     private void showAuthors() {
-        System.out.println("XD");
+        mainController.setCenter("/views/authors.fxml");
     }
 
     @FXML
