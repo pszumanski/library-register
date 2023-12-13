@@ -112,33 +112,43 @@ public class AuthorController {
         addAuthorDeathDate.setOnKeyTyped(e -> validateAuthor());
 
         dateFormat = DateTimeFormatter.ofPattern("dd-MMM-yyyy");
+        dateField.setText(TimeManager.getInstance().getDate().format(dateFormat));
 
         loadAuthors();
     }
 
     public void loadAuthors() {
-        ObservableList<Author> authors = FXCollections.observableArrayList(authorManager.get());
+        try {
+            List<Author> foundAuthors;
 
-        //TODO: Search
+            if (searchType != null & !searchQuery.getText().isEmpty()) {
+                authorManager.setSearch(searchType);
+                foundAuthors = authorManager.search(searchQuery.getText());
+            } else {
+                foundAuthors = authorManager.get();
+            }
 
-        elementsFound.setText(String.valueOf(authors.size()));
+            ObservableList<Author> authors = FXCollections.observableArrayList(foundAuthors);
 
-        if (authors.size() != 1) {
-            objectFound.setText(FxmlUtils.getResourceBundle().getString("manyAuthors"));
-        } else {
-            objectFound.setText(FxmlUtils.getResourceBundle().getString("singleAuthor"));
-        }
+            elementsFound.setText(String.valueOf(authors.size()));
 
-        this.authorTable.setItems(authors);
-        this.authorIdColumn.setCellValueFactory(authorData -> new SimpleIntegerProperty(authorData.getValue().getId()).asObject());
-        this.authorNameColumn.setCellValueFactory(authorData -> new ReadOnlyStringWrapper(authorData.getValue().getName()));
-        this.authorTitlesColumn.setCellValueFactory(authorData -> {
-            return new SimpleIntegerProperty(authorManager.fetchTitles(authorData.getValue()).size()).asObject();
-        });
-        this.authorBornDateColumn.setCellValueFactory(authorData -> new ReadOnlyStringWrapper(authorData.getValue().getBornDate()));
-        this.authorDeathDateColumn.setCellValueFactory(authorData -> new ReadOnlyStringWrapper(authorData.getValue().getDeathDate()));
+            if (authors.size() != 1) {
+                objectFound.setText(FxmlUtils.getResourceBundle().getString("manyAuthors"));
+            } else {
+                objectFound.setText(FxmlUtils.getResourceBundle().getString("singleAuthor"));
+            }
 
-        this.authorTable.getSelectionModel().selectedItemProperty().addListener(((observable, oldValue, newValue) -> selectAuthor(newValue)));
+            this.authorTable.setItems(authors);
+            this.authorIdColumn.setCellValueFactory(authorData -> new SimpleIntegerProperty(authorData.getValue().getId()).asObject());
+            this.authorNameColumn.setCellValueFactory(authorData -> new ReadOnlyStringWrapper(authorData.getValue().getName()));
+            this.authorTitlesColumn.setCellValueFactory(authorData -> {
+                return new SimpleIntegerProperty(authorManager.fetchTitles(authorData.getValue()).size()).asObject();
+            });
+            this.authorBornDateColumn.setCellValueFactory(authorData -> new ReadOnlyStringWrapper(authorData.getValue().getBornDate()));
+            this.authorDeathDateColumn.setCellValueFactory(authorData -> new ReadOnlyStringWrapper(authorData.getValue().getDeathDate()));
+
+            this.authorTable.getSelectionModel().selectedItemProperty().addListener(((observable, oldValue, newValue) -> selectAuthor(newValue)));
+        } catch (NullPointerException ex) {}
     }
 
     public static void refresh() {
@@ -216,7 +226,7 @@ public class AuthorController {
             } else {
                 addAuthorBornDate.setStyle("");
             }
-        } catch (Exception ex) {
+        } catch (NumberFormatException ex) {
             if (!addAuthorBornDate.getText().isEmpty()) {
                 addAuthorBornDate.setStyle("-fx-background-color: darkred; -fx-text-fill: white");
                 errors++;
@@ -231,7 +241,7 @@ public class AuthorController {
             } else {
                 addAuthorDeathDate.setStyle("");
             }
-        } catch (Exception ex) {
+        } catch (NumberFormatException ex) {
             if (!addAuthorDeathDate.getText().isEmpty()) {
                 addAuthorDeathDate.setStyle("-fx-background-color: darkred; -fx-text-fill: white");
                 errors++;
@@ -245,7 +255,7 @@ public class AuthorController {
                 addAuthorDeathDate.setStyle("-fx-background-color: darkred; -fx-text-fill: white");
                 errors++;
             }
-        } catch (Exception ex) {}
+        } catch (NullPointerException ex) {}
 
         addAuthorButton.setDisable(errors != 0);
     }

@@ -196,7 +196,7 @@ public class BooksController {
 
     public void loadBooks() {
         try {
-            List<Book> allBooks;
+            List<Book> foundBooks;
 
             String currentLanguage = languageList.getValue();
             languageList.getItems().clear();
@@ -212,16 +212,16 @@ public class BooksController {
 
             if (searchType != null && !searchQuery.getText().isEmpty()) {
                 bookManager.setSearch(searchType);
-                allBooks = bookManager.search(searchQuery.getText());
+                foundBooks = bookManager.search(searchQuery.getText());
             } else {
-                allBooks = bookManager.get();
+                foundBooks = bookManager.get();
             }
 
             for (BookFilter filter: filterList) {
-                allBooks = filter.filter(allBooks);
+                foundBooks = filter.filter(foundBooks);
             }
 
-            ObservableList<Book> books = FXCollections.observableArrayList(allBooks);
+            ObservableList<Book> books = FXCollections.observableArrayList(foundBooks);
 
             elementsFound.setText(String.valueOf(books.size()));
 
@@ -248,7 +248,7 @@ public class BooksController {
             this.publisherColumn.setCellValueFactory(bookData -> new ReadOnlyStringWrapper(bookData.getValue().getPublisher()));
 
             this.bookTable.getSelectionModel().selectedItemProperty().addListener(((observable, oldValue, newValue) -> selectBook(newValue)));
-        } catch (Exception e) {}
+        } catch (NullPointerException ex) {}
 
     }
 

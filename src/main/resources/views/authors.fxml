@@ -24,7 +24,7 @@
          <items>
             <TabPane prefHeight="781.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE">
                <tabs>
-                  <Tab fx:id="searchTab" text="%searchAndManage">
+                  <Tab fx:id="searchTab" onSelectionChanged="#tabChanged" text="%searchAndManage">
                      <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="783.0" prefWidth="600.0">
                            <children>
@@ -105,7 +105,7 @@
                         </AnchorPane>
                      </content>
                   </Tab>
-                  <Tab fx:id="addTab" text="%addAuthor">
+                  <Tab fx:id="addTab" onSelectionChanged="#tabChanged" text="%addAuthor">
                      <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="783.0" prefWidth="600.0">
                            <children>
