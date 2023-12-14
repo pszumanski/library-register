@@ -114,6 +114,10 @@ public class AuthorController {
         dateFormat = DateTimeFormatter.ofPattern("dd-MMM-yyyy");
         dateField.setText(TimeManager.getInstance().getDate().format(dateFormat));
 
+        for (TableColumn<?, ?> column : authorTable.getColumns()) {
+            column.setReorderable(false);
+        }
+
         loadAuthors();
     }
 
@@ -165,6 +169,7 @@ public class AuthorController {
             loadAuthorInfo();
             validateManage();
         }
+        authorTable.refresh();
     }
 
     @FXML
@@ -218,6 +223,15 @@ public class AuthorController {
     private void validateAuthor() {
         int errors = 0;
         errors += checkEmpty(addAuthorName);
+
+        for (Author author : authorManager.get()) {
+            if (addAuthorName.getText().equalsIgnoreCase(author.getName())) {
+                errors++;
+                addAuthorName.setStyle("-fx-background-color: darkred; -fx-text-fill: white");
+                break;
+            }
+        }
+
         int currentYear = TimeManager.getInstance().getDate().getYear();
         try {
             if (Integer.parseInt(addAuthorBornDate.getText()) > currentYear) {
@@ -255,7 +269,7 @@ public class AuthorController {
                 addAuthorDeathDate.setStyle("-fx-background-color: darkred; -fx-text-fill: white");
                 errors++;
             }
-        } catch (NullPointerException ex) {}
+        } catch (NumberFormatException ex) {}
 
         addAuthorButton.setDisable(errors != 0);
     }

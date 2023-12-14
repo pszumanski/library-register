@@ -189,6 +189,16 @@ public class BooksController {
         addBookGenre.setOnKeyTyped(e -> validateBook());
         addBookLanguage.setOnKeyTyped(e -> validateBook());
 
+        for (TableColumn<?, ?> column : bookTable.getColumns()) {
+            column.setReorderable(false);
+        }
+        for (TableColumn<?, ?> column : authorTable.getColumns()) {
+            column.setReorderable(false);
+        }
+        for (TableColumn<?, ?> column : readerTable.getColumns()) {
+            column.setReorderable(false);
+        }
+
         manageTab.setDisable(true);
 
         loadBooks();
@@ -314,6 +324,7 @@ public class BooksController {
         } else {
             manageTab.setDisable(true);
         }
+        bookTable.refresh();
     }
 
     @FXML
@@ -323,6 +334,7 @@ public class BooksController {
             selectedAuthorField.setText(author.getName());
             validateBook();
         }
+        authorTable.refresh();
     }
 
     @FXML
@@ -332,6 +344,7 @@ public class BooksController {
             selectedReaderField.setText(reader.getName());
             selectedReaderField.setStyle("");
         }
+        readerTable.refresh();
         validateManage();
     }
 
@@ -397,9 +410,6 @@ public class BooksController {
             searchType = null;
         }
         loadBooks();
-    }
-
-    public void search(ActionEvent event) {
     }
 
     @FXML

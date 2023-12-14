@@ -5,6 +5,7 @@ import java.time.LocalDate;
 public class TimeManager {
 
     private static TimeManager timeManager;
+    private LocalDate changedDate;
     private LocalDate currentDate;
 
     private TimeManager() {
@@ -26,14 +27,27 @@ public class TimeManager {
     }
 
     public void addDay() {
-        currentDate = currentDate.plusDays(1);
+        changedDate = currentDate.plusDays(1);
+        PenaltyManager.calculate(currentDate, changedDate);
+        currentDate = changedDate;
     }
 
-    public void addWeek() {currentDate = currentDate.plusWeeks(1);}
+    public void addWeek() {
+        changedDate = currentDate.plusWeeks(1);
+        PenaltyManager.calculate(currentDate, changedDate);
+        currentDate = changedDate;
+    }
 
-    public void addMonth() {currentDate = currentDate.plusMonths(1);}
+    public void addMonth() {
+        changedDate = currentDate.plusMonths(1);
+        PenaltyManager.calculate(currentDate, changedDate);
+        currentDate = changedDate;
+    }
 
-    public void chooseDate(LocalDate date) {currentDate = date;}
+    public void chooseDate(LocalDate date) {
+        PenaltyManager.calculate(currentDate, date);
+        currentDate = date;
+    }
 
     public LocalDate calculateDate(int days) {
         return currentDate.plusDays(days);

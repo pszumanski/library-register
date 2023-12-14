@@ -46,7 +46,6 @@ public class MainController {
 
     @FXML
     private void addDay() {
-        //TODO: Calcualte differnece and apply penalty
         NotificationController.notification(FxmlUtils.getResourceBundle().getString("dateChanged"),
                 FxmlUtils.getResourceBundle().getString("addedDay"));
         timeManager.addDay();
