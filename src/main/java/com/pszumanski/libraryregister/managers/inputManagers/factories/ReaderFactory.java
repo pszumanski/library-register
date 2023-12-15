@@ -16,17 +16,17 @@ public class ReaderFactory implements ReaderFactoryService {
 
     @Override
     public Reader create(Map<String, String> attributes) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
         Reader reader = new Reader(
                 (getMaxIndex() + 1),
                 attributes.get("name"),
                 LocalDate.parse(attributes.get("bornDate"), formatter),
-                Integer.parseInt(attributes.get("personalId")),
+                attributes.get("personalId"),
                 attributes.get("addressFirst"),
                 attributes.get("addressSecond"),
                 attributes.get("email"),
-                Integer.parseInt(attributes.get("phoneNumber"))
+                attributes.get("phoneNumber")
         );
         reader.setPenalty(0);
         return reader;

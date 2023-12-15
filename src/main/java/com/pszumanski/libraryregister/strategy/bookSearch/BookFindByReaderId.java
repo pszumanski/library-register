@@ -10,6 +10,7 @@ public class BookFindByReaderId implements BookSearch {
     @Override
     public List<Book> search(String query) {
         return new BookManager().get().stream()
+                .filter(book -> book.getCurrentReaderId() != null)
                 .filter(book -> query.equals(book.getCurrentReaderId().toString()))
                 .collect(Collectors.toList());
     }

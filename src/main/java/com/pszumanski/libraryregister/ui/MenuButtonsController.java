@@ -18,7 +18,7 @@ public class MenuButtonsController {
 
     @FXML
     private void showReaders() {
-        System.out.println("XDDD");
+        mainController.setCenter("/views/readers.fxml");
     }
 
     public void setMainController(MainController mainController) {

@@ -1,17 +1,15 @@
 package com.pszumanski.libraryregister.strategy.readerFilter;
 
 import com.pszumanski.libraryregister.data.objects.Reader;
-import com.pszumanski.libraryregister.managers.dataManagers.TimeManager;
 
-import java.time.temporal.ChronoUnit;
 import java.util.List;
 
-public class ReaderFilterIsAdult implements ReaderFilter {
+public class ReaderFilterUnpaidPenalty implements ReaderFilter {
 
     @Override
     public List<Reader> filter(List<Reader> readersToFilter) {
         return readersToFilter.stream()
-                .filter(reader -> (ChronoUnit.YEARS.between(reader.getBornDate(), TimeManager.getInstance().getDate()) >= 18))
+                .filter(reader -> reader.getPenalty() > 0)
                 .toList();
     }
 }

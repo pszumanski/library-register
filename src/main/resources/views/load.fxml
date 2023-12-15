@@ -15,17 +15,17 @@
       </Label>
       <VBox alignment="CENTER" layoutX="750.0" layoutY="344.0" prefHeight="300.0" prefWidth="300.0" spacing="30.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="450.0" AnchorPane.rightAnchor="450.0">
          <children>
-            <Button fx:id="loadButton" mnemonicParsing="false" onAction="#load" prefHeight="60.0" prefWidth="280.0" text="Load existing database" textAlignment="CENTER">
+            <Button fx:id="loadButton" mnemonicParsing="false" onAction="#load" prefHeight="60.0" prefWidth="280.0" text="%loadExistingDb" textAlignment="CENTER">
                <font>
                   <Font size="24.0" />
                </font>
             </Button>
-            <Button fx:id="createNewButton" mnemonicParsing="false" onAction="#createNew" prefHeight="60.0" prefWidth="280.0" text="Create new database">
+            <Button fx:id="createNewButton" mnemonicParsing="false" onAction="#createNew" prefHeight="60.0" prefWidth="280.0" text="%createNewDb">
                <font>
                   <Font size="24.0" />
                </font>
             </Button>
-            <Button fx:id="exitButton" mnemonicParsing="false" onAction="#exit" prefHeight="60.0" prefWidth="280.0" text="Exit">
+            <Button fx:id="exitButton" mnemonicParsing="false" onAction="#exit" prefHeight="60.0" prefWidth="280.0" text="%exit">
                <font>
                   <Font size="24.0" />
                </font>

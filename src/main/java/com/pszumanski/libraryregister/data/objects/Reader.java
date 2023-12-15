@@ -23,7 +23,7 @@ public class Reader {
     @NonNull
     private LocalDate bornDate;
     @NonNull
-    private Integer personalId;
+    private String personalId;
     @NonNull
     private String addressFirst;
     @NonNull
@@ -31,7 +31,7 @@ public class Reader {
     @NonNull
     private String email;
     @NonNull
-    private Integer phoneNumber;
+    private String phoneNumber;
     @Setter
     private Integer penalty;
 

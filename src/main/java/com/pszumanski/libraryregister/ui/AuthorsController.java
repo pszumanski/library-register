@@ -1,48 +1,34 @@
 package com.pszumanski.libraryregister.ui;
 
 import com.pszumanski.libraryregister.data.objects.Author;
-import com.pszumanski.libraryregister.data.objects.Book;
-import com.pszumanski.libraryregister.data.objects.Reader;
 import com.pszumanski.libraryregister.managers.dataManagers.*;
 import com.pszumanski.libraryregister.managers.inputManagers.factories.AuthorFactory;
 import com.pszumanski.libraryregister.managers.inputManagers.factories.AuthorFactoryService;
-import com.pszumanski.libraryregister.managers.inputManagers.factories.BookFactory;
-import com.pszumanski.libraryregister.managers.inputManagers.factories.BookFactoryService;
-import com.pszumanski.libraryregister.strategy.authorSearch.AuthorFindById;
 import com.pszumanski.libraryregister.strategy.authorSearch.AuthorFindByName;
 import com.pszumanski.libraryregister.strategy.authorSearch.AuthorFindByTitle;
 import com.pszumanski.libraryregister.strategy.authorSearch.AuthorSearch;
-import com.pszumanski.libraryregister.strategy.bookFilter.BookFilter;
-import com.pszumanski.libraryregister.strategy.bookFilter.BookFilterAvailable;
-import com.pszumanski.libraryregister.strategy.bookFilter.BookFilterGenre;
-import com.pszumanski.libraryregister.strategy.bookFilter.BookFilterLanguage;
-import com.pszumanski.libraryregister.strategy.bookSearch.BookFindByAuthorName;
-import com.pszumanski.libraryregister.strategy.bookSearch.BookFindByTitle;
-import com.pszumanski.libraryregister.strategy.bookSearch.BookSearch;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
-import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class AuthorController {
+public class AuthorsController {
 
     private Author selectedAuthor;
-    String[] searchOptions = {"Search all", "Search by name", "Search by title"};
+    String[] searchOptions = {FxmlUtils.getResourceBundle().getString("showAll"),
+            FxmlUtils.getResourceBundle().getString("searchByName"),
+            FxmlUtils.getResourceBundle().getString("searchByTitle")};
     private AuthorSearch searchType;
     private AuthorManagerService authorManager;
     DateTimeFormatter dateFormat;
 
-    private static AuthorController authorController;
+    private static AuthorsController authorsController;
 
     @FXML
     private ChoiceBox<String> searchList;
@@ -77,8 +63,6 @@ public class AuthorController {
     @FXML
     private Button deleteAuthorButton;
     @FXML
-    private TextField infoAuthorName;
-    @FXML
     private TextField infoAuthorBornDate;
     @FXML
     private TextField infoAuthorDeathDate;
@@ -93,7 +77,7 @@ public class AuthorController {
 
     @FXML
     private void initialize() {
-        AuthorController.authorController = this;
+        AuthorsController.authorsController = this;
 
         authorManager = new AuthorManager();
 
@@ -156,8 +140,8 @@ public class AuthorController {
     }
 
     public static void refresh() {
-        if (authorController != null) {
-            authorController.tabChanged();
+        if (authorsController != null) {
+            authorsController.tabChanged();
         }
     }
 
@@ -178,7 +162,7 @@ public class AuthorController {
         Author author = authorFactory.create(Map.of(
                 "name", addAuthorName.getText().substring(0,1).toUpperCase() + addAuthorName.getText().substring(1),
                 "bornDate", addAuthorBornDate.getText(),
-                "deathDate", addAuthorDeathDate.getText().substring(0,1).toUpperCase() + addAuthorDeathDate.getText().substring(1)
+                "deathDate", addAuthorDeathDate.getText()
         ));
         authorManager.add(author);
         addAuthorName.clear();
@@ -278,7 +262,7 @@ public class AuthorController {
         deleteAuthorButton.setDisable(true);
         if (!(selectedAuthor == null)) {
             if (!authorManager.fetchTitles(selectedAuthor).isEmpty()) {
-            deleteAuthorButton.setText("Author has books");
+            deleteAuthorButton.setText(FxmlUtils.getResourceBundle().getString("authorHasBooks"));
             } else {
                 deleteAuthorButton.setText(FxmlUtils.getResourceBundle().getString("removeAuthor"));
                 deleteAuthorButton.setDisable(false);
@@ -323,23 +307,16 @@ public class AuthorController {
                 selectedAuthor.getName() + " " +FxmlUtils.getResourceBundle().getString("authorGotRemoved"));
         authorManager.remove(selectedAuthor);
         selectedAuthor = null;
-        selectedAuthorField.setText("Author got deleted");
+        selectedAuthorField.setText(FxmlUtils.getResourceBundle().getString("authorWasRemoved"));
         selectedAuthorField.setStyle("-fx-background-color: darkred; -fx-text-fill: white");
-        infoAuthorBornDate.setText("Author got deleted");
+        infoAuthorBornDate.setText(FxmlUtils.getResourceBundle().getString("authorWasRemoved"));
         infoAuthorBornDate.setStyle("-fx-background-color: darkred; -fx-text-fill: white");
-        infoAuthorDeathDate.setText("Author got deleted");
+        infoAuthorDeathDate.setText(FxmlUtils.getResourceBundle().getString("authorWasRemoved"));
         infoAuthorDeathDate.setStyle("-fx-background-color: darkred; -fx-text-fill: white");
-        infoAuthorTitlesCount.setText("Author got deleted");
+        infoAuthorTitlesCount.setText(FxmlUtils.getResourceBundle().getString("authorWasRemoved"));
         infoAuthorTitlesCount.setStyle("-fx-background-color: darkred; -fx-text-fill: white");
         deleteAuthorButton.setDisable(true);
         tabChanged();
     }
 }
-
-/*
-ReaderManagerService readerManager = new ReaderManager();
-        ReaderFactoryService readerFactory = new ReaderFactory(readerManager);
-        Reader reader = readerFactory.create(Map.of("name", "Maciej", "bornDate", "23-03-1989", "personalId", "58912734", "addressFirst", "Coconut Street 51/D", "addressSecond", "Gdansk", "email", "maciejunio@outlook.com", "phoneNumber", "589712341"));
-        readerManager.add(reader);
- */
 

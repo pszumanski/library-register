@@ -35,7 +35,9 @@ public class BooksController {
     private Author selectedAuthor;
     private Reader selectedReader;
     private LocalDate selectedDate;
-    String[] searchOptions = {"Search all", "Search by title", "Search by author"};
+    String[] searchOptions = {FxmlUtils.getResourceBundle().getString("showAllF"),
+            FxmlUtils.getResourceBundle().getString("searchByTitle"),
+            FxmlUtils.getResourceBundle().getString("searchByAuthor")};
     private BookSearch searchType;
     private List<BookFilter> filterList;
     private BookManagerService bookManager;
@@ -103,7 +105,7 @@ public class BooksController {
     @FXML
     private TableColumn<Reader, Integer> readerPenaltyColumn;
     @FXML
-    private TableColumn<Reader, Integer> readerPhoneNumberColumn;
+    private TableColumn<Reader, String> readerPhoneNumberColumn;
     @FXML
     private Button addBookButton;
     @FXML
@@ -167,15 +169,15 @@ public class BooksController {
         searchList.setOnAction(e -> setSearchOption());
 
         languageList.getItems().clear();
-        languageList.getItems().add("Show all");
+        languageList.getItems().add(FxmlUtils.getResourceBundle().getString("showAllF"));
         languageList.getItems().addAll(new BookManager().fetchLanguages());
-        languageList.setValue("Show all");
+        languageList.setValue(FxmlUtils.getResourceBundle().getString("showAllF"));
         languageList.setOnAction(e -> setLanguageFilter());
 
         genreList.getItems().clear();
-        genreList.getItems().add("Any genre");
+        genreList.getItems().add(FxmlUtils.getResourceBundle().getString("anyGenre"));
         genreList.getItems().addAll(new BookManager().fetchGenres());
-        genreList.setValue("Any genre");
+        genreList.setValue(FxmlUtils.getResourceBundle().getString("anyGenre"));
         genreList.setOnAction(e -> setGenreFilter());
 
         searchQuery.setDisable(true);
@@ -210,13 +212,13 @@ public class BooksController {
 
             String currentLanguage = languageList.getValue();
             languageList.getItems().clear();
-            languageList.getItems().add("Show all");
+            languageList.getItems().add(FxmlUtils.getResourceBundle().getString("showAllF"));
             languageList.getItems().addAll(new BookManager().fetchLanguages());
             languageList.setValue(currentLanguage);
 
             String currentGenre = genreList.getValue();
             genreList.getItems().clear();
-            genreList.getItems().add("Any genre");
+            genreList.getItems().add(FxmlUtils.getResourceBundle().getString("anyGenre"));
             genreList.getItems().addAll(new BookManager().fetchGenres());
             genreList.setValue(currentGenre);
 
@@ -303,17 +305,11 @@ public class BooksController {
             return new SimpleStringProperty(readerData.getValue().getBornDate().toString());
         });
         this.readerAddressColumn.setCellValueFactory(readerData -> new ReadOnlyStringWrapper(readerData.getValue().getAddress()));
-        this.readerPhoneNumberColumn.setCellValueFactory(readerData -> new SimpleIntegerProperty(readerData.getValue().getPhoneNumber()).asObject());
+        this.readerPhoneNumberColumn.setCellValueFactory(readerData -> new ReadOnlyStringWrapper(readerData.getValue().getPhoneNumber()));
         this.readerEmailColumn.setCellValueFactory(readerData -> new ReadOnlyStringWrapper(readerData.getValue().getEmail()));
         this.readerPenaltyColumn.setCellValueFactory(readerData -> new SimpleIntegerProperty(readerData.getValue().getPenalty()).asObject());
 
         this.readerTable.getSelectionModel().selectedItemProperty().addListener(((observable, oldValue, newValue) -> selectReader(newValue)));
-    }
-
-    public static void refresh() {
-        if (booksController != null) {
-            booksController.tabChanged();
-        }
     }
 
     @FXML
@@ -417,12 +413,7 @@ public class BooksController {
         if (filterCheckBox.isSelected()) {
             filterList.add(new BookFilterAvailable());
         } else {
-            for (BookFilter filter: filterList) {
-                if (filter instanceof BookFilterAvailable) {
-                    filterList.remove(filter);
-                    break;
-                }
-            }
+            filterList.removeIf(filter -> filter instanceof BookFilterAvailable);
         }
         loadBooks();
     }
@@ -432,7 +423,7 @@ public class BooksController {
             return;
         }
         filterList.removeIf(filter -> filter instanceof BookFilterLanguage);
-        if (!languageList.getValue().equals("Show all")) {
+        if (!languageList.getValue().equals(FxmlUtils.getResourceBundle().getString("showAllF"))) {
             filterList.add(new BookFilterLanguage(languageList.getValue()));
         }
         loadBooks();
@@ -443,7 +434,7 @@ public class BooksController {
             return;
         }
         filterList.removeIf(filter -> filter instanceof BookFilterGenre);
-        if (!genreList.getValue().equals("Any genre")) {
+        if (!genreList.getValue().equals(FxmlUtils.getResourceBundle().getString("anyGenre"))) {
             filterList.add(new BookFilterGenre(genreList.getValue()));
         }
         loadBooks();
@@ -484,11 +475,11 @@ public class BooksController {
             datePicker.setStyle("");
         }
         if (selectedBook == null) {
-            selectedReaderField.setText("Book got deleted");
+            selectedReaderField.setText(FxmlUtils.getResourceBundle().getString("bookIsRemoved"));
             selectedReaderField.setStyle("-fx-background-color: darkred; -fx-text-fill: white");
             errors++;
         } else if (selectedBook.getDeadline() != null) {
-            selectedReaderField.setText("Book is already lent");
+            selectedReaderField.setText(FxmlUtils.getResourceBundle().getString("bookIsLent"));
             selectedReaderField.setStyle("-fx-background-color: darkred; -fx-text-fill: white");
             errors++;
         }
@@ -515,16 +506,6 @@ public class BooksController {
         validateManage();
     }
 
-    private int checkEmpty(TextField textField) {
-        if (textField.getText().isEmpty()) {
-            textField.setStyle("-fx-background-color: darkred; -fx-text-fill: white");
-            return 1;
-        } else {
-            textField.setStyle("");
-            return 0;
-        }
-    }
-
     @FXML
     private void deleteBook() {
         deleteBookButton.setDisable(true);
@@ -534,6 +515,7 @@ public class BooksController {
                 selectedBook.getTitle() + " " +FxmlUtils.getResourceBundle().getString("bookGotRemoved"));
         bookManager.remove(selectedBook);
         selectedBook = null;
+        manageTab.setDisable(true);
         validateManage();
     }
 
@@ -547,11 +529,20 @@ public class BooksController {
         + " " + FxmlUtils.getResourceBundle().getString("bookLentUpTo") + " " + selectedDate.toString());
         validateManage();
     }
-}
 
-/*
-ReaderManagerService readerManager = new ReaderManager();
-        ReaderFactoryService readerFactory = new ReaderFactory(readerManager);
-        Reader reader = readerFactory.create(Map.of("name", "Maciej", "bornDate", "23-03-1989", "personalId", "58912734", "addressFirst", "Coconut Street 51/D", "addressSecond", "Gdansk", "email", "maciejunio@outlook.com", "phoneNumber", "589712341"));
-        readerManager.add(reader);
- */
+    public static void refresh() {
+        if (booksController != null) {
+            booksController.tabChanged();
+        }
+    }
+
+    private int checkEmpty(TextField textField) {
+        if (textField.getText().isEmpty()) {
+            textField.setStyle("-fx-background-color: darkred; -fx-text-fill: white");
+            return 1;
+        } else {
+            textField.setStyle("");
+            return 0;
+        }
+    }
+}

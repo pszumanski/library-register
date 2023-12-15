@@ -6,24 +6,16 @@ import com.pszumanski.libraryregister.managers.dataManagers.FileManager;
 import com.pszumanski.libraryregister.managers.dataManagers.TimeManager;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.Label;
-import javafx.scene.control.RadioMenuItem;
-import javafx.scene.control.Tab;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 import java.time.LocalDate;
 import java.util.Locale;
-import java.util.ResourceBundle;
 
 @ViewController
 public class MainController {
@@ -49,8 +41,7 @@ public class MainController {
         NotificationController.notification(FxmlUtils.getResourceBundle().getString("dateChanged"),
                 FxmlUtils.getResourceBundle().getString("addedDay"));
         timeManager.addDay();
-        BooksController.refresh();
-        AuthorController.refresh();
+        refreshAll();
     }
 
     @FXML
@@ -58,8 +49,7 @@ public class MainController {
         NotificationController.notification(FxmlUtils.getResourceBundle().getString("dateChanged"),
                 FxmlUtils.getResourceBundle().getString("addedWeek"));
         timeManager.addWeek();
-        BooksController.refresh();
-        AuthorController.refresh();
+        refreshAll();
     }
 
     @FXML
@@ -67,8 +57,7 @@ public class MainController {
         NotificationController.notification(FxmlUtils.getResourceBundle().getString("dateChanged"),
                 FxmlUtils.getResourceBundle().getString("addedMonth"));
         timeManager.addMonth();
-        BooksController.refresh();
-        AuthorController.refresh();
+        refreshAll();
     }
 
     @FXML
@@ -82,8 +71,7 @@ public class MainController {
             NotificationController.notification(FxmlUtils.getResourceBundle().getString("dateChanged"),
                     FxmlUtils.getResourceBundle().getString("dateChangedTo") + " " + date.toString());
             timeManager.chooseDate(date);
-            BooksController.refresh();
-            AuthorController.refresh();
+            refreshAll();
         }
     }
 
@@ -118,8 +106,7 @@ public class MainController {
     @FXML
     private void load() {
         FileManager.getInstance().loadDatabase();
-        BooksController.refresh();
-        AuthorController.refresh();
+        refreshAll();
     }
 
     @FXML
@@ -162,5 +149,11 @@ public class MainController {
 
     public static void setStage(Stage stage) {
         MainController.stage = stage;
+    }
+
+    private void refreshAll() {
+        BooksController.refresh();
+        AuthorsController.refresh();
+        ReadersController.refresh();
     }
 }
