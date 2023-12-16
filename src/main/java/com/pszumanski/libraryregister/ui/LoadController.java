@@ -5,7 +5,6 @@ import com.pszumanski.libraryregister.managers.dataManagers.FileManager;
 import com.pszumanski.libraryregister.managers.dataManagers.FileManagerService;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
@@ -40,7 +39,7 @@ public class LoadController {
 
         Scene scene = new Scene(pane, stage.getWidth(), stage.getHeight());
 
-        String css = this.getClass().getResource("/stylesheet.css").toExternalForm();
+        String css = this.getClass().getResource("/stylesheets/lightmode.css").toExternalForm();
         scene.getStylesheets().add(css);
         stage.setScene(scene);
     }

@@ -108,19 +108,19 @@
           </Tab>
             <Tab fx:id="addTab" onSelectionChanged="#tabChanged" text="%addBook">
                <content>
-                  <SplitPane dividerPositions="0.2" prefHeight="765.0" prefWidth="1326.0">
+                  <SplitPane dividerPositions="0.2136986301369863" prefHeight="765.0" prefWidth="1326.0">
                      <items>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="783.0" prefWidth="600.0">
                            <children>
                               <VBox prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
                                  <children>
-                                    <HBox alignment="BASELINE_RIGHT" spacing="10.0">
+                                    <HBox alignment="BASELINE_RIGHT" prefWidth="349.0" spacing="10.0">
                                        <children>
                                           <Label text="%title" />
-                                          <TextField fx:id="addBookTitle" promptText="%title" />
+                                          <TextField fx:id="addBookTitle" prefWidth="135.0" promptText="%title" />
                                        </children>
                                        <padding>
-                                          <Insets left="10.0" top="20.0" />
+                                          <Insets top="20.0" />
                                        </padding>
                                        <opaqueInsets>
                                           <Insets />
@@ -129,13 +129,13 @@
                                           <Insets right="30.0" />
                                        </VBox.margin>
                                     </HBox>
-                                    <HBox alignment="BASELINE_RIGHT" spacing="10.0">
+                                    <HBox alignment="BASELINE_RIGHT" prefWidth="0.0" spacing="10.0">
                                        <children>
                                           <Label text="%author" />
-                                          <TextField fx:id="selectedAuthorField" editable="false" promptText="%selectAuthor" />
+                                          <TextField fx:id="selectedAuthorField" editable="false" prefWidth="135.0" promptText="%selectAuthor" />
                                        </children>
                                        <padding>
-                                          <Insets left="10.0" top="20.0" />
+                                          <Insets top="20.0" />
                                        </padding>
                                        <opaqueInsets>
                                           <Insets />
@@ -144,13 +144,13 @@
                                           <Insets right="30.0" />
                                        </VBox.margin>
                                     </HBox>
-                                    <HBox alignment="BASELINE_RIGHT" spacing="10.0">
+                                    <HBox alignment="BASELINE_RIGHT" prefWidth="0.0" spacing="10.0">
                                        <children>
                                           <Label text="%publisher" />
-                                          <TextField fx:id="addBookPublisher" promptText="%publisher" />
+                                          <TextField fx:id="addBookPublisher" prefWidth="135.0" promptText="%publisher" />
                                        </children>
                                        <padding>
-                                          <Insets left="10.0" top="20.0" />
+                                          <Insets top="20.0" />
                                        </padding>
                                        <opaqueInsets>
                                           <Insets />
@@ -159,13 +159,13 @@
                                           <Insets right="30.0" />
                                        </VBox.margin>
                                     </HBox>
-                                    <HBox alignment="BASELINE_RIGHT" spacing="10.0">
+                                    <HBox alignment="BASELINE_RIGHT" prefWidth="0.0" spacing="10.0">
                                        <children>
                                           <Label text="%publishYear" />
-                                          <TextField fx:id="addBookPublishYear" promptText="%publishYear" />
+                                          <TextField fx:id="addBookPublishYear" prefWidth="135.0" promptText="%publishYear" />
                                        </children>
                                        <padding>
-                                          <Insets left="10.0" top="20.0" />
+                                          <Insets top="20.0" />
                                        </padding>
                                        <opaqueInsets>
                                           <Insets />
@@ -174,13 +174,13 @@
                                           <Insets right="30.0" />
                                        </VBox.margin>
                                     </HBox>
-                                    <HBox alignment="BASELINE_RIGHT" spacing="10.0">
+                                    <HBox alignment="BASELINE_RIGHT" prefWidth="0.0" spacing="10.0">
                                        <children>
                                           <Label text="%isbn" />
-                                          <TextField fx:id="addBookIsbn" promptText="%isbn" />
+                                          <TextField fx:id="addBookIsbn" prefWidth="135.0" promptText="%isbn" />
                                        </children>
                                        <padding>
-                                          <Insets left="10.0" top="20.0" />
+                                          <Insets top="20.0" />
                                        </padding>
                                        <opaqueInsets>
                                           <Insets />
@@ -189,13 +189,13 @@
                                           <Insets right="30.0" />
                                        </VBox.margin>
                                     </HBox>
-                                    <HBox alignment="BASELINE_RIGHT" spacing="10.0">
+                                    <HBox alignment="BASELINE_RIGHT" prefWidth="0.0" spacing="10.0">
                                        <children>
                                           <Label text="%genre" />
-                                          <TextField fx:id="addBookGenre" promptText="%genre" />
+                                          <TextField fx:id="addBookGenre" prefWidth="135.0" promptText="%genre" />
                                        </children>
                                        <padding>
-                                          <Insets left="10.0" top="20.0" />
+                                          <Insets top="20.0" />
                                        </padding>
                                        <opaqueInsets>
                                           <Insets />
@@ -204,13 +204,13 @@
                                           <Insets right="30.0" />
                                        </VBox.margin>
                                     </HBox>
-                                    <HBox alignment="BASELINE_RIGHT" spacing="10.0">
+                                    <HBox alignment="BASELINE_RIGHT" prefWidth="0.0" spacing="10.0">
                                        <children>
                                           <Label text="%language" />
-                                          <TextField fx:id="addBookLanguage" promptText="%language" />
+                                          <TextField fx:id="addBookLanguage" prefWidth="135.0" promptText="%language" />
                                        </children>
                                        <padding>
-                                          <Insets left="10.0" top="20.0" />
+                                          <Insets top="20.0" />
                                        </padding>
                                        <opaqueInsets>
                                           <Insets />
@@ -219,7 +219,7 @@
                                           <Insets right="30.0" />
                                        </VBox.margin>
                                     </HBox>
-                                    <HBox alignment="CENTER" prefHeight="31.0" prefWidth="279.0" spacing="10.0">
+                                    <HBox alignment="CENTER" prefHeight="31.0" prefWidth="296.0" spacing="10.0">
                                        <padding>
                                           <Insets left="10.0" top="20.0" />
                                        </padding>
@@ -227,10 +227,13 @@
                                           <Insets />
                                        </opaqueInsets>
                                        <children>
-                                          <Button fx:id="addBookButton" mnemonicParsing="false" onAction="#addBook" text="%addBook" />
+                                          <Button fx:id="addBookButton" mnemonicParsing="false" onAction="#addBook" prefHeight="30.0" prefWidth="130.0" text="%addBook" />
                                        </children>
                                     </HBox>
                                  </children>
+                                 <padding>
+                                    <Insets left="10.0" />
+                                 </padding>
                               </VBox>
                            </children>
                         </AnchorPane>
@@ -242,7 +245,7 @@
                                     <TableColumn fx:id="authorNameColumn" editable="false" prefWidth="400.0" resizable="false" text="%name" />
                                     <TableColumn fx:id="authorTitlesColumn" editable="false" prefWidth="240.0" resizable="false" text="%titleCount" />
                                     <TableColumn fx:id="authorBornDateColumn" editable="false" prefWidth="235.0" resizable="false" text="%bornDate" />
-                                    <TableColumn fx:id="authorDeathDateColumn" editable="false" prefWidth="235.0" resizable="false" text="%deathDate" />
+                                    <TableColumn fx:id="authorDeathDateColumn" editable="false" prefWidth="215.0" resizable="false" text="%deathDate" />
                                  </columns>
                               </TableView>
                            </children>
@@ -253,19 +256,19 @@
             </Tab>
             <Tab fx:id="manageTab" onSelectionChanged="#tabChanged" text="%manage">
                <content>
-                  <SplitPane dividerPositions="0.2" prefHeight="765.0" prefWidth="1326.0">
+                  <SplitPane dividerPositions="0.2184931506849315" prefHeight="765.0" prefWidth="1326.0">
                      <items>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="783.0" prefWidth="600.0">
                            <children>
                               <VBox prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
                                  <children>
-                                    <HBox alignment="CENTER_RIGHT" prefWidth="200.0" spacing="10.0">
+                                    <HBox alignment="CENTER_RIGHT" prefHeight="48.0" prefWidth="273.0" spacing="10.0">
                                        <children>
                                           <Label text="%title" />
                                           <TextField fx:id="lendBookTitle" alignment="CENTER" editable="false" promptText="%selectBookFirst" />
                                        </children>
                                        <padding>
-                                          <Insets right="30.0" top="20.0" />
+                                          <Insets right="15.0" top="20.0" />
                                        </padding>
                                     </HBox>
                                     <HBox alignment="CENTER_RIGHT" prefWidth="200.0" spacing="10.0">
@@ -274,7 +277,7 @@
                                           <TextField fx:id="lendBookAuthor" alignment="CENTER" editable="false" promptText="%selectBookFirst" />
                                        </children>
                                        <padding>
-                                          <Insets right="30.0" top="20.0" />
+                                          <Insets right="15.0" top="20.0" />
                                        </padding>
                                     </HBox>
                                     <HBox alignment="CENTER_RIGHT" prefWidth="200.0" spacing="10.0">
@@ -283,7 +286,7 @@
                                           <TextField fx:id="lendBookPublisher" alignment="CENTER" editable="false" promptText="%selectBookFirst" />
                                        </children>
                                        <padding>
-                                          <Insets right="30.0" top="20.0" />
+                                          <Insets right="15.0" top="20.0" />
                                        </padding>
                                     </HBox>
                                     <HBox alignment="CENTER_RIGHT" prefWidth="200.0" spacing="10.0">
@@ -292,16 +295,16 @@
                                           <TextField fx:id="lendBookPublishYear" alignment="CENTER" editable="false" promptText="%selectBookFirst" />
                                        </children>
                                        <padding>
-                                          <Insets right="30.0" top="20.0" />
+                                          <Insets right="15.0" top="20.0" />
                                        </padding>
                                     </HBox>
                                     <HBox alignment="CENTER_RIGHT" prefWidth="200.0" spacing="10.0">
                                        <children>
-                                          <Label text="%booksLanguage" />
+                                          <Label text="%language" />
                                           <TextField fx:id="lendBookLanguage" alignment="CENTER" editable="false" promptText="%selectBookFirst" />
                                        </children>
                                        <padding>
-                                          <Insets right="30.0" top="20.0" />
+                                          <Insets right="15.0" top="20.0" />
                                        </padding>
                                     </HBox>
                                     <HBox alignment="CENTER_RIGHT" prefWidth="200.0" spacing="10.0">
@@ -310,7 +313,7 @@
                                           <TextField fx:id="lendBookGenre" alignment="CENTER" editable="false" promptText="%selectBookFirst" />
                                        </children>
                                        <padding>
-                                          <Insets right="30.0" top="20.0" />
+                                          <Insets right="15.0" top="20.0" />
                                        </padding>
                                     </HBox>
                                     <HBox alignment="CENTER_RIGHT" prefWidth="200.0" spacing="10.0">
@@ -319,7 +322,7 @@
                                           <TextField fx:id="lendBookIsbn" alignment="CENTER" editable="false" promptText="%selectBookFirst" />
                                        </children>
                                        <padding>
-                                          <Insets right="30.0" top="20.0" />
+                                          <Insets right="15.0" top="20.0" />
                                        </padding>
                                     </HBox>
                                     <HBox alignment="CENTER_RIGHT" prefWidth="200.0" spacing="10.0">
@@ -328,7 +331,7 @@
                                           <TextField fx:id="lendBookId" alignment="CENTER" editable="false" promptText="%selectBookFirst" />
                                        </children>
                                        <padding>
-                                          <Insets right="30.0" top="20.0" />
+                                          <Insets right="15.0" top="20.0" />
                                        </padding>
                                     </HBox>
                                     <Separator prefHeight="10.0" prefWidth="200.0">
@@ -342,7 +345,7 @@
                                           <TextField fx:id="selectedReaderField" alignment="CENTER" editable="false" promptText="%selectReader" />
                                        </children>
                                        <padding>
-                                          <Insets right="30.0" top="20.0" />
+                                          <Insets right="15.0" top="20.0" />
                                        </padding>
                                     </HBox>
                                     <HBox alignment="CENTER_RIGHT" prefWidth="200.0" spacing="10.0">
@@ -351,12 +354,12 @@
                                           <DatePicker fx:id="datePicker" onAction="#getDate" prefWidth="149.0" promptText="%selectDate" />
                                        </children>
                                        <padding>
-                                          <Insets right="30.0" top="20.0" />
+                                          <Insets right="15.0" top="20.0" />
                                        </padding>
                                     </HBox>
-                                    <Button fx:id="lendBookButton" mnemonicParsing="false" onAction="#lendBook" prefWidth="100.0" text="%lend">
+                                    <Button fx:id="lendBookButton" mnemonicParsing="false" onAction="#lendBook" prefWidth="170.0" text="%lend" textAlignment="CENTER">
                                        <VBox.margin>
-                                          <Insets left="80.0" top="20.0" />
+                                          <Insets left="110.0" top="20.0" />
                                        </VBox.margin>
                                     </Button>
                                     <Separator prefWidth="200.0">
@@ -364,9 +367,9 @@
                                           <Insets top="20.0" />
                                        </VBox.margin>
                                     </Separator>
-                                    <Button fx:id="deleteBookButton" mnemonicParsing="false" onAction="#deleteBook" prefWidth="100.0" text="%removeBook">
+                                    <Button fx:id="deleteBookButton" mnemonicParsing="false" onAction="#deleteBook" prefWidth="170.0" text="%removeBook">
                                        <VBox.margin>
-                                          <Insets left="80.0" top="20.0" />
+                                          <Insets left="110.0" top="10.0" />
                                        </VBox.margin>
                                     </Button>
                                  </children>
@@ -379,11 +382,11 @@
                                  <columns>
                                     <TableColumn fx:id="readerIdColumn" editable="false" prefWidth="50.0" resizable="false" text="%id" />
                                     <TableColumn fx:id="readerNameColumn" editable="false" prefWidth="280.0" resizable="false" text="%name" />
-                                    <TableColumn fx:id="readerDateColumn" editable="false" prefWidth="140.0" resizable="false" text="%bornDate" />
+                                    <TableColumn fx:id="readerDateColumn" editable="false" prefWidth="130.0" resizable="false" text="%bornDate" />
                                     <TableColumn fx:id="readerAddressColumn" editable="false" prefWidth="300.0" resizable="false" text="%address" />
-                                    <TableColumn fx:id="readerPhoneNumberColumn" editable="false" prefWidth="150.0" resizable="false" text="%phoneNumber" />
+                                    <TableColumn fx:id="readerPhoneNumberColumn" editable="false" prefWidth="130.0" resizable="false" text="%phoneNumber" />
                                     <TableColumn fx:id="readerEmailColumn" editable="false" prefWidth="150.0" resizable="false" text="%email" />
-                                    <TableColumn fx:id="readerPenaltyColumn" editable="false" prefWidth="93.0" resizable="false" text="%penalty" />
+                                    <TableColumn fx:id="readerPenaltyColumn" editable="false" prefWidth="95.0" resizable="false" text="%penalty" />
                                  </columns>
                               </TableView>
                            </children>

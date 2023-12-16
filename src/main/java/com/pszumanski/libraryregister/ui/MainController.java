@@ -1,9 +1,12 @@
 package com.pszumanski.libraryregister.ui;
 
 
+import atlantafx.base.theme.PrimerDark;
+import atlantafx.base.theme.PrimerLight;
 import com.github.spring.boot.javafx.stereotype.ViewController;
 import com.pszumanski.libraryregister.managers.dataManagers.FileManager;
 import com.pszumanski.libraryregister.managers.dataManagers.TimeManager;
+import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -24,6 +27,7 @@ public class MainController {
 
     private static Stage stage;
     private static final String MAIN_FXML = "/views/main.fxml";
+    private static String stylesheet = "/stylesheets/lightmode.css";
 
     @FXML
     private HBox loadBox;
@@ -77,12 +81,18 @@ public class MainController {
 
     @FXML
     private void darkmode() {
-    //TODO: Set darkmode
+        Application.setUserAgentStylesheet(new PrimerDark().getUserAgentStylesheet());
+        NotificationController.notification(FxmlUtils.getResourceBundle().getString("themeChanged"),
+                FxmlUtils.getResourceBundle().getString("themeChangedTo") + " "
+                        + FxmlUtils.getResourceBundle().getString("dark"));
     }
 
     @FXML
     private void lightmode() {
-    //TODO: set light mode
+        Application.setUserAgentStylesheet(new PrimerLight().getUserAgentStylesheet());
+        NotificationController.notification(FxmlUtils.getResourceBundle().getString("themeChanged"),
+                FxmlUtils.getResourceBundle().getString("themeChangedTo") + " "
+                        + FxmlUtils.getResourceBundle().getString("light"));
     }
 
     @FXML
@@ -142,8 +152,6 @@ public class MainController {
 
         Scene scene = new Scene(pane, stage.getWidth(), stage.getHeight());
 
-        String css = this.getClass().getResource("/stylesheet.css").toExternalForm();
-        scene.getStylesheets().add(css);
         stage.setScene(scene);
     }
 

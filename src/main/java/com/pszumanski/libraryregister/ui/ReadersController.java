@@ -373,7 +373,7 @@ public class ReadersController {
             if (deleteReaderButton != null && datePicker != null) {
                 deleteReaderButton.setDisable(false);
                 selectedDate = null;
-                datePicker.setValue(selectedDate);
+                datePicker.setValue(null);
                 datePicker.setDisable(false);
                 selectedBookField.setStyle("");
             }

@@ -42,7 +42,6 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 
-
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="780.0" prefWidth="1326.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.pszumanski.libraryregister.ui.MainController">
    <children>
       <HBox prefWidth="1328.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -66,12 +65,11 @@
                   </Menu>
                   <Menu mnemonicParsing="false" text="%view">
                      <items>
-                        <RadioMenuItem mnemonicParsing="false" onAction="#darkmode" selected="true" text="%dark">
+                        <RadioMenuItem mnemonicParsing="false" onAction="#lightmode" selected="true" text="%light">
                            <toggleGroup>
                               <ToggleGroup fx:id="style" />
-                           </toggleGroup>
-                        </RadioMenuItem>
-                        <RadioMenuItem mnemonicParsing="false" onAction="#lightmode" text="%light" toggleGroup="$style" />
+                           </toggleGroup></RadioMenuItem>
+                        <RadioMenuItem mnemonicParsing="false" onAction="#darkmode" text="%dark" toggleGroup="$style" />
                      </items>
                   </Menu>
                   <Menu mnemonicParsing="false" text="%help">
@@ -83,7 +81,7 @@
                         </RadioMenuItem>
                         <RadioMenuItem mnemonicParsing="false" onAction="#setPolish" text="Polski" toggleGroup="$language" />
                         <SeparatorMenuItem mnemonicParsing="false" />
-                        <MenuItem mnemonicParsing="false" onAction="#about" text="About application" />
+                        <MenuItem mnemonicParsing="false" onAction="#about" text="%aboutApplication" />
                      </items>
                   </Menu>
                </menus>
