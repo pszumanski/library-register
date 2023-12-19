@@ -11,7 +11,7 @@ import java.util.Map;
 @AllArgsConstructor
 public class AuthorFactory implements AuthorFactoryService {
 
-    AuthorManagerService authorMangerr;
+    AuthorManagerService authorManager;
 
     @Override
     public Author create(Map<String, String> attributes) {
@@ -24,7 +24,6 @@ public class AuthorFactory implements AuthorFactoryService {
     }
 
     private Integer getMaxIndex() {
-        AuthorManager authorManager = new AuthorManager();
         List<Author> authors = authorManager.get().stream()
                 .sorted((author1, author2) -> {
                     return author2.getId() - author1.getId();

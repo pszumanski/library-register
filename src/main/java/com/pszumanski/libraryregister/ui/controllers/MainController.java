@@ -149,7 +149,7 @@ public class MainController {
         loadBox.getChildren().set(0, FxmlUtils.fmxlLoader(fxmlPath));
     }
 
-    public void reloadMain() {
+    private void reloadMain() {
         Pane pane = FxmlUtils.fmxlLoader(MAIN_FXML);
 
         Scene scene = new Scene(pane, stage.getWidth(), stage.getHeight());

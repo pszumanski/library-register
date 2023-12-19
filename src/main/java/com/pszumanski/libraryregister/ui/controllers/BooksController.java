@@ -208,7 +208,7 @@ public class BooksController {
         loadBooks();
     }
 
-    public void loadBooks() {
+    private void loadBooks() {
         try {
             List<Book> foundBooks;
 
@@ -266,7 +266,7 @@ public class BooksController {
 
     }
 
-    public void loadAuthors() {
+    private void loadAuthors() {
         ObservableList<Author> authors = FXCollections.observableArrayList(authorManager.get());
 
         elementsFound.setText(String.valueOf(authors.size()));
@@ -280,16 +280,14 @@ public class BooksController {
         this.authorTable.setItems(authors);
         this.authorIdColumn.setCellValueFactory(authorData -> new SimpleIntegerProperty(authorData.getValue().getId()).asObject());
         this.authorNameColumn.setCellValueFactory(authorData -> new ReadOnlyStringWrapper(authorData.getValue().getName()));
-        this.authorTitlesColumn.setCellValueFactory(authorData -> {
-            return new SimpleIntegerProperty(authorManager.fetchTitles(authorData.getValue()).size()).asObject();
-        });
+        this.authorTitlesColumn.setCellValueFactory(authorData -> new SimpleIntegerProperty(authorManager.fetchTitles(authorData.getValue()).size()).asObject());
         this.authorBornDateColumn.setCellValueFactory(authorData -> new ReadOnlyStringWrapper(authorData.getValue().getBornDate()));
         this.authorDeathDateColumn.setCellValueFactory(authorData -> new ReadOnlyStringWrapper(authorData.getValue().getDeathDate()));
 
         this.authorTable.getSelectionModel().selectedItemProperty().addListener(((observable, oldValue, newValue) -> selectAuthor(newValue)));
     }
 
-    public void loadReaders() {
+    private void loadReaders() {
         ObservableList<Reader> readers = FXCollections.observableArrayList(readerManager.get());
 
         elementsFound.setText(String.valueOf(readers.size()));
@@ -313,7 +311,7 @@ public class BooksController {
     }
 
     @FXML
-    public void selectBook(Book book) {
+    private void selectBook(Book book) {
         if (book != null) {
             selectedBook = book;
             manageTab.setDisable(false);
@@ -324,7 +322,7 @@ public class BooksController {
     }
 
     @FXML
-    public void selectAuthor(Author author) {
+    private void selectAuthor(Author author) {
         if (author != null) {
             selectedAuthor = author;
             selectedAuthorField.setText(author.getName());
@@ -334,7 +332,7 @@ public class BooksController {
     }
 
     @FXML
-    public void selectReader(Reader reader) {
+    private void selectReader(Reader reader) {
         if (reader != null) {
             selectedReader = reader;
             selectedReaderField.setText(reader.getName());
@@ -345,7 +343,7 @@ public class BooksController {
     }
 
     @FXML
-    public void addBook() {
+    private void addBook() {
         BookFactoryService bookFactory = new BookFactory(bookManager);
         Book book = bookFactory.create(Map.of(
                 "title", addBookTitle.getText().substring(0,1).toUpperCase() + addBookTitle.getText().substring(1),
@@ -369,7 +367,7 @@ public class BooksController {
     }
 
     @FXML
-    public void tabChanged() {
+    private void tabChanged() {
         if (searchTab.isSelected()) {
             loadBooks();
         } else if (addTab.isSelected()) {
@@ -391,7 +389,7 @@ public class BooksController {
         }
     }
 
-    public void setSearchOption() {
+    private void setSearchOption() {
         if (searchList.getValue().equals(searchOptions[1])) {
             searchType = new BookFindByTitle();
             searchQuery.setText("");

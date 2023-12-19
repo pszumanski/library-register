@@ -5,6 +5,7 @@ import com.pszumanski.libraryregister.data.managers.FileManager;
 import com.pszumanski.libraryregister.data.managers.FileManagerService;
 import com.pszumanski.libraryregister.ui.utils.FxmlUtils;
 import javafx.application.Platform;
+import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
@@ -12,21 +13,22 @@ import javafx.stage.Stage;
 @ViewController
 public class LoadController {
 
+    public static final String MAIN_FXML = "/views/main.fxml";
     private static Stage stage;
 
     public static void setStage(Stage stage) {
         LoadController.stage = stage;
     }
 
-    public static final String MAIN_FXML = "/views/main.fxml";
-
-    public void load() {
+    @FXML
+    private void load() {
         FileManagerService fileManager = FileManager.getInstance();
         fileManager.loadDatabase();
         switchToMenu();
     }
 
-    public void createNew() {
+    @FXML
+    private void createNew() {
         FileManagerService fileManager = FileManager.getInstance();
         fileManager.createNew();
         switchToMenu();
@@ -36,13 +38,11 @@ public class LoadController {
         Pane pane = FxmlUtils.fmxlLoader(MAIN_FXML);
 
         Scene scene = new Scene(pane, stage.getWidth(), stage.getHeight());
-
-        String css = this.getClass().getResource("/stylesheets/lightmode.css").toExternalForm();
-        scene.getStylesheets().add(css);
         stage.setScene(scene);
     }
 
-    public void exit() {
+    @FXML
+    private void exit() {
         Platform.exit();
     }
 

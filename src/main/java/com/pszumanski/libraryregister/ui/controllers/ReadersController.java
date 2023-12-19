@@ -3,17 +3,10 @@ package com.pszumanski.libraryregister.ui.controllers;
 import com.pszumanski.libraryregister.data.factories.ReaderFactory;
 import com.pszumanski.libraryregister.data.factories.ReaderFactoryService;
 import com.pszumanski.libraryregister.data.managers.*;
-import com.pszumanski.libraryregister.data.objects.Author;
-import com.pszumanski.libraryregister.data.objects.Book;
-import com.pszumanski.libraryregister.data.objects.Reader;
+import com.pszumanski.libraryregister.data.objects.*;
 import com.pszumanski.libraryregister.strategy.authorSearch.AuthorFindById;
-import com.pszumanski.libraryregister.strategy.readerFilter.ReaderFilter;
-import com.pszumanski.libraryregister.strategy.readerFilter.ReaderFilterHasBooks;
-import com.pszumanski.libraryregister.strategy.readerFilter.ReaderFilterHasOverdueBooks;
-import com.pszumanski.libraryregister.strategy.readerFilter.ReaderFilterUnpaidPenalty;
-import com.pszumanski.libraryregister.strategy.readerSearch.ReaderFindByName;
-import com.pszumanski.libraryregister.strategy.readerSearch.ReaderFindByTitle;
-import com.pszumanski.libraryregister.strategy.readerSearch.ReaderSearch;
+import com.pszumanski.libraryregister.strategy.readerFilter.*;
+import com.pszumanski.libraryregister.strategy.readerSearch.*;
 import com.pszumanski.libraryregister.ui.utils.FxmlUtils;
 import com.pszumanski.libraryregister.ui.utils.NotificationUtils;
 import javafx.beans.property.ReadOnlyStringWrapper;
@@ -197,7 +190,7 @@ public class ReadersController {
         loadReaders();
     }
 
-    public void loadBooks() {
+    private void loadBooks() {
         try {
             List<Book> readersBooks = readerManager.fetchBooks(selectedReader);
 
@@ -271,7 +264,7 @@ public class ReadersController {
         catch (NullPointerException ex) {}
     }
 
-    public void loadReadersAdd() {
+    private void loadReadersAdd() {
         try {
             ObservableList<Reader> readers = FXCollections.observableArrayList(readerManager.get());
 
@@ -304,7 +297,7 @@ public class ReadersController {
     }
 
     @FXML
-    public void selectBook(Book book) {
+    private void selectBook(Book book) {
         if (book != null) {
             selectedBook = book;
             selectedBookField.setText(selectedBook.getTitle());
@@ -314,7 +307,7 @@ public class ReadersController {
     }
 
     @FXML
-    public void selectReader(Reader reader) {
+    private void selectReader(Reader reader) {
         if (reader != null) {
             selectedReader = reader;
             manageTab.setDisable(false);
@@ -325,7 +318,7 @@ public class ReadersController {
     }
 
     @FXML
-    public void addReader() {
+    private void addReader() {
         ReaderFactoryService readerFactory = new ReaderFactory(readerManager);
         Reader reader = readerFactory.create(Map.of(
                 "name", addReaderName.getText().substring(0,1).toUpperCase() + addReaderName.getText().substring(1),
@@ -350,7 +343,7 @@ public class ReadersController {
     }
 
     @FXML
-    public void tabChanged() {
+    private void tabChanged() {
         if (searchTab.isSelected()) {
             loadReaders();
             readerTable.refresh();
@@ -374,7 +367,7 @@ public class ReadersController {
         }
     }
 
-    public void setSearchOption() {
+    private void setSearchOption() {
         if (searchList.getValue().equals(searchOptions[1])) {
             searchType = new ReaderFindByName();
             searchQuery.setText("");

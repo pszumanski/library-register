@@ -109,7 +109,7 @@ public class AuthorsController {
         loadAuthors();
     }
 
-    public void loadAuthors() {
+    private void loadAuthors() {
         try {
             List<Author> foundAuthors;
 
@@ -133,9 +133,7 @@ public class AuthorsController {
             this.authorTable.setItems(authors);
             this.authorIdColumn.setCellValueFactory(authorData -> new SimpleIntegerProperty(authorData.getValue().getId()).asObject());
             this.authorNameColumn.setCellValueFactory(authorData -> new ReadOnlyStringWrapper(authorData.getValue().getName()));
-            this.authorTitlesColumn.setCellValueFactory(authorData -> {
-                return new SimpleIntegerProperty(authorManager.fetchTitles(authorData.getValue()).size()).asObject();
-            });
+            this.authorTitlesColumn.setCellValueFactory(authorData -> new SimpleIntegerProperty(authorManager.fetchTitles(authorData.getValue()).size()).asObject());
             this.authorBornDateColumn.setCellValueFactory(authorData -> new ReadOnlyStringWrapper(authorData.getValue().getBornDate()));
             this.authorDeathDateColumn.setCellValueFactory(authorData -> new ReadOnlyStringWrapper(authorData.getValue().getDeathDate()));
 
@@ -150,7 +148,7 @@ public class AuthorsController {
     }
 
     @FXML
-    public void selectAuthor(Author author) {
+    private void selectAuthor(Author author) {
         if (author != null && selectedAuthorField != null) {
             selectedAuthor = author;
             selectedAuthorField.setText(author.getName());
@@ -161,7 +159,7 @@ public class AuthorsController {
     }
 
     @FXML
-    public void addAuthor() {
+    private void addAuthor() {
         AuthorFactoryService authorFactory = new AuthorFactory(authorManager);
         Author author = authorFactory.create(Map.of(
                 "name", addAuthorName.getText().substring(0,1).toUpperCase() + addAuthorName.getText().substring(1),
@@ -178,7 +176,7 @@ public class AuthorsController {
     }
 
     @FXML
-    public void tabChanged() {
+    private void tabChanged() {
         if (searchTab.isSelected()) {
             loadAuthors();
             loadAuthorInfo();
@@ -191,7 +189,7 @@ public class AuthorsController {
         }
     }
 
-    public void setSearchOption() {
+    private void setSearchOption() {
         if (searchList.getValue().equals(searchOptions[1])) {
             searchType = new AuthorFindByName();
             searchQuery.setText("");
