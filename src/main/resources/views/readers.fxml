@@ -76,11 +76,11 @@
                               <TableView fx:id="readerTable" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                  <columns>
                                     <TableColumn fx:id="readerIdColumn" editable="false" prefWidth="50.0" resizable="false" text="%id" />
-                                    <TableColumn fx:id="readerNameColumn" editable="false" prefWidth="280.0" resizable="false" text="%name" />
-                                    <TableColumn fx:id="readerDateColumn" editable="false" prefWidth="140.0" resizable="false" text="%bornDate" />
+                                    <TableColumn fx:id="readerNameColumn" editable="false" prefWidth="260.0" resizable="false" text="%name" />
+                                    <TableColumn fx:id="readerDateColumn" editable="false" prefWidth="120.0" resizable="false" text="%bornDate" />
                                     <TableColumn fx:id="readerAddressColumn" editable="false" prefWidth="300.0" resizable="false" text="%address" />
                                     <TableColumn fx:id="readerPhoneNumberColumn" editable="false" prefWidth="150.0" resizable="false" text="%phoneNumber" />
-                                    <TableColumn fx:id="readerEmailColumn" editable="false" prefWidth="150.0" resizable="false" text="%email" />
+                                    <TableColumn fx:id="readerEmailColumn" editable="false" prefWidth="190.0" resizable="false" text="%email" />
                                     <TableColumn fx:id="readerPenaltyColumn" editable="false" prefWidth="93.0" resizable="false" text="%penalty" />
                                  </columns>
                               </TableView>
@@ -92,7 +92,7 @@
           </Tab>
             <Tab fx:id="addTab" onSelectionChanged="#tabChanged" text="%addReader">
                <content>
-                  <SplitPane dividerPositions="0.20753424657534247" prefHeight="765.0" prefWidth="1326.0">
+                  <SplitPane dividerPositions="0.21164383561643835" prefHeight="765.0" prefWidth="1326.0">
                      <items>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="783.0" prefWidth="600.0">
                            <children>
@@ -223,12 +223,12 @@
                               <TableView fx:id="readerTableAdd" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                  <columns>
                                     <TableColumn fx:id="readerIdColumnAdd" editable="false" prefWidth="50.0" resizable="false" text="%id" />
-                                    <TableColumn fx:id="readerNameColumnAdd" editable="false" prefWidth="280.0" resizable="false" text="%name" />
-                                    <TableColumn fx:id="readerDateColumnAdd" editable="false" prefWidth="140.0" resizable="false" text="%bornDate" />
+                                    <TableColumn fx:id="readerNameColumnAdd" editable="false" prefWidth="260.0" resizable="false" text="%name" />
+                                    <TableColumn fx:id="readerDateColumnAdd" editable="false" prefWidth="120.0" resizable="false" text="%bornDate" />
                                     <TableColumn fx:id="readerAddressColumnAdd" editable="false" prefWidth="300.0" resizable="false" text="%address" />
                                     <TableColumn fx:id="readerPhoneNumberColumnAdd" editable="false" prefWidth="150.0" resizable="false" text="%phoneNumber" />
-                                    <TableColumn fx:id="readerEmailColumnAdd" editable="false" prefWidth="150.0" resizable="false" text="%email" />
-                                    <TableColumn fx:id="readerPenaltyColumnAdd" editable="false" resizable="false" text="%penalty" />
+                                    <TableColumn fx:id="readerEmailColumnAdd" editable="false" prefWidth="190.0" resizable="false" text="%email" />
+                                    <TableColumn fx:id="readerPenaltyColumnAdd" editable="false" prefWidth="75.0" resizable="false" text="%penalty" />
                                  </columns>
                               </TableView>
                            </children>
@@ -356,11 +356,12 @@
                               <TableView fx:id="bookTable" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                 <columns>
                                   <TableColumn fx:id="idColumn" editable="false" prefWidth="50.0" resizable="false" text="%id" />
-                                  <TableColumn fx:id="titleColumn" editable="false" prefWidth="330.0" resizable="false" text="%title" />
-                                    <TableColumn fx:id="authorColumn" editable="false" prefWidth="330.0" resizable="false" text="%author" />
+                                  <TableColumn fx:id="titleColumn" editable="false" prefWidth="310.0" resizable="false" text="%title" />
+                                    <TableColumn fx:id="authorColumn" editable="false" prefWidth="230.0" resizable="false" text="%author" />
+                                    <TableColumn fx:id="deadlineColumn" editable="false" prefWidth="120.0" resizable="false" text="%deadline" />
                                     <TableColumn fx:id="genreColumn" editable="false" prefWidth="150.0" resizable="false" text="%genre" />
-                                    <TableColumn fx:id="publisherColumn" editable="false" prefWidth="180.0" resizable="false" text="%publisher" />
-                                    <TableColumn fx:id="languageColumn" editable="false" prefWidth="120.0" resizable="false" text="%language" />
+                                    <TableColumn fx:id="publisherColumn" editable="false" prefWidth="190.0" resizable="false" text="%publisher" />
+                                    <TableColumn fx:id="languageColumn" editable="false" prefWidth="110.0" resizable="false" text="%language" />
                                 </columns>
                               </TableView>
                            </children>

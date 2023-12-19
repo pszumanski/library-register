@@ -55,6 +55,8 @@ public class ReadersController {
     @FXML
     private TableColumn<Book, String> authorColumn;
     @FXML
+    private TableColumn<Book, String> deadlineColumn;
+    @FXML
     private TableColumn<Book, String> genreColumn;
     @FXML
     private TableColumn<Book, Integer> idColumn;
@@ -216,6 +218,7 @@ public class ReadersController {
                 Author author = authorManager.search(String.valueOf(authorId)).getFirst();
                 return new ReadOnlyStringWrapper(author.getName());
             });
+            this.deadlineColumn.setCellValueFactory(bookData -> new ReadOnlyStringWrapper(bookData.getValue().getDeadline().toString()));
             this.genreColumn.setCellValueFactory(bookData -> new ReadOnlyStringWrapper(bookData.getValue().getGenre()));
             this.languageColumn.setCellValueFactory(bookData -> new ReadOnlyStringWrapper(bookData.getValue().getLanguage()));
             this.publisherColumn.setCellValueFactory(bookData -> new ReadOnlyStringWrapper(bookData.getValue().getPublisher()));
@@ -477,6 +480,7 @@ public class ReadersController {
             deleteReaderButton.setDisable(true);
             payPenaltyButton.setDisable(true);
         } else {
+            readerInfoName.setStyle("");
             if (selectedReader.getPenalty() == 0) {
                 payPenaltyButton.setDisable(true);
             } else {

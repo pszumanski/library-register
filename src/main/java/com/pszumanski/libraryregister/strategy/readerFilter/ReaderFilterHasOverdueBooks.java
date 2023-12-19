@@ -6,12 +6,14 @@ import com.pszumanski.libraryregister.strategy.readerSearch.ReaderFindById;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 public class ReaderFilterHasOverdueBooks implements ReaderFilter {
 
     @Override
     public List<Reader> filter(List<Reader> readersToFilter) {
-        List<Reader> filteredReaders = new ArrayList<>();
+        Set<Reader> filteredReaders = new TreeSet<>();
         BookManagerService bookManager = new BookManager();
         ReaderManagerService readerManager = new ReaderManager();
         readerManager.setSearch(new ReaderFindById());
@@ -24,6 +26,6 @@ public class ReaderFilterHasOverdueBooks implements ReaderFilter {
                         filteredReaders.add(reader);
                     }
                 });
-        return filteredReaders;
+        return filteredReaders.stream().toList();
     }
 }

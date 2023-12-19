@@ -28,9 +28,9 @@
             </Button>
          </children>
       </VBox>
-      <ImageView fitHeight="564.0" fitWidth="560.0" layoutX="384.0" layoutY="-9.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="518.0" fitWidth="864.0" layoutX="156.0" layoutY="37.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="262.0" AnchorPane.rightAnchor="202.0">
          <image>
-            <Image url="@../images/libraryLogoNew.png" />
+            <Image url="@../images/libraryLogo.png" />
          </image>
       </ImageView>
    </children>
