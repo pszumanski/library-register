@@ -2,13 +2,10 @@ package com.pszumanski.libraryregister.strategy.authorSearch;
 
 import com.pszumanski.libraryregister.data.objects.Author;
 import com.pszumanski.libraryregister.data.objects.Book;
-import com.pszumanski.libraryregister.managers.dataManagers.AuthorManager;
-import com.pszumanski.libraryregister.managers.dataManagers.BookManager;
+import com.pszumanski.libraryregister.data.managers.AuthorManager;
+import com.pszumanski.libraryregister.data.managers.BookManager;
 
 import java.util.*;
-import java.util.stream.Collectors;
-
-import static java.util.stream.Collectors.toList;
 
 public class AuthorFindByTitle implements AuthorSearch {
     @Override

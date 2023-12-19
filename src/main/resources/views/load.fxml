@@ -7,21 +7,21 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="830.0" prefWidth="1328.0" styleClass="anchor-pane" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.pszumanski.libraryregister.ui.LoadController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="830.0" prefWidth="1328.0" styleClass="anchor-pane" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.pszumanski.libraryregister.ui.controllers.LoadController">
    <children>
       <VBox alignment="CENTER" layoutX="750.0" layoutY="344.0" prefHeight="300.0" prefWidth="300.0" spacing="30.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="450.0" AnchorPane.rightAnchor="450.0">
          <children>
-            <Button fx:id="loadButton" mnemonicParsing="false" onAction="#load" prefHeight="60.0" prefWidth="280.0" text="%loadExistingDb" textAlignment="CENTER">
+            <Button mnemonicParsing="false" onAction="#load" prefHeight="60.0" prefWidth="280.0" text="%loadExistingDb" textAlignment="CENTER">
                <font>
                   <Font size="24.0" />
                </font>
             </Button>
-            <Button fx:id="createNewButton" mnemonicParsing="false" onAction="#createNew" prefHeight="60.0" prefWidth="280.0" text="%createNewDb">
+            <Button mnemonicParsing="false" onAction="#createNew" prefHeight="60.0" prefWidth="280.0" text="%createNewDb">
                <font>
                   <Font size="24.0" />
                </font>
             </Button>
-            <Button fx:id="exitButton" mnemonicParsing="false" onAction="#exit" prefHeight="60.0" prefWidth="280.0" text="%exit">
+            <Button mnemonicParsing="false" onAction="#exit" prefHeight="60.0" prefWidth="280.0" text="%exit">
                <font>
                   <Font size="24.0" />
                </font>

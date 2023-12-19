@@ -1,7 +1,7 @@
 package com.pszumanski.libraryregister.strategy.readerFilter;
 
 import com.pszumanski.libraryregister.data.objects.Reader;
-import com.pszumanski.libraryregister.managers.dataManagers.TimeManager;
+import com.pszumanski.libraryregister.data.managers.TimeManager;
 
 import java.time.temporal.ChronoUnit;
 import java.util.List;

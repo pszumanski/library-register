@@ -2,9 +2,9 @@ package com.pszumanski.libraryregister.strategy.bookSearch;
 
 import com.pszumanski.libraryregister.data.objects.Author;
 import com.pszumanski.libraryregister.data.objects.Book;
-import com.pszumanski.libraryregister.managers.dataManagers.AuthorManager;
-import com.pszumanski.libraryregister.managers.dataManagers.AuthorManagerService;
-import com.pszumanski.libraryregister.managers.dataManagers.BookManager;
+import com.pszumanski.libraryregister.data.managers.AuthorManager;
+import com.pszumanski.libraryregister.data.managers.AuthorManagerService;
+import com.pszumanski.libraryregister.data.managers.BookManager;
 
 import java.util.ArrayList;
 import java.util.Arrays;

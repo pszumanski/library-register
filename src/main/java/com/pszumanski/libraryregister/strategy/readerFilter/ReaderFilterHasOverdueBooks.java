@@ -1,7 +1,7 @@
 package com.pszumanski.libraryregister.strategy.readerFilter;
 
+import com.pszumanski.libraryregister.data.managers.*;
 import com.pszumanski.libraryregister.data.objects.Reader;
-import com.pszumanski.libraryregister.managers.dataManagers.*;
 import com.pszumanski.libraryregister.strategy.readerSearch.ReaderFindById;
 
 import java.util.ArrayList;
