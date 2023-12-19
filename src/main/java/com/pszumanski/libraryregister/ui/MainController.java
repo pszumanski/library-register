@@ -27,7 +27,6 @@ public class MainController {
 
     private static Stage stage;
     private static final String MAIN_FXML = "/views/main.fxml";
-    private static String stylesheet = "/stylesheets/lightmode.css";
 
     @FXML
     private HBox loadBox;
@@ -152,6 +151,7 @@ public class MainController {
 
         Scene scene = new Scene(pane, stage.getWidth(), stage.getHeight());
 
+        stage.setTitle(FxmlUtils.getResourceBundle().getString("application.title"));
         stage.setScene(scene);
     }
 

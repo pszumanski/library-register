@@ -154,13 +154,7 @@ public class ReadersController {
     @FXML
     private TextField readerInfoPersonalId;
     @FXML
-    private TextField readerInfoAddressFirst;
-    @FXML
-    private TextField readerInfoAddressSecond;
-    @FXML
     private TextField readerInfoEmail;
-    @FXML
-    private TextField readerInfoPhoneNumber;
     @FXML
     private TextField readerInfoId;
     @FXML
@@ -367,8 +361,10 @@ public class ReadersController {
     public void tabChanged() {
         if (searchTab.isSelected()) {
             loadReaders();
+            readerTable.refresh();
         } else if (addTab.isSelected()) {
             loadReadersAdd();
+            readerTableAdd.refresh();
         } else if (manageTab.isSelected()) {
             if (deleteReaderButton != null && datePicker != null) {
                 deleteReaderButton.setDisable(false);
@@ -481,6 +477,7 @@ public class ReadersController {
                 datePicker.setStyle("");
                 lengthenDeadlineButton.setDisable(false);
             } else {
+                datePicker.setValue(selectedBook.getDeadline());
                 datePicker.setStyle("-fx-background-color: darkred; -fx-text-fill: white");
                 lengthenDeadlineButton.setDisable(true);
             }
@@ -513,10 +510,7 @@ public class ReadersController {
         readerInfoName.setText(selectedReader.getName());
         readerInfoBornDate.setText(selectedReader.getBornDate().toString());
         readerInfoPersonalId.setText(selectedReader.getPersonalId());
-        readerInfoAddressFirst.setText(selectedReader.getAddressFirst());
-        readerInfoAddressSecond.setText(selectedReader.getAddressSecond());
         readerInfoEmail.setText(selectedReader.getEmail());
-        readerInfoPhoneNumber.setText(selectedReader.getPhoneNumber());
         readerInfoId.setText(selectedReader.getId().toString());
         readerInfoPenalty.setText(selectedReader.getPenalty().toString());
     }
@@ -553,10 +547,6 @@ public class ReadersController {
     }
 
     @FXML
-    private void chooseSlider(MouseEvent mouseEvent) {
-    }
-
-    @FXML
     private void returnBook() {
         NotificationController.notification(FxmlUtils.getResourceBundle().getString("bookReturned"),
                 selectedReader.getName() + " " + FxmlUtils.getResourceBundle().getString("returned") + " " + selectedBook.getTitle());
@@ -573,7 +563,7 @@ public class ReadersController {
         NotificationController.notification(FxmlUtils.getResourceBundle().getString("penaltyPayed"),
                 selectedReader.getName() + " " + FxmlUtils.getResourceBundle().getString("paid") + " " + selectedReader.getPenalty());
         selectedReader.setPenalty(0);
-        validateManage();
+        loadReaderInfo();
     }
 
     private int checkEmpty(TextField textField) {

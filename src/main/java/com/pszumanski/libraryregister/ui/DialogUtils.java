@@ -11,9 +11,8 @@ import java.util.stream.Collectors;
 
 public class DialogUtils {
 
-    private static ResourceBundle bundle = FxmlUtils.getResourceBundle();
-
     public static void about() {
+        ResourceBundle bundle = FxmlUtils.getResourceBundle();
         Alert informationAlert = new Alert(Alert.AlertType.INFORMATION);
         informationAlert.setTitle(bundle.getString("aboutTitle"));
         informationAlert.setHeaderText(bundle.getString("aboutInfo"));
@@ -21,6 +20,7 @@ public class DialogUtils {
     }
 
     public static Optional<ButtonType> exitConfirmation() {
+        ResourceBundle bundle = FxmlUtils.getResourceBundle();
         Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION);
         confirmationAlert.setTitle(bundle.getString("exitTitle"));
         confirmationAlert.setHeaderText(bundle.getString("exitHeader"));
@@ -31,6 +31,7 @@ public class DialogUtils {
     }
 
     public static LocalDate pickDate() {
+        ResourceBundle bundle = FxmlUtils.getResourceBundle();
         Alert informationAlert = new Alert(Alert.AlertType.INFORMATION);
         informationAlert.setTitle(bundle.getString("pickDate"));
         informationAlert.setHeaderText(bundle.getString("pickDate"));
@@ -52,6 +53,7 @@ public class DialogUtils {
     }
 
     public static void error(String error) {
+        ResourceBundle bundle = FxmlUtils.getResourceBundle();
         Alert errorAlert = new Alert(Alert.AlertType.ERROR);
         errorAlert.setTitle(bundle.getString("errorTitle"));
         errorAlert.setHeaderText(bundle.getString("errorMessage"));

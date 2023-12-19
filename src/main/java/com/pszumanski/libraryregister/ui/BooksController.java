@@ -469,6 +469,7 @@ public class BooksController {
         int errors = 0;
         errors += checkEmpty(selectedReaderField);
         if (selectedDate == null || !selectedDate.isAfter(TimeManager.getInstance().getDate())) {
+            datePicker.setValue(TimeManager.getInstance().getDate());
             datePicker.setStyle("-fx-background-color: darkred; -fx-text-fill: white");
             errors++;
         } else {

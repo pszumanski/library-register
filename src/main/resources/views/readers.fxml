@@ -7,14 +7,12 @@
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Separator?>
-<?import javafx.scene.control.Slider?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.effect.Blend?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -51,30 +49,6 @@
                                        <VBox.margin>
                                           <Insets top="20.0" />
                                        </VBox.margin></Separator>
-                                    <HBox alignment="BASELINE_RIGHT" prefWidth="200.0" spacing="10.0">
-                                       <children>
-                                          <Label text="%age">
-                                             <HBox.margin>
-                                                <Insets left="5.0" />
-                                             </HBox.margin></Label>
-                                          <AnchorPane prefHeight="30.0" prefWidth="150.0">
-                                             <children>
-                                                <Slider fx:id="sliderMin" minorTickCount="1" onMouseMoved="#chooseSlider" opacity="0.5" showTickLabels="true" showTickMarks="true" snapToTicks="true" />
-                                                <Slider fx:id="sliderMax" minorTickCount="1" onMouseMoved="#chooseSlider" opacity="0.5" showTickLabels="true" showTickMarks="true" snapToTicks="true" value="100.0">
-                                                   <effect>
-                                                      <Blend />
-                                                   </effect>
-                                                </Slider>
-                                             </children>
-                                          </AnchorPane>
-                                       </children>
-                                       <padding>
-                                          <Insets top="20.0" />
-                                       </padding>
-                                       <VBox.margin>
-                                          <Insets right="40.0" />
-                                       </VBox.margin>
-                                    </HBox>
                                     <HBox alignment="CENTER">
                                        <children>
                                           <CheckBox fx:id="filterHasBooksCheckBox" mnemonicParsing="false" onAction="#setFilterHasBooks" text="%filterHasBooks" />
@@ -118,7 +92,7 @@
           </Tab>
             <Tab fx:id="addTab" onSelectionChanged="#tabChanged" text="%addReader">
                <content>
-                  <SplitPane dividerPositions="0.2" prefHeight="765.0" prefWidth="1326.0">
+                  <SplitPane dividerPositions="0.20753424657534247" prefHeight="765.0" prefWidth="1326.0">
                      <items>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="783.0" prefWidth="600.0">
                            <children>
@@ -142,7 +116,7 @@
                                     <HBox alignment="BASELINE_RIGHT" spacing="10.0">
                                        <children>
                                           <Label text="%bornDate" />
-                                          <DatePicker fx:id="bornDatePicker" onAction="#validateReader" prefWidth="149.0" promptText="%pickDate" />
+                                          <DatePicker fx:id="bornDatePicker" onAction="#validateReader" prefWidth="180.0" promptText="%pickDate" />
                                        </children>
                                        <padding>
                                           <Insets top="20.0" />
@@ -254,7 +228,7 @@
                                     <TableColumn fx:id="readerAddressColumnAdd" editable="false" prefWidth="300.0" resizable="false" text="%address" />
                                     <TableColumn fx:id="readerPhoneNumberColumnAdd" editable="false" prefWidth="150.0" resizable="false" text="%phoneNumber" />
                                     <TableColumn fx:id="readerEmailColumnAdd" editable="false" prefWidth="150.0" resizable="false" text="%email" />
-                                    <TableColumn fx:id="readerPenaltyColumnAdd" editable="false" prefWidth="93.0" resizable="false" text="%penalty" />
+                                    <TableColumn fx:id="readerPenaltyColumnAdd" editable="false" resizable="false" text="%penalty" />
                                  </columns>
                               </TableView>
                            </children>
@@ -300,35 +274,8 @@
                                     </HBox>
                                     <HBox alignment="CENTER_RIGHT" prefWidth="200.0" spacing="10.0">
                                        <children>
-                                          <Label text="%addressFirst" />
-                                          <TextField fx:id="readerInfoAddressFirst" alignment="CENTER" editable="false" promptText="%selectReaderFirst" />
-                                       </children>
-                                       <padding>
-                                          <Insets right="5.0" top="20.0" />
-                                       </padding>
-                                    </HBox>
-                                    <HBox alignment="CENTER_RIGHT" prefWidth="200.0" spacing="10.0">
-                                       <children>
-                                          <Label text="%addressSecond" />
-                                          <TextField fx:id="readerInfoAddressSecond" alignment="CENTER" editable="false" promptText="%selectReaderFirst" />
-                                       </children>
-                                       <padding>
-                                          <Insets right="5.0" top="20.0" />
-                                       </padding>
-                                    </HBox>
-                                    <HBox alignment="CENTER_RIGHT" prefWidth="200.0" spacing="10.0">
-                                       <children>
                                           <Label text="%email" />
                                           <TextField fx:id="readerInfoEmail" alignment="CENTER" editable="false" promptText="%selectReaderFirst" />
-                                       </children>
-                                       <padding>
-                                          <Insets right="5.0" top="20.0" />
-                                       </padding>
-                                    </HBox>
-                                    <HBox alignment="CENTER_RIGHT" prefWidth="200.0" spacing="10.0">
-                                       <children>
-                                          <Label text="%phoneNumber" />
-                                          <TextField fx:id="readerInfoPhoneNumber" alignment="CENTER" editable="false" promptText="%selectReaderFirst" />
                                        </children>
                                        <padding>
                                           <Insets right="5.0" top="20.0" />
@@ -369,7 +316,7 @@
                                     <HBox alignment="CENTER_RIGHT" prefWidth="200.0" spacing="10.0">
                                        <children>
                                           <Label text="%date" />
-                                          <DatePicker fx:id="datePicker" onAction="#getDate" prefWidth="149.0" promptText="Select date...." />
+                                          <DatePicker fx:id="datePicker" onAction="#getDate" prefWidth="180.0" promptText="Select date...." />
                                        </children>
                                        <padding>
                                           <Insets right="5.0" top="20.0" />
