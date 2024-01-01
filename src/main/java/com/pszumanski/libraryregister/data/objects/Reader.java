@@ -13,7 +13,7 @@ import java.time.LocalDate;
 @ToString
 @RequiredArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Reader implements Comparable {
+public class Reader implements Comparable<Reader> {
 
     @Id
     @NonNull
@@ -41,7 +41,7 @@ public class Reader implements Comparable {
 
 
     @Override
-    public int compareTo(Object o) {
-        return this.id - ((Reader) o).getId();
+    public int compareTo(Reader reader) {
+        return this.id - reader.getId();
     }
 }
