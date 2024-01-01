@@ -12,7 +12,7 @@ import java.util.TreeSet;
 public class AuthorManager implements AuthorManagerService {
 
     private static List<Author> authors;
-    private static AuthorSearch authorSearch;
+    private AuthorSearch authorSearch;
 
     @Override
     public void add(Author author) {
@@ -31,7 +31,7 @@ public class AuthorManager implements AuthorManagerService {
 
     @Override
     public void setSearch(AuthorSearch authorSearch) {
-        AuthorManager.authorSearch = authorSearch;
+        this.authorSearch = authorSearch;
     }
 
     @Override
@@ -46,7 +46,7 @@ public class AuthorManager implements AuthorManagerService {
 
     @Override
     public List<String> fetchTitles(Author author) {
-        BookManager bookManager = new BookManager();
+        BookManagerService bookManager = new BookManager();
         bookManager.setSearch(new BookFindByAuthorId());
         List<Book> books = bookManager.search(author.getId().toString());
         Set<String> titles = new TreeSet<>();

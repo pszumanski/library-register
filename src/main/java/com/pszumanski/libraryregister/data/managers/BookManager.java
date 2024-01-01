@@ -14,7 +14,7 @@ import java.util.Set;
 public class BookManager implements BookManagerService {
 
     private static List<Book> books;
-    private static BookSearch bookSearch;
+    private BookSearch bookSearch;
 
     @Override
     public List<Book> get() {
@@ -38,7 +38,7 @@ public class BookManager implements BookManagerService {
 
     @Override
     public void setSearch(BookSearch bookSearch) {
-        BookManager.bookSearch = bookSearch;
+        this.bookSearch = bookSearch;
     }
 
     @Override

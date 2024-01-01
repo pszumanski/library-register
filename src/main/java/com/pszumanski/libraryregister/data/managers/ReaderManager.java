@@ -12,7 +12,7 @@ import java.util.List;
 public class ReaderManager implements ReaderManagerService {
 
     private static List<Reader> readers;
-    private static ReaderSearch readerSearch;
+    private ReaderSearch readerSearch;
 
     @Override
     public List<Reader> get() {
@@ -36,7 +36,7 @@ public class ReaderManager implements ReaderManagerService {
 
     @Override
     public void setSearch(ReaderSearch readerSearch) {
-        ReaderManager.readerSearch = readerSearch;
+        this.readerSearch = readerSearch;
     }
 
     @Override
