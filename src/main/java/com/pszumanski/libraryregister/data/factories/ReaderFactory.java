@@ -34,9 +34,7 @@ public class ReaderFactory implements ReaderFactoryService {
 
     private Integer getMaxIndex() {
         List<Reader> readers = readerManager.get().stream()
-                .sorted((reader1, reader2) -> {
-                    return reader2.getId() - reader1.getId();
-                })
+                .sorted((reader1, reader2) -> reader2.getId() - reader1.getId())
                 .toList();
         return readers.isEmpty() ? 0 : readers.getFirst().getId();
     }

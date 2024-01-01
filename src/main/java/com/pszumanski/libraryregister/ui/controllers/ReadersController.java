@@ -529,7 +529,7 @@ public class ReadersController {
     private void lengthenDeadline() {
         NotificationUtils.notification(FxmlUtils.getResourceBundle().getString("deadlineLengthened"),
                 selectedBook.getTitle() + " " + FxmlUtils.getResourceBundle().getString("ofReader") + " " + selectedReader.getName()
-                        + FxmlUtils.getResourceBundle().getString("gotLengthenedTo") + selectedDate.toString()
+                        + FxmlUtils.getResourceBundle().getString("gotLengthenedTo") + " " + selectedDate.toString()
         + " " + FxmlUtils.getResourceBundle().getString("from") + " " + selectedBook.getDeadline().toString());
         selectedBook.setDeadline(selectedDate);
         validateManage();

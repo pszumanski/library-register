@@ -75,6 +75,7 @@ public class LibraryRegisterApplication extends SpringJavaFXApplication {
         Image icon = new Image(getClass().getResource(LIBRARY_REGISTER_LOGO_PNG).toExternalForm());
         stage.setTitle(bundle.getString("application.title"));
         stage.getIcons().add(icon);
+
         // Handle exit
         stage.setOnCloseRequest(event -> {
             switch (DialogUtils.exitConfirmation().get().getButtonData()) {

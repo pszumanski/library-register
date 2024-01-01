@@ -25,9 +25,7 @@ public class AuthorFactory implements AuthorFactoryService {
 
     private Integer getMaxIndex() {
         List<Author> authors = authorManager.get().stream()
-                .sorted((author1, author2) -> {
-                    return author2.getId() - author1.getId();
-                })
+                .sorted((author1, author2) -> author2.getId() - author1.getId())
                 .toList();
         return authors.isEmpty() ? 0 : authors.getFirst().getId();
     }

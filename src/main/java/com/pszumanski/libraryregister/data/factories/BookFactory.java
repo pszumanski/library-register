@@ -29,9 +29,7 @@ public class BookFactory implements BookFactoryService {
 
     private Integer getMaxIndex() {
         List<Book> books = bookManager.get().stream()
-                .sorted((book1, book2) -> {
-                    return book2.getId() - book1.getId();
-                })
+                .sorted((book1, book2) -> book2.getId() - book1.getId())
                 .toList();
         return books.isEmpty() ? 0 : books.getFirst().getId();
     }
