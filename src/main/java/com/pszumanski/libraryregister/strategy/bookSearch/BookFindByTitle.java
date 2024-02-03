@@ -10,20 +10,15 @@ public class BookFindByTitle implements BookSearch {
     @Override
     public List<Book> search(String query) {
         List<String> queries = Arrays.stream(query.toLowerCase().split(" ")).toList();
-        int numberOfWords = queries.size();
         return new BookManager().get().stream()
                 .filter(book -> {
-                    List<String> bookTitle = Arrays.stream(book.getTitle().toLowerCase().split(" ")).toList();
-                    int matches = 0;
+                    String bookTitle = book.getTitle().toLowerCase();
                     for (String word: queries) {
-                        for (String bookSubTitle: bookTitle) {
-                            if (bookSubTitle.contains(word)) {
-                                matches++;
-                                break;
-                            }
+                        if (!bookTitle.contains(word)) {
+                            return false;
                         }
                     }
-                    return matches >= numberOfWords;
+                    return true;
                 })
                 .toList();
     }

@@ -11,33 +11,29 @@ public class AuthorFindByTitle implements AuthorSearch {
     @Override
     public List<Author> search(String query) {
         List<String> queries = Arrays.stream(query.toLowerCase().split(" ")).toList();
-        int numberOfWords = queries.size();
 
         List<Book> booksOfTitle = new BookManager().get().stream()
                 .filter(book -> {
-                    List<String> bookTitle = Arrays.stream(book.getTitle().toLowerCase().split(" ")).toList();
-                    int matches = 0;
+                    String bookTitle = book.getTitle().toLowerCase();
                     for (String word : queries) {
-                        for (String bookSubTitle: bookTitle) {
-                            if (bookSubTitle.contains(word)) {
-                                matches++;
-                                break;
-                            }
+                        if (!bookTitle.contains(word)) {
+                            return false;
                         }
                     }
-                    return matches >= numberOfWords;
+                    return true;
                 })
                 .toList();
 
-        Set<Author> authors = new HashSet<>();
-        AuthorManager authorManager = new AuthorManager();
-        authorManager.setSearch(new AuthorFindById());
-
+        List<Author> authors = new ArrayList<>();
         booksOfTitle.forEach(book -> {
             Integer authorID = book.getAuthorId();
-            authors.add(authorManager.search(authorID.toString()).get(0));
+
+            authors.addAll(new AuthorManager().get().stream()
+                    .filter(author -> authorID.equals(author.getId()))
+                    .toList());
+
         });
 
-        return authors.stream().toList();
+        return authors.stream().distinct().toList();
     }
 }

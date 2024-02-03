@@ -9,31 +9,28 @@ import com.pszumanski.libraryregister.data.managers.BookManager;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class BookFindByAuthorName implements BookSearch {
     @Override
     public List<Book> search(String query) {
         List<String> queries = Arrays.stream(query.toLowerCase().split(" ")).toList();
-        AuthorManagerService authorManager = new AuthorManager();
-        int numberOfWords = queries.size();
 
-        List<Author> authors = authorManager.get().stream()
+        List<Author> authors = new AuthorManager().get().stream()
                 .filter(author -> {
-                    List<String> authorName = Arrays.stream(author.getName().toLowerCase().split(" ")).toList();
-                    int matches = 0;
+                    String authorName = author.getName().toLowerCase();
                     for (String word: queries) {
-                        for (String authorSubName : authorName) {
-                            if (authorSubName.contains(word)) {
-                                matches++;
-                                break;
-                            }
+                        if (!authorName.contains(word)) {
+                            return false;
                         }
                     }
-                    return matches >= numberOfWords;
+                    return true;
                 })
                 .toList();
-        List<Integer> authorIds = new ArrayList<>();
-        authors.forEach(author -> authorIds.add(author.getId()));
+
+        List<Integer> authorIds = authors.stream()
+                .map(author -> author.getId())
+                .toList();
 
 
         return new BookManager().get().stream()

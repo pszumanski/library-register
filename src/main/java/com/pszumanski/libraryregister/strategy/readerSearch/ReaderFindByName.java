@@ -12,21 +12,16 @@ public class ReaderFindByName implements ReaderSearch {
     @Override
     public List<Reader> search(String query) {
         List<String> queries = Arrays.stream(query.toLowerCase().split(" ")).toList();
-        int numberOfWords = queries.size();
 
         return new ReaderManager().get().stream()
                 .filter(reader -> {
-                    int matches = 0;
-                    List<String> readerName = Arrays.stream(reader.getName().toLowerCase().split(" ")).toList();
+                    String readerName = reader.getName().toLowerCase();
                     for (String word: queries) {
-                        for (String readerSubName : readerName) {
-                            if (readerSubName.contains(word)) {
-                                matches++;
-                                break;
-                            }
+                        if (!readerName.contains(word)) {
+                            return false;
                         }
                     }
-                    return matches >= numberOfWords;
+                    return true;
                 })
                 .collect(Collectors.toList());
     }

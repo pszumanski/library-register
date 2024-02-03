@@ -11,21 +11,16 @@ public class AuthorFindByName implements AuthorSearch {
     @Override
     public List<Author> search(String query) {
         List<String> queries = Arrays.stream(query.toLowerCase().split(" ")).toList();
-        int numberOfWords = queries.size();
 
         return new AuthorManager().get().stream()
                 .filter(author -> {
-                    List<String> authorName = Arrays.stream(author.getName().toLowerCase().split(" ")).toList();
-                    int matches = 0;
+                    String authorName = author.getName().toLowerCase();
                     for (String word: queries) {
-                        for (String authorSubName: authorName) {
-                            if (authorSubName.contains(word)) {
-                                matches++;
-                                break;
-                            }
+                        if (!authorName.contains(word)) {
+                            return false;
                         }
                     }
-                    return matches >= numberOfWords;
+                    return true;
                 })
                 .collect(Collectors.toList());
     }
