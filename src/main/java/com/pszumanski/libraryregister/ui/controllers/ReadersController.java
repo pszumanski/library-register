@@ -245,24 +245,8 @@ public class ReadersController {
 
             ObservableList<Reader> readers = FXCollections.observableArrayList(foundReaders);
 
-            elementsFound.setText(String.valueOf(readers.size()));
-
-            if (readers.size() != 1) {
-                objectFound.setText(FxmlUtils.getResourceBundle().getString("manyReaders"));
-            } else {
-                objectFound.setText(FxmlUtils.getResourceBundle().getString("singleReader"));
-            }
-
-            this.readerTable.setItems(readers);
-            this.readerIdColumn.setCellValueFactory(readerData -> new SimpleIntegerProperty(readerData.getValue().getId()).asObject());
-            this.readerNameColumn.setCellValueFactory(readerData -> new ReadOnlyStringWrapper(readerData.getValue().getName()));
-            this.readerDateColumn.setCellValueFactory(readerData -> new SimpleStringProperty(readerData.getValue().getBornDate().toString()));
-            this.readerAddressColumn.setCellValueFactory(readerData -> new ReadOnlyStringWrapper(readerData.getValue().getAddress()));
-            this.readerPhoneNumberColumn.setCellValueFactory(readerData -> new ReadOnlyStringWrapper(readerData.getValue().getPhoneNumber()));
-            this.readerEmailColumn.setCellValueFactory(readerData -> new ReadOnlyStringWrapper(readerData.getValue().getEmail()));
-            this.readerPenaltyColumn.setCellValueFactory(readerData -> new SimpleIntegerProperty(readerData.getValue().getPenalty()).asObject());
-
-            this.readerTable.getSelectionModel().selectedItemProperty().addListener(((observable, oldValue, newValue) -> selectReader(newValue)));
+            readersInfo(readers, this.readerTable, this.readerIdColumn, this.readerNameColumn, this.readerDateColumn,
+                    this.readerAddressColumn, this.readerPhoneNumberColumn, this.readerEmailColumn, this.readerPenaltyColumn);
         }
         catch (NullPointerException ex) {}
     }
@@ -271,26 +255,35 @@ public class ReadersController {
         try {
             ObservableList<Reader> readers = FXCollections.observableArrayList(readerManager.get());
 
-            elementsFound.setText(String.valueOf(readers.size()));
-
-            if (readers.size() != 1) {
-                objectFound.setText(FxmlUtils.getResourceBundle().getString("manyReaders"));
-            } else {
-                objectFound.setText(FxmlUtils.getResourceBundle().getString("singleReader"));
-            }
-
-            this.readerTableAdd.setItems(readers);
-            this.readerIdColumnAdd.setCellValueFactory(readerData -> new SimpleIntegerProperty(readerData.getValue().getId()).asObject());
-            this.readerNameColumnAdd.setCellValueFactory(readerData -> new ReadOnlyStringWrapper(readerData.getValue().getName()));
-            this.readerDateColumnAdd.setCellValueFactory(readerData -> new SimpleStringProperty(readerData.getValue().getBornDate().toString()));
-            this.readerAddressColumnAdd.setCellValueFactory(readerData -> new ReadOnlyStringWrapper(readerData.getValue().getAddress()));
-            this.readerPhoneNumberColumnAdd.setCellValueFactory(readerData -> new ReadOnlyStringWrapper(readerData.getValue().getPhoneNumber()));
-            this.readerEmailColumnAdd.setCellValueFactory(readerData -> new ReadOnlyStringWrapper(readerData.getValue().getEmail()));
-            this.readerPenaltyColumnAdd.setCellValueFactory(readerData -> new SimpleIntegerProperty(readerData.getValue().getPenalty()).asObject());
-
-            this.readerTableAdd.getSelectionModel().selectedItemProperty().addListener(((observable, oldValue, newValue) -> selectReader(newValue)));
+            readersInfo(readers, this.readerTableAdd, this.readerIdColumnAdd, this.readerNameColumnAdd, this.readerDateColumnAdd,
+                    this.readerAddressColumnAdd, this.readerPhoneNumberColumnAdd, this.readerEmailColumnAdd, this.readerPenaltyColumnAdd);
         }
         catch (NullPointerException ex) {}
+    }
+
+    private void readersInfo(ObservableList<Reader> readers, TableView<Reader> table, TableColumn<Reader, Integer> idColumn, TableColumn<Reader, String> nameColumn,
+                             TableColumn<Reader, String> dateColumn, TableColumn<Reader, String> addressColumn,
+                             TableColumn<Reader, String> phoneNumberColumn, TableColumn<Reader, String> emailColumn,
+                             TableColumn<Reader, Integer> penaltyColumn) {
+        elementsFound.setText(String.valueOf(readers.size()));
+
+        if (readers.size() != 1) {
+            objectFound.setText(FxmlUtils.getResourceBundle().getString("manyReaders"));
+        } else {
+            objectFound.setText(FxmlUtils.getResourceBundle().getString("singleReader"));
+        }
+
+        table.setItems(readers);
+        idColumn.setCellValueFactory(readerData -> new SimpleIntegerProperty(readerData.getValue().getId()).asObject());
+        nameColumn.setCellValueFactory(readerData -> new ReadOnlyStringWrapper(readerData.getValue().getName()));
+        dateColumn.setCellValueFactory(readerData -> new SimpleStringProperty(readerData.getValue().getBornDate().toString()));
+        addressColumn.setCellValueFactory(readerData -> new ReadOnlyStringWrapper(readerData.getValue().getAddress()));
+        phoneNumberColumn.setCellValueFactory(readerData -> new ReadOnlyStringWrapper(readerData.getValue().getPhoneNumber()));
+        emailColumn.setCellValueFactory(readerData -> new ReadOnlyStringWrapper(readerData.getValue().getEmail()));
+        penaltyColumn.setCellValueFactory(readerData -> new SimpleIntegerProperty(readerData.getValue().getPenalty()).asObject());
+
+        table.getSelectionModel().selectedItemProperty().addListener(((observable, oldValue, newValue) -> selectReader(newValue)));
+
     }
 
     public static void refresh() {
