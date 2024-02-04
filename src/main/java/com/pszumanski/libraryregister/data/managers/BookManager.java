@@ -58,18 +58,18 @@ public class BookManager implements BookManagerService {
 
     @Override
     public List<String> fetchLanguages() {
-        Set<String> languages = new HashSet<>();
-        books.forEach(book ->
-                languages.add(book.getLanguage()));
-        return languages.stream().toList();
+        return books.stream()
+                .map(book -> book.getLanguage())
+                .distinct()
+                .toList();
     }
 
     @Override
     public List<String> fetchGenres() {
-        Set<String> genres = new HashSet<>();
-        books.forEach(book ->
-                genres.add(book.getGenre()));
-        return genres.stream().toList();
+        return books.stream()
+                .map(book -> book.getGenre())
+                .distinct()
+                .toList();
     }
 
     @Override

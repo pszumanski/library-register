@@ -10,7 +10,6 @@ public class TimeManager {
 
     private TimeManager() {
         currentDate = LocalDate.now();
-        System.out.println(currentDate);
         timeManager = this;
     }
 

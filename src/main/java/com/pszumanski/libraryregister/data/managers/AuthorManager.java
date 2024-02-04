@@ -46,15 +46,10 @@ public class AuthorManager implements AuthorManagerService {
 
     @Override
     public List<String> fetchTitles(Author author) {
-        BookManagerService bookManager = new BookManager();
-        bookManager.setSearch(new BookFindByAuthorId());
-        List<Book> books = bookManager.search(author.getId().toString());
-        Set<String> titles = new TreeSet<>();
-        books.forEach(book -> {
-            if (book.getAuthorId().equals(author.getId())) {
-                titles.add(book.getTitle());
-            }
-        });
-        return titles.stream().toList();
+        return new BookManager().get().stream()
+                .filter(book -> author.getId().equals(book.getAuthorId()))
+                .map(book -> book.getTitle())
+                .distinct()
+                .toList();
     }
 }
