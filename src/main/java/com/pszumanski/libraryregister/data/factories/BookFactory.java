@@ -5,6 +5,7 @@ import com.pszumanski.libraryregister.data.managers.BookManagerService;
 import lombok.AllArgsConstructor;
 
 import java.time.Year;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
@@ -28,9 +29,9 @@ public class BookFactory implements BookFactoryService {
     }
 
     private Integer getMaxIndex() {
-        List<Book> books = bookManager.get().stream()
-                .sorted((book1, book2) -> book2.getId() - book1.getId())
-                .toList();
-        return books.isEmpty() ? 0 : books.getFirst().getId();
+        return bookManager.get().stream()
+                .map(book -> book.getId())
+                .max(Comparator.naturalOrder())
+                .orElse(0);
     }
 }

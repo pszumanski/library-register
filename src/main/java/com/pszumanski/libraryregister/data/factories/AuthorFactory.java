@@ -5,8 +5,10 @@ import com.pszumanski.libraryregister.data.managers.AuthorManagerService;
 import com.pszumanski.libraryregister.data.objects.Author;
 import lombok.AllArgsConstructor;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @AllArgsConstructor
 public class AuthorFactory implements AuthorFactoryService {
@@ -24,9 +26,9 @@ public class AuthorFactory implements AuthorFactoryService {
     }
 
     private Integer getMaxIndex() {
-        List<Author> authors = authorManager.get().stream()
-                .sorted((author1, author2) -> author2.getId() - author1.getId())
-                .toList();
-        return authors.isEmpty() ? 0 : authors.getFirst().getId();
+        return authorManager.get().stream()
+                .map(author -> author.getId())
+                .max(Comparator.naturalOrder())
+                .orElse(0);
     }
 }

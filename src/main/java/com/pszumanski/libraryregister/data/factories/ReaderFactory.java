@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
@@ -33,9 +34,9 @@ public class ReaderFactory implements ReaderFactoryService {
     }
 
     private Integer getMaxIndex() {
-        List<Reader> readers = readerManager.get().stream()
-                .sorted((reader1, reader2) -> reader2.getId() - reader1.getId())
-                .toList();
-        return readers.isEmpty() ? 0 : readers.getFirst().getId();
+        return readerManager.get().stream()
+                .map(reader -> reader.getId())
+                .max(Comparator.naturalOrder())
+                .orElse(0);
     }
 }
