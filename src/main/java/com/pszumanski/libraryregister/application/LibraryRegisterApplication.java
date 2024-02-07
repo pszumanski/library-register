@@ -37,7 +37,7 @@ import java.util.ResourceBundle;
 public class LibraryRegisterApplication extends SpringJavaFXApplication {
 
     public static final String LOAD_FXML = "/views/load.fxml";
-    public static final String LIBRARY_REGISTER_LOGO_PNG = "/images/libraryLogoNew.png";
+    public static final String LIBRARY_REGISTER_LOGO_PNG = "/images/libraryIcon.png";
     @Autowired
     AuthorRepository authorRepository;
     @Autowired
