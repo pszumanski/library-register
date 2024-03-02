@@ -1,10 +1,14 @@
 package com.pszumanski.libraryregister.data.managers;
 
+import com.pszumanski.libraryregister.data.objects.Author;
+import com.pszumanski.libraryregister.data.objects.Book;
+import com.pszumanski.libraryregister.data.objects.Reader;
 import com.pszumanski.libraryregister.data.repositories.AuthorRepository;
 import com.pszumanski.libraryregister.data.repositories.BookRepository;
 import com.pszumanski.libraryregister.data.repositories.ReaderRepository;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class FileManager implements FileManagerService {
 
@@ -39,9 +43,9 @@ public class FileManager implements FileManagerService {
 
     @Override
     public void loadDatabase() {
-        authorManager.load(authorRepository.findAll());
-        bookManager.load(bookRepository.findAll());
-        readerManager.load(readerRepository.findAll());
+        authorManager.load((List<Author>) authorRepository.findAll());
+        bookManager.load((List<Book>) bookRepository.findAll());
+        readerManager.load((List<Reader>) readerRepository.findAll());
     }
 
     @Override

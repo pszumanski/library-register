@@ -1,9 +1,6 @@
 package com.pszumanski.libraryregister.data.repositories;
 
 import com.pszumanski.libraryregister.data.objects.Reader;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
+import org.springframework.data.repository.CrudRepository;
 
-@Repository
-public interface ReaderRepository extends JpaRepository<Reader, Integer> {
-}
+public interface ReaderRepository extends CrudRepository<Reader, Integer> {}
