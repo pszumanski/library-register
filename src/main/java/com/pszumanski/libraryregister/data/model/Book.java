@@ -1,6 +1,5 @@
-package com.pszumanski.libraryregister.data.objects;
+package com.pszumanski.libraryregister.data.model;
 
-import jakarta.persistence.Access;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;

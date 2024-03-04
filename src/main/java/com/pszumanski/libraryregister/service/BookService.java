@@ -1,13 +1,13 @@
-package com.pszumanski.libraryregister.data.managers;
+package com.pszumanski.libraryregister.service;
 
-import com.pszumanski.libraryregister.data.objects.Book;
-import com.pszumanski.libraryregister.data.objects.Reader;
+import com.pszumanski.libraryregister.data.model.Book;
+import com.pszumanski.libraryregister.data.model.Reader;
 import com.pszumanski.libraryregister.strategy.bookSearch.BookSearch;
 
 import java.time.LocalDate;
 import java.util.List;
 
-public interface BookManagerService {
+public interface BookService {
 
     List<Book> get();
 

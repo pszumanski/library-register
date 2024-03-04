@@ -1,11 +1,11 @@
 package com.pszumanski.libraryregister.ui.controllers;
 
-import com.pszumanski.libraryregister.data.objects.Author;
-import com.pszumanski.libraryregister.data.managers.AuthorManager;
-import com.pszumanski.libraryregister.data.managers.AuthorManagerService;
-import com.pszumanski.libraryregister.data.managers.TimeManager;
-import com.pszumanski.libraryregister.data.factories.AuthorFactory;
-import com.pszumanski.libraryregister.data.factories.AuthorFactoryService;
+import com.pszumanski.libraryregister.data.factory.Factory;
+import com.pszumanski.libraryregister.data.model.Author;
+import com.pszumanski.libraryregister.service.AuthorServiceImpl;
+import com.pszumanski.libraryregister.service.AuthorService;
+import com.pszumanski.libraryregister.service.TimeServiceImpl;
+import com.pszumanski.libraryregister.data.factory.AuthorFactory;
 import com.pszumanski.libraryregister.strategy.authorSearch.AuthorFindByName;
 import com.pszumanski.libraryregister.strategy.authorSearch.AuthorFindByTitle;
 import com.pszumanski.libraryregister.strategy.authorSearch.AuthorSearch;
@@ -29,7 +29,7 @@ public class AuthorsController {
             FxmlUtils.getResourceBundle().getString("searchByName"),
             FxmlUtils.getResourceBundle().getString("searchByTitle")};
     private AuthorSearch searchType;
-    private AuthorManagerService authorManager;
+    private AuthorService authorManager;
     DateTimeFormatter dateFormat;
 
     private static AuthorsController authorsController;
@@ -83,7 +83,7 @@ public class AuthorsController {
     private void initialize() {
         AuthorsController.authorsController = this;
 
-        authorManager = new AuthorManager();
+        authorManager = new AuthorServiceImpl();
 
         searchList.getItems().addAll(searchOptions);
         searchList.setValue(searchOptions[0]);
@@ -100,7 +100,7 @@ public class AuthorsController {
         addAuthorDeathDate.setOnKeyTyped(e -> validateAuthor());
 
         dateFormat = DateTimeFormatter.ofPattern("dd-MMM-yyyy");
-        dateField.setText(TimeManager.getInstance().getDate().format(dateFormat));
+        dateField.setText(TimeServiceImpl.getInstance().getDate().format(dateFormat));
 
         for (TableColumn<?, ?> column : authorTable.getColumns()) {
             column.setReorderable(false);
@@ -113,6 +113,7 @@ public class AuthorsController {
         try {
             List<Author> foundAuthors;
 
+            //TODO: EXTRACT PREDICATE TO OTHER METHOD
             if (searchType != null & !searchQuery.getText().isEmpty()) {
                 authorManager.setSearch(searchType);
                 foundAuthors = authorManager.search(searchQuery.getText());
@@ -124,6 +125,7 @@ public class AuthorsController {
 
             elementsFound.setText(String.valueOf(authors.size()));
 
+            //TODO: EXTRACT TO OTHER METHOD
             if (authors.size() != 1) {
                 objectFound.setText(FxmlUtils.getResourceBundle().getString("manyAuthors"));
             } else {
@@ -138,7 +140,9 @@ public class AuthorsController {
             this.authorDeathDateColumn.setCellValueFactory(authorData -> new ReadOnlyStringWrapper(authorData.getValue().getDeathDate()));
 
             this.authorTable.getSelectionModel().selectedItemProperty().addListener(((observable, oldValue, newValue) -> selectAuthor(newValue)));
-        } catch (NullPointerException ex) {}
+        } catch (NullPointerException ex) {
+            //TODO: WHAT TO DO WITH THIS?
+        }
     }
 
     public static void refresh() {
@@ -160,13 +164,14 @@ public class AuthorsController {
 
     @FXML
     private void addAuthor() {
-        AuthorFactoryService authorFactory = new AuthorFactory(authorManager);
+        Factory<Author> authorFactory = new AuthorFactory(authorManager);
         Author author = authorFactory.create(Map.of(
                 "name", addAuthorName.getText().substring(0,1).toUpperCase() + addAuthorName.getText().substring(1),
                 "bornDate", addAuthorBornDate.getText(),
                 "deathDate", addAuthorDeathDate.getText()
         ));
         authorManager.add(author);
+        //TODO: EXTRACT THIS v
         addAuthorName.clear();
         addAuthorBornDate.clear();
         addAuthorDeathDate.clear();
@@ -185,11 +190,12 @@ public class AuthorsController {
             loadAuthors();
         }
         if (dateField != null) {
-            dateField.setText(TimeManager.getInstance().getDate().format(dateFormat));
+            dateField.setText(TimeServiceImpl.getInstance().getDate().format(dateFormat));
         }
     }
 
     private void setSearchOption() {
+        //TODO: SWITCH THIS
         if (searchList.getValue().equals(searchOptions[1])) {
             searchType = new AuthorFindByName();
             searchQuery.setText("");
@@ -218,7 +224,7 @@ public class AuthorsController {
             }
         }
 
-        int currentYear = TimeManager.getInstance().getDate().getYear();
+        int currentYear = TimeServiceImpl.getInstance().getDate().getYear();
         try {
             if (Integer.parseInt(addAuthorBornDate.getText()) > currentYear) {
                 addAuthorBornDate.setStyle("-fx-background-color: darkred; -fx-text-fill: white");
@@ -262,7 +268,8 @@ public class AuthorsController {
 
     private void validateManage() {
         deleteAuthorButton.setDisable(true);
-        if (!(selectedAuthor == null)) {
+        if (selectedAuthor != null) {
+            //TODO: EXTRACT THIS v
             if (!authorManager.fetchTitles(selectedAuthor).isEmpty()) {
             deleteAuthorButton.setText(FxmlUtils.getResourceBundle().getString("authorHasBooks"));
             } else {
@@ -309,6 +316,7 @@ public class AuthorsController {
                 selectedAuthor.getName() + " " +FxmlUtils.getResourceBundle().getString("authorGotRemoved"));
         authorManager.remove(selectedAuthor);
         selectedAuthor = null;
+        //TODO: EXTRACT THIS
         selectedAuthorField.setText(FxmlUtils.getResourceBundle().getString("authorWasRemoved"));
         selectedAuthorField.setStyle("-fx-background-color: darkred; -fx-text-fill: white");
         infoAuthorBornDate.setText(FxmlUtils.getResourceBundle().getString("authorWasRemoved"));

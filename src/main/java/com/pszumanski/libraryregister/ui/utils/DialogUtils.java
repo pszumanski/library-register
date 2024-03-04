@@ -1,6 +1,6 @@
 package com.pszumanski.libraryregister.ui.utils;
 
-import com.pszumanski.libraryregister.data.managers.TimeManager;
+import com.pszumanski.libraryregister.service.TimeServiceImpl;
 import javafx.scene.control.*;
 
 import java.time.LocalDate;
@@ -34,7 +34,7 @@ public class DialogUtils {
         informationAlert.setTitle(bundle.getString("pickDate"));
         informationAlert.setHeaderText(bundle.getString("pickDate"));
         DatePicker datePicker = new DatePicker();
-        datePicker.setValue(TimeManager.getInstance().getDate());
+        datePicker.setValue(TimeServiceImpl.getInstance().getDate());
         informationAlert.getDialogPane().setContent(datePicker);
         informationAlert.showAndWait();
         /*informationAlert.getDialogPane().setContent(new DatePicker());

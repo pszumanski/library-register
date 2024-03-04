@@ -1,18 +1,17 @@
-package com.pszumanski.libraryregister.data.factories;
+package com.pszumanski.libraryregister.data.factory;
 
-import com.pszumanski.libraryregister.data.objects.Book;
-import com.pszumanski.libraryregister.data.managers.BookManagerService;
+import com.pszumanski.libraryregister.data.model.Book;
+import com.pszumanski.libraryregister.service.BookService;
 import lombok.AllArgsConstructor;
 
 import java.time.Year;
 import java.util.Comparator;
-import java.util.List;
 import java.util.Map;
 
 @AllArgsConstructor
-public class BookFactory implements BookFactoryService {
+public class BookFactory implements Factory<Book> {
 
-    BookManagerService bookManager;
+    BookService bookManager;
 
     @Override
     public Book create(Map<String, String> attributes) {

@@ -4,14 +4,13 @@ package com.pszumanski.libraryregister.ui.controllers;
 import atlantafx.base.theme.PrimerDark;
 import atlantafx.base.theme.PrimerLight;
 import com.github.spring.boot.javafx.stereotype.ViewController;
-import com.pszumanski.libraryregister.data.managers.FileManager;
-import com.pszumanski.libraryregister.data.managers.TimeManager;
+import com.pszumanski.libraryregister.service.FileManagerImpl;
+import com.pszumanski.libraryregister.service.TimeServiceImpl;
 import com.pszumanski.libraryregister.ui.utils.DialogUtils;
 import com.pszumanski.libraryregister.ui.utils.FxmlUtils;
 import com.pszumanski.libraryregister.ui.utils.NotificationUtils;
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.ButtonBar;
@@ -26,7 +25,7 @@ import java.util.Locale;
 @ViewController
 public class MainController {
 
-    private TimeManager timeManager;
+    private TimeServiceImpl timeService;
 
     private static Stage stage;
     private static final String MAIN_FXML = "/views/main.fxml";
@@ -39,14 +38,14 @@ public class MainController {
     @FXML
     private void initialize() {
         menuButtonsController.setMainController(this);
-        timeManager = TimeManager.getInstance();
+        timeService = TimeServiceImpl.getInstance();
     }
 
     @FXML
     private void addDay() {
         NotificationUtils.notification(FxmlUtils.getResourceBundle().getString("dateChanged"),
                 FxmlUtils.getResourceBundle().getString("addedDay"));
-        timeManager.addDay();
+        timeService.addDay();
         refreshAll();
     }
 
@@ -54,7 +53,7 @@ public class MainController {
     private void addWeek() {
         NotificationUtils.notification(FxmlUtils.getResourceBundle().getString("dateChanged"),
                 FxmlUtils.getResourceBundle().getString("addedWeek"));
-        timeManager.addWeek();
+        timeService.addWeek();
         refreshAll();
     }
 
@@ -62,21 +61,21 @@ public class MainController {
     private void addMonth() {
         NotificationUtils.notification(FxmlUtils.getResourceBundle().getString("dateChanged"),
                 FxmlUtils.getResourceBundle().getString("addedMonth"));
-        timeManager.addMonth();
+        timeService.addMonth();
         refreshAll();
     }
 
     @FXML
     private void chooseDate() {
         LocalDate date = DialogUtils.pickDate();
-        if (date.isBefore(TimeManager.getInstance().getDate())) {
+        if (date.isBefore(TimeServiceImpl.getInstance().getDate())) {
             NotificationUtils.notification(FxmlUtils.getResourceBundle().getString("dateNotChanged"),
                     date + " " + FxmlUtils.getResourceBundle().getString("dateNotBefore"));
         } else {
             BooksController.refresh();
             NotificationUtils.notification(FxmlUtils.getResourceBundle().getString("dateChanged"),
                     FxmlUtils.getResourceBundle().getString("dateChangedTo") + " " + date);
-            timeManager.chooseDate(date);
+            timeService.chooseDate(date);
             refreshAll();
         }
     }
@@ -101,7 +100,7 @@ public class MainController {
     private void exit() {
         switch (DialogUtils.exitConfirmation().get().getButtonData()) {
             case ButtonBar.ButtonData.OK_DONE:
-                FileManager.getInstance().saveDatabase();
+                FileManagerImpl.getInstance().saveDatabase();
             case ButtonBar.ButtonData.FINISH:
                 Platform.exit();
                 break;
@@ -117,13 +116,13 @@ public class MainController {
 
     @FXML
     private void load() {
-        FileManager.getInstance().loadDatabase();
+        FileManagerImpl.getInstance().loadDatabase();
         refreshAll();
     }
 
     @FXML
     private void save() {
-        FileManager.getInstance().saveDatabase();
+        FileManagerImpl.getInstance().saveDatabase();
     }
 
     @FXML

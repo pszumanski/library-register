@@ -1,6 +1,6 @@
-package com.pszumanski.libraryregister.data.repositories;
+package com.pszumanski.libraryregister.data.repository;
 
-import com.pszumanski.libraryregister.data.objects.Book;
+import com.pszumanski.libraryregister.data.model.Book;
 import org.springframework.data.repository.CrudRepository;
 
 public interface BookRepository extends CrudRepository<Book, Integer> {}

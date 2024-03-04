@@ -1,11 +1,11 @@
-package com.pszumanski.libraryregister.data.managers;
+package com.pszumanski.libraryregister.service;
 
-import com.pszumanski.libraryregister.data.objects.Author;
+import com.pszumanski.libraryregister.data.model.Author;
 import com.pszumanski.libraryregister.strategy.authorSearch.AuthorSearch;
 
 import java.util.List;
 
-public interface AuthorManagerService {
+public interface AuthorService {
 
     List<Author> get();
 

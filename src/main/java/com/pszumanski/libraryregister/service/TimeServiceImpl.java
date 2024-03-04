@@ -1,24 +1,24 @@
-package com.pszumanski.libraryregister.data.managers;
+package com.pszumanski.libraryregister.service;
 
 import java.time.LocalDate;
 
-public class TimeManager {
+public class TimeServiceImpl implements TimeService {
 
-    private static TimeManager timeManager;
+    private static TimeServiceImpl timeService;
     private LocalDate changedDate;
     private LocalDate currentDate;
 
-    private TimeManager() {
+    private TimeServiceImpl() {
         currentDate = LocalDate.now();
-        timeManager = this;
+        timeService = this;
     }
 
-    public static TimeManager getInstance() {
-        if (timeManager == null) {
-            return new TimeManager();
+    public static TimeServiceImpl getInstance() {
+        if (timeService == null) {
+            return new TimeServiceImpl();
         }
 
-        return timeManager;
+        return timeService;
     }
 
     public LocalDate getDate() {

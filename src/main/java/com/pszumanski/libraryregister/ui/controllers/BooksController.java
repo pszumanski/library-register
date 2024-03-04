@@ -1,19 +1,14 @@
 package com.pszumanski.libraryregister.ui.controllers;
 
-import com.pszumanski.libraryregister.data.managers.*;
-import com.pszumanski.libraryregister.data.objects.Author;
-import com.pszumanski.libraryregister.data.objects.Book;
-import com.pszumanski.libraryregister.data.objects.Reader;
-import com.pszumanski.libraryregister.data.factories.BookFactory;
-import com.pszumanski.libraryregister.data.factories.BookFactoryService;
+import com.pszumanski.libraryregister.data.factory.BookFactory;
+import com.pszumanski.libraryregister.data.factory.Factory;
+import com.pszumanski.libraryregister.data.model.Author;
+import com.pszumanski.libraryregister.data.model.Book;
+import com.pszumanski.libraryregister.data.model.Reader;
+import com.pszumanski.libraryregister.service.*;
 import com.pszumanski.libraryregister.strategy.authorSearch.AuthorFindById;
-import com.pszumanski.libraryregister.strategy.bookFilter.BookFilter;
-import com.pszumanski.libraryregister.strategy.bookFilter.BookFilterAvailable;
-import com.pszumanski.libraryregister.strategy.bookFilter.BookFilterGenre;
-import com.pszumanski.libraryregister.strategy.bookFilter.BookFilterLanguage;
-import com.pszumanski.libraryregister.strategy.bookSearch.BookFindByAuthorName;
-import com.pszumanski.libraryregister.strategy.bookSearch.BookFindByTitle;
-import com.pszumanski.libraryregister.strategy.bookSearch.BookSearch;
+import com.pszumanski.libraryregister.strategy.bookFilter.*;
+import com.pszumanski.libraryregister.strategy.bookSearch.*;
 import com.pszumanski.libraryregister.ui.utils.FxmlUtils;
 import com.pszumanski.libraryregister.ui.utils.NotificationUtils;
 import javafx.beans.property.ReadOnlyStringWrapper;
@@ -21,7 +16,6 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
@@ -42,9 +36,9 @@ public class BooksController {
             FxmlUtils.getResourceBundle().getString("searchByAuthor")};
     private BookSearch searchType;
     private List<BookFilter> filterList;
-    private BookManagerService bookManager;
-    private AuthorManagerService authorManager;
-    private ReaderManagerService readerManager;
+    private BookService bookManager;
+    private AuthorService authorManager;
+    private ReaderService readerManager;
     DateTimeFormatter dateFormat;
 
 
@@ -159,11 +153,11 @@ public class BooksController {
     private void initialize() {
         BooksController.booksController = this;
         dateFormat = DateTimeFormatter.ofPattern("dd-MMM-yyyy");
-        dateField.setText(TimeManager.getInstance().getDate().format(dateFormat));
+        dateField.setText(TimeServiceImpl.getInstance().getDate().format(dateFormat));
 
-        bookManager = new BookManager();
-        authorManager = new AuthorManager();
-        readerManager = new ReaderManager();
+        bookManager = new BookServiceImpl();
+        authorManager = new AuthorServiceImpl();
+        readerManager = new ReaderServiceImpl();
 
         filterList = new ArrayList<>();
         searchList.getItems().addAll(searchOptions);
@@ -172,13 +166,13 @@ public class BooksController {
 
         languageList.getItems().clear();
         languageList.getItems().add(FxmlUtils.getResourceBundle().getString("showAllF"));
-        languageList.getItems().addAll(new BookManager().fetchLanguages());
+        languageList.getItems().addAll(new BookServiceImpl().fetchLanguages());
         languageList.setValue(FxmlUtils.getResourceBundle().getString("showAllF"));
         languageList.setOnAction(e -> setLanguageFilter());
 
         genreList.getItems().clear();
         genreList.getItems().add(FxmlUtils.getResourceBundle().getString("anyGenre"));
-        genreList.getItems().addAll(new BookManager().fetchGenres());
+        genreList.getItems().addAll(new BookServiceImpl().fetchGenres());
         genreList.setValue(FxmlUtils.getResourceBundle().getString("anyGenre"));
         genreList.setOnAction(e -> setGenreFilter());
 
@@ -215,13 +209,13 @@ public class BooksController {
             String currentLanguage = languageList.getValue();
             languageList.getItems().clear();
             languageList.getItems().add(FxmlUtils.getResourceBundle().getString("showAllF"));
-            languageList.getItems().addAll(new BookManager().fetchLanguages());
+            languageList.getItems().addAll(new BookServiceImpl().fetchLanguages());
             languageList.setValue(currentLanguage);
 
             String currentGenre = genreList.getValue();
             genreList.getItems().clear();
             genreList.getItems().add(FxmlUtils.getResourceBundle().getString("anyGenre"));
-            genreList.getItems().addAll(new BookManager().fetchGenres());
+            genreList.getItems().addAll(new BookServiceImpl().fetchGenres());
             genreList.setValue(currentGenre);
 
             if (searchType != null && !searchQuery.getText().isEmpty()) {
@@ -344,7 +338,7 @@ public class BooksController {
 
     @FXML
     private void addBook() {
-        BookFactoryService bookFactory = new BookFactory(bookManager);
+        Factory<Book> bookFactory = new BookFactory(bookManager);
         Book book = bookFactory.create(Map.of(
                 "title", addBookTitle.getText().substring(0,1).toUpperCase() + addBookTitle.getText().substring(1),
                 "authorId", selectedAuthor.getId().toString(),
@@ -385,7 +379,7 @@ public class BooksController {
             validateManage();
         }
         if (dateField != null) {
-            dateField.setText(TimeManager.getInstance().getDate().format(dateFormat));
+            dateField.setText(TimeServiceImpl.getInstance().getDate().format(dateFormat));
         }
     }
 
@@ -445,7 +439,7 @@ public class BooksController {
         errors += checkEmpty(addBookPublisher);
         errors += checkEmpty(addBookPublishYear);
         try {
-            int currentYear = TimeManager.getInstance().getDate().getYear();
+            int currentYear = TimeServiceImpl.getInstance().getDate().getYear();
             if (Integer.parseInt(addBookPublishYear.getText()) > currentYear) {
                 addBookPublishYear.setStyle("-fx-background-color: darkred; -fx-text-fill: white");
                 errors++;
@@ -466,8 +460,8 @@ public class BooksController {
     private void validateManage() {
         int errors = 0;
         errors += checkEmpty(selectedReaderField);
-        if (selectedDate == null || !selectedDate.isAfter(TimeManager.getInstance().getDate())) {
-            datePicker.setValue(TimeManager.getInstance().getDate());
+        if (selectedDate == null || !selectedDate.isAfter(TimeServiceImpl.getInstance().getDate())) {
+            datePicker.setValue(TimeServiceImpl.getInstance().getDate());
             datePicker.setStyle("-fx-background-color: darkred; -fx-text-fill: white");
             errors++;
         } else {
@@ -488,7 +482,7 @@ public class BooksController {
     private void loadBookInfo() {
         lendBookTitle.setText(selectedBook.getTitle());
         int authorId = selectedBook.getAuthorId();
-        AuthorManager authorManager = new AuthorManager();
+        AuthorServiceImpl authorManager = new AuthorServiceImpl();
         authorManager.setSearch(new AuthorFindById());
         lendBookAuthor.setText(authorManager.search(String.valueOf(authorId)).getFirst().getName());
         lendBookPublisher.setText(selectedBook.getPublisher());

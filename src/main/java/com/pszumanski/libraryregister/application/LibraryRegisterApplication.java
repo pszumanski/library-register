@@ -2,24 +2,22 @@ package com.pszumanski.libraryregister.application;
 
 import atlantafx.base.theme.PrimerLight;
 import com.github.spring.boot.javafx.SpringJavaFXApplication;
-import com.pszumanski.libraryregister.data.managers.FileManager;
-import com.pszumanski.libraryregister.data.managers.FileManagerService;
-import com.pszumanski.libraryregister.data.repositories.AuthorRepository;
-import com.pszumanski.libraryregister.data.repositories.BookRepository;
-import com.pszumanski.libraryregister.data.repositories.ReaderRepository;
+import com.pszumanski.libraryregister.service.FileManagerImpl;
+import com.pszumanski.libraryregister.service.FileManager;
+import com.pszumanski.libraryregister.data.repository.AuthorRepository;
+import com.pszumanski.libraryregister.data.repository.BookRepository;
+import com.pszumanski.libraryregister.data.repository.ReaderRepository;
 import com.pszumanski.libraryregister.ui.utils.DialogUtils;
 import com.pszumanski.libraryregister.ui.utils.FxmlUtils;
 import com.pszumanski.libraryregister.ui.controllers.LoadController;
 import com.pszumanski.libraryregister.ui.controllers.MainController;
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -32,7 +30,7 @@ import java.util.ResourceBundle;
 
 @SpringBootApplication(scanBasePackages = "com.pszumanski.libraryregister")
 @EntityScan("com.pszumanski.libraryregister.data")
-@EnableJpaRepositories(basePackages = "com.pszumanski.libraryregister.data.repositories")
+@EnableJpaRepositories(basePackages = "com.pszumanski.libraryregister.data.repository")
 @Slf4j
 public class LibraryRegisterApplication extends SpringJavaFXApplication {
 
@@ -54,7 +52,7 @@ public class LibraryRegisterApplication extends SpringJavaFXApplication {
         return (args) -> {
 
             // Setting up file manager
-            FileManagerService fileManager = FileManager.getInstance();
+            FileManager fileManager = FileManagerImpl.getInstance();
             fileManager.setRepos(authorRepository, bookRepository, readerRepository);
         };
     }
@@ -80,7 +78,7 @@ public class LibraryRegisterApplication extends SpringJavaFXApplication {
         stage.setOnCloseRequest(event -> {
             switch (DialogUtils.exitConfirmation().get().getButtonData()) {
                 case ButtonBar.ButtonData.OK_DONE:
-                    FileManager.getInstance().saveDatabase();
+                    FileManagerImpl.getInstance().saveDatabase();
                 case ButtonBar.ButtonData.FINISH:
                     Platform.exit();
                     break;

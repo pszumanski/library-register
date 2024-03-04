@@ -1,29 +1,29 @@
-package com.pszumanski.libraryregister.data.managers;
+package com.pszumanski.libraryregister.service;
 
-import com.pszumanski.libraryregister.data.objects.Author;
-import com.pszumanski.libraryregister.data.objects.Book;
-import com.pszumanski.libraryregister.data.objects.Reader;
-import com.pszumanski.libraryregister.data.repositories.AuthorRepository;
-import com.pszumanski.libraryregister.data.repositories.BookRepository;
-import com.pszumanski.libraryregister.data.repositories.ReaderRepository;
+import com.pszumanski.libraryregister.data.model.Author;
+import com.pszumanski.libraryregister.data.model.Book;
+import com.pszumanski.libraryregister.data.model.Reader;
+import com.pszumanski.libraryregister.data.repository.AuthorRepository;
+import com.pszumanski.libraryregister.data.repository.BookRepository;
+import com.pszumanski.libraryregister.data.repository.ReaderRepository;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class FileManager implements FileManagerService {
+public class FileManagerImpl implements FileManager {
 
     private AuthorRepository authorRepository;
     private BookRepository bookRepository;
     private ReaderRepository readerRepository;
-    private final AuthorManagerService authorManager;
-    private final BookManagerService bookManager;
-    private final ReaderManagerService readerManager;
+    private final AuthorService authorManager;
+    private final BookService bookManager;
+    private final ReaderService readerManager;
 
-    private static FileManager fileManager;
+    private static FileManagerImpl fileManager;
 
-    public static FileManager getInstance() {
+    public static FileManagerImpl getInstance() {
         if (fileManager == null) {
-            fileManager = new FileManager();
+            fileManager = new FileManagerImpl();
         }
 
         return fileManager;
@@ -35,10 +35,10 @@ public class FileManager implements FileManagerService {
         this.readerRepository = readerRepository;
     }
 
-    private FileManager() {
-        this.authorManager = new AuthorManager();
-        this.bookManager = new BookManager();
-        this.readerManager = new ReaderManager();
+    private FileManagerImpl() {
+        this.authorManager = new AuthorServiceImpl();
+        this.bookManager = new BookServiceImpl();
+        this.readerManager = new ReaderServiceImpl();
     }
 
     @Override

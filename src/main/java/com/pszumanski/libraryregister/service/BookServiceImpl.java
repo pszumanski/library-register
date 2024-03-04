@@ -1,24 +1,22 @@
-package com.pszumanski.libraryregister.data.managers;
+package com.pszumanski.libraryregister.service;
 
-import com.pszumanski.libraryregister.data.objects.Book;
-import com.pszumanski.libraryregister.data.objects.Reader;
+import com.pszumanski.libraryregister.data.model.Book;
+import com.pszumanski.libraryregister.data.model.Reader;
 import com.pszumanski.libraryregister.strategy.bookSearch.BookSearch;
 import lombok.Getter;
 
 import java.time.LocalDate;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Getter
-public class BookManager implements BookManagerService {
+public class BookServiceImpl implements BookService {
 
     private static List<Book> books;
     private BookSearch bookSearch;
 
     @Override
     public List<Book> get() {
-        return BookManager.books;
+        return BookServiceImpl.books;
     }
 
     @Override
@@ -43,7 +41,7 @@ public class BookManager implements BookManagerService {
 
     @Override
     public void load(List<Book> books) {
-        BookManager.books = books;
+        BookServiceImpl.books = books;
     }
 
     @Override
@@ -53,7 +51,7 @@ public class BookManager implements BookManagerService {
 
     @Override
     public boolean isOverDue(Book book) {
-        return TimeManager.getInstance().isBefore(book.getDeadline());
+        return TimeServiceImpl.getInstance().isBefore(book.getDeadline());
     }
 
     @Override

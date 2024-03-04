@@ -1,19 +1,16 @@
-package com.pszumanski.libraryregister.data.factories;
+package com.pszumanski.libraryregister.data.factory;
 
-import com.pszumanski.libraryregister.data.managers.AuthorManager;
-import com.pszumanski.libraryregister.data.managers.AuthorManagerService;
-import com.pszumanski.libraryregister.data.objects.Author;
+import com.pszumanski.libraryregister.service.AuthorService;
+import com.pszumanski.libraryregister.data.model.Author;
 import lombok.AllArgsConstructor;
 
 import java.util.Comparator;
-import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 @AllArgsConstructor
-public class AuthorFactory implements AuthorFactoryService {
+public class AuthorFactory implements Factory<Author> {
 
-    AuthorManagerService authorManager;
+    AuthorService authorManager;
 
     @Override
     public Author create(Map<String, String> attributes) {

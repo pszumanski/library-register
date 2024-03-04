@@ -1,15 +1,11 @@
-package com.pszumanski.libraryregister.data.managers;
+package com.pszumanski.libraryregister.service;
 
-import com.pszumanski.libraryregister.data.objects.Author;
-import com.pszumanski.libraryregister.data.objects.Book;
+import com.pszumanski.libraryregister.data.model.Author;
 import com.pszumanski.libraryregister.strategy.authorSearch.AuthorSearch;
-import com.pszumanski.libraryregister.strategy.bookSearch.BookFindByAuthorId;
 
 import java.util.List;
-import java.util.Set;
-import java.util.TreeSet;
 
-public class AuthorManager implements AuthorManagerService {
+public class AuthorServiceImpl implements AuthorService {
 
     private static List<Author> authors;
     private AuthorSearch authorSearch;
@@ -36,17 +32,17 @@ public class AuthorManager implements AuthorManagerService {
 
     @Override
     public void load(List<Author> authors) {
-        AuthorManager.authors = authors;
+        AuthorServiceImpl.authors = authors;
     }
 
     @Override
     public List<Author> get() {
-        return AuthorManager.authors;
+        return AuthorServiceImpl.authors;
     }
 
     @Override
     public List<String> fetchTitles(Author author) {
-        return new BookManager().get().stream()
+        return new BookServiceImpl().get().stream()
                 .filter(book -> author.getId().equals(book.getAuthorId()))
                 .map(book -> book.getTitle())
                 .distinct()

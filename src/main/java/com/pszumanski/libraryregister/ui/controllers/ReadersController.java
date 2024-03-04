@@ -1,12 +1,19 @@
 package com.pszumanski.libraryregister.ui.controllers;
 
-import com.pszumanski.libraryregister.data.factories.ReaderFactory;
-import com.pszumanski.libraryregister.data.factories.ReaderFactoryService;
-import com.pszumanski.libraryregister.data.managers.*;
-import com.pszumanski.libraryregister.data.objects.*;
+import com.pszumanski.libraryregister.data.factory.Factory;
+import com.pszumanski.libraryregister.data.factory.ReaderFactory;
+import com.pszumanski.libraryregister.data.model.Author;
+import com.pszumanski.libraryregister.data.model.Book;
+import com.pszumanski.libraryregister.data.model.Reader;
+import com.pszumanski.libraryregister.service.*;
 import com.pszumanski.libraryregister.strategy.authorSearch.AuthorFindById;
-import com.pszumanski.libraryregister.strategy.readerFilter.*;
-import com.pszumanski.libraryregister.strategy.readerSearch.*;
+import com.pszumanski.libraryregister.strategy.readerFilter.ReaderFilter;
+import com.pszumanski.libraryregister.strategy.readerFilter.ReaderFilterHasBooks;
+import com.pszumanski.libraryregister.strategy.readerFilter.ReaderFilterHasOverdueBooks;
+import com.pszumanski.libraryregister.strategy.readerFilter.ReaderFilterUnpaidPenalty;
+import com.pszumanski.libraryregister.strategy.readerSearch.ReaderFindByName;
+import com.pszumanski.libraryregister.strategy.readerSearch.ReaderFindByTitle;
+import com.pszumanski.libraryregister.strategy.readerSearch.ReaderSearch;
 import com.pszumanski.libraryregister.ui.utils.FxmlUtils;
 import com.pszumanski.libraryregister.ui.utils.NotificationUtils;
 import javafx.beans.property.ReadOnlyStringWrapper;
@@ -33,8 +40,8 @@ public class ReadersController {
             FxmlUtils.getResourceBundle().getString("searchByTitle")};
     private ReaderSearch searchType;
     private List<ReaderFilter> filterList;
-    private AuthorManagerService authorManager;
-    private ReaderManagerService readerManager;
+    private AuthorService authorManager;
+    private ReaderService readerManager;
     DateTimeFormatter dateFormat;
 
 
@@ -156,10 +163,10 @@ public class ReadersController {
     private void initialize() {
         ReadersController.readersController = this;
         dateFormat = DateTimeFormatter.ofPattern("dd-MMM-yyyy");
-        dateField.setText(TimeManager.getInstance().getDate().format(dateFormat));
+        dateField.setText(TimeServiceImpl.getInstance().getDate().format(dateFormat));
 
-        authorManager = new AuthorManager();
-        readerManager = new ReaderManager();
+        authorManager = new AuthorServiceImpl();
+        readerManager = new ReaderServiceImpl();
 
         filterList = new ArrayList<>();
         searchList.getItems().addAll(searchOptions);
@@ -315,7 +322,7 @@ public class ReadersController {
 
     @FXML
     private void addReader() {
-        ReaderFactoryService readerFactory = new ReaderFactory(readerManager);
+        Factory<Reader> readerFactory = new ReaderFactory(readerManager);
         Reader reader = readerFactory.create(Map.of(
                 "name", addReaderName.getText().substring(0,1).toUpperCase() + addReaderName.getText().substring(1),
                 "bornDate", bornDatePicker.getValue().toString(),
@@ -327,7 +334,7 @@ public class ReadersController {
                 ));
         readerManager.add(reader);
         addReaderName.clear();
-        bornDatePicker.setValue(TimeManager.getInstance().getDate());
+        bornDatePicker.setValue(TimeServiceImpl.getInstance().getDate());
         addReaderPersonalId.clear();
         addReaderAddressFirst.clear();
         addReaderAddressSecond.clear();
@@ -359,7 +366,7 @@ public class ReadersController {
             validateManage();
         }
         if (dateField != null) {
-            dateField.setText(TimeManager.getInstance().getDate().format(dateFormat));
+            dateField.setText(TimeServiceImpl.getInstance().getDate().format(dateFormat));
         }
     }
 
@@ -415,7 +422,7 @@ public class ReadersController {
         int errors = 0;
         errors += checkEmpty(addReaderName);
         try {
-            LocalDate currentDate = TimeManager.getInstance().getDate();
+            LocalDate currentDate = TimeServiceImpl.getInstance().getDate();
             if (bornDatePicker.getValue().isAfter(currentDate)) {
                 bornDatePicker.setStyle("-fx-background-color: darkred; -fx-text-fill: white");
                 errors++;

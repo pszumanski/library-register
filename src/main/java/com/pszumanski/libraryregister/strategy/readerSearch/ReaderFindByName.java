@@ -1,7 +1,7 @@
 package com.pszumanski.libraryregister.strategy.readerSearch;
 
-import com.pszumanski.libraryregister.data.objects.Reader;
-import com.pszumanski.libraryregister.data.managers.ReaderManager;
+import com.pszumanski.libraryregister.data.model.Reader;
+import com.pszumanski.libraryregister.service.ReaderServiceImpl;
 
 import java.util.Arrays;
 import java.util.List;
@@ -13,7 +13,7 @@ public class ReaderFindByName implements ReaderSearch {
     public List<Reader> search(String query) {
         List<String> queries = Arrays.stream(query.toLowerCase().split(" ")).toList();
 
-        return new ReaderManager().get().stream()
+        return new ReaderServiceImpl().get().stream()
                 .filter(reader -> {
                     String readerName = reader.getName().toLowerCase();
                     for (String word: queries) {
