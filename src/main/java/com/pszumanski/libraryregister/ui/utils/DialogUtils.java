@@ -7,7 +7,9 @@ import java.time.LocalDate;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-public class DialogUtils {
+public final class DialogUtils {
+
+    private DialogUtils() {}
 
     public static void about() {
         ResourceBundle bundle = FxmlUtils.getResourceBundle();
@@ -37,16 +39,6 @@ public class DialogUtils {
         datePicker.setValue(TimeServiceImpl.getInstance().getDate());
         informationAlert.getDialogPane().setContent(datePicker);
         informationAlert.showAndWait();
-        /*informationAlert.getDialogPane().setContent(new DatePicker());
-        informationAlert.showAndWait();
-        DatePicker datePicker;
-        datePicker = (DatePicker) informationAlert.getDialogPane().getChildren().stream()
-                .filter(e -> e instanceof DatePicker)
-                .toList()
-                .getFirst();
-        if (datePicker != null && datePicker.getValue() != null) {
-            date = datePicker.getValue();
-        }*/
         return datePicker.getValue() != null ? datePicker.getValue() : LocalDate.now();
     }
 

@@ -4,7 +4,9 @@ import javafx.geometry.Pos;
 import javafx.util.Duration;
 import org.controlsfx.control.Notifications;
 
-public class NotificationUtils {
+public final class NotificationUtils {
+
+    private NotificationUtils() {}
 
     public static void notification(String message, String title) {
         Notifications notification = Notifications.create();
