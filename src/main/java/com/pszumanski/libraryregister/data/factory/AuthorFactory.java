@@ -3,14 +3,15 @@ package com.pszumanski.libraryregister.data.factory;
 import com.pszumanski.libraryregister.service.AuthorService;
 import com.pszumanski.libraryregister.data.model.Author;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
 import java.util.Comparator;
 import java.util.Map;
 
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class AuthorFactory implements Factory<Author> {
 
-    AuthorService authorManager;
+    private final AuthorService authorManager;
 
     @Override
     public Author create(Map<String, String> attributes) {

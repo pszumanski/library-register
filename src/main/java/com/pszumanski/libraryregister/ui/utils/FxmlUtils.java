@@ -21,7 +21,7 @@ public final class FxmlUtils {
     }
 
     public static ResourceBundle getResourceBundle() {
-        return ResourceBundle.getBundle("bundles.messages");
+        return ResourceBundle.getBundle("messages.messages");
     }
 
 }

@@ -3,16 +3,17 @@ package com.pszumanski.libraryregister.data.factory;
 import com.pszumanski.libraryregister.data.model.Reader;
 import com.pszumanski.libraryregister.service.ReaderService;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Comparator;
 import java.util.Map;
 
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class ReaderFactory implements Factory<Reader> {
 
-    ReaderService readerManager;
+    private final ReaderService readerManager;
 
     @Override
     public Reader create(Map<String, String> attributes) {
