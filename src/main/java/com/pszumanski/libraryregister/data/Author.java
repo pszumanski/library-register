@@ -1,10 +1,10 @@
-package com.pszumanski.libraryregister.data.model;
+package com.pszumanski.libraryregister.data;
 
 import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
-@Table(name = "authors", schema = "LIBRARY_REGISTER")
+@Table(name = "author")
 @Getter
 @ToString
 @RequiredArgsConstructor

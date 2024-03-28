@@ -1,9 +1,9 @@
 services:
   db:
-    container_name: LIBRARY_REGISTER
+    container_name: mysql
     image: mysql
     environment:
-      MYSQL_ROOT_PASSWORD: "1709"
+      MYSQL_ROOT_PASSWORD: "root"
     ports:
       - "3307:3306"
     restart: unless-stopped

@@ -1,11 +1,11 @@
-package com.pszumanski.libraryregister.service;
+package com.pszumanski.libraryregister.dao;
 
-import com.pszumanski.libraryregister.data.model.Author;
+import com.pszumanski.libraryregister.data.Author;
 import com.pszumanski.libraryregister.strategy.authorSearch.AuthorSearch;
 
 import java.util.List;
 
-public class AuthorServiceImpl implements AuthorService {
+public class AuthorDaoImpl implements AuthorDao {
 
     private static List<Author> authors;
     private AuthorSearch authorSearch;
@@ -32,17 +32,17 @@ public class AuthorServiceImpl implements AuthorService {
 
     @Override
     public void load(List<Author> authors) {
-        AuthorServiceImpl.authors = authors;
+        AuthorDaoImpl.authors = authors;
     }
 
     @Override
     public List<Author> get() {
-        return AuthorServiceImpl.authors;
+        return AuthorDaoImpl.authors;
     }
 
     @Override
-    public List<String> fetchTitles(Author author) {
-        return new BookServiceImpl().get().stream()
+    public List<String> getTitles(Author author) {
+        return new BookDaoImpl().get().stream()
                 .filter(book -> author.getId().equals(book.getAuthorId()))
                 .map(book -> book.getTitle())
                 .distinct()

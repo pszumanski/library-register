@@ -1,18 +1,22 @@
 package com.pszumanski.libraryregister.service;
 
-import com.pszumanski.libraryregister.data.model.Reader;
+import com.pszumanski.libraryregister.dao.BookDao;
+import com.pszumanski.libraryregister.dao.BookDaoImpl;
+import com.pszumanski.libraryregister.dao.ReaderDao;
+import com.pszumanski.libraryregister.dao.ReaderDaoImpl;
+import com.pszumanski.libraryregister.data.Reader;
 import com.pszumanski.libraryregister.strategy.readerSearch.ReaderFindById;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 
-public class PenaltyManager {
+public class PenaltyService {
 
     private static final int RATE = 10;
 
     public static void calculate(LocalDate currentDate, LocalDate changedDate) {
-        BookService bookManager = new BookServiceImpl();
-        ReaderService readerManager = new ReaderServiceImpl();
+        BookDao bookManager = new BookDaoImpl();
+        ReaderDao readerManager = new ReaderDaoImpl();
         readerManager.setSearch(new ReaderFindById());
 
         bookManager.get().stream()

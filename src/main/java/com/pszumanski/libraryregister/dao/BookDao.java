@@ -1,13 +1,13 @@
-package com.pszumanski.libraryregister.service;
+package com.pszumanski.libraryregister.dao;
 
-import com.pszumanski.libraryregister.data.model.Book;
-import com.pszumanski.libraryregister.data.model.Reader;
+import com.pszumanski.libraryregister.data.Book;
+import com.pszumanski.libraryregister.data.Reader;
 import com.pszumanski.libraryregister.strategy.bookSearch.BookSearch;
 
 import java.time.LocalDate;
 import java.util.List;
 
-public interface BookService {
+public interface BookDao {
 
     List<Book> get();
 
@@ -25,9 +25,9 @@ public interface BookService {
 
     boolean isOverDue(Book book);
 
-    List<String> fetchLanguages();
+    List<String> getLanguages();
 
-    List<String> fetchGenres();
+    List<String> getGenres();
 
     void lendBook(Book book, Reader reader, LocalDate date);
 }

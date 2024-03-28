@@ -1,10 +1,14 @@
 package com.pszumanski.libraryregister.ui.controllers;
 
-import com.pszumanski.libraryregister.data.factory.Factory;
-import com.pszumanski.libraryregister.data.factory.ReaderFactory;
-import com.pszumanski.libraryregister.data.model.Author;
-import com.pszumanski.libraryregister.data.model.Book;
-import com.pszumanski.libraryregister.data.model.Reader;
+import com.pszumanski.libraryregister.dao.AuthorDao;
+import com.pszumanski.libraryregister.dao.AuthorDaoImpl;
+import com.pszumanski.libraryregister.dao.ReaderDao;
+import com.pszumanski.libraryregister.dao.ReaderDaoImpl;
+import com.pszumanski.libraryregister.factory.Factory;
+import com.pszumanski.libraryregister.factory.ReaderFactory;
+import com.pszumanski.libraryregister.data.Author;
+import com.pszumanski.libraryregister.data.Book;
+import com.pszumanski.libraryregister.data.Reader;
 import com.pszumanski.libraryregister.service.*;
 import com.pszumanski.libraryregister.strategy.authorSearch.AuthorFindById;
 import com.pszumanski.libraryregister.strategy.readerFilter.ReaderFilter;
@@ -40,8 +44,8 @@ public class ReadersController {
             FxmlUtils.getResourceBundle().getString("searchByTitle")};
     private ReaderSearch searchType;
     private List<ReaderFilter> filterList;
-    private AuthorService authorManager;
-    private ReaderService readerManager;
+    private AuthorDao authorManager;
+    private ReaderDao readerManager;
     DateTimeFormatter dateFormat;
 
 
@@ -163,10 +167,10 @@ public class ReadersController {
     private void initialize() {
         ReadersController.readersController = this;
         dateFormat = DateTimeFormatter.ofPattern("dd-MMM-yyyy");
-        dateField.setText(TimeServiceImpl.getInstance().getDate().format(dateFormat));
+        dateField.setText(TimeService.getInstance().getDate().format(dateFormat));
 
-        authorManager = new AuthorServiceImpl();
-        readerManager = new ReaderServiceImpl();
+        authorManager = new AuthorDaoImpl();
+        readerManager = new ReaderDaoImpl();
 
         filterList = new ArrayList<>();
         searchList.getItems().addAll(searchOptions);
@@ -201,7 +205,7 @@ public class ReadersController {
 
     private void loadBooks() {
         try {
-            List<Book> readersBooks = readerManager.fetchBooks(selectedReader);
+            List<Book> readersBooks = readerManager.getBooks(selectedReader);
 
             ObservableList<Book> books = FXCollections.observableArrayList(readersBooks);
 
@@ -334,7 +338,7 @@ public class ReadersController {
                 ));
         readerManager.add(reader);
         addReaderName.clear();
-        bornDatePicker.setValue(TimeServiceImpl.getInstance().getDate());
+        bornDatePicker.setValue(TimeService.getInstance().getDate());
         addReaderPersonalId.clear();
         addReaderAddressFirst.clear();
         addReaderAddressSecond.clear();
@@ -366,7 +370,7 @@ public class ReadersController {
             validateManage();
         }
         if (dateField != null) {
-            dateField.setText(TimeServiceImpl.getInstance().getDate().format(dateFormat));
+            dateField.setText(TimeService.getInstance().getDate().format(dateFormat));
         }
     }
 
@@ -422,7 +426,7 @@ public class ReadersController {
         int errors = 0;
         errors += checkEmpty(addReaderName);
         try {
-            LocalDate currentDate = TimeServiceImpl.getInstance().getDate();
+            LocalDate currentDate = TimeService.getInstance().getDate();
             if (bornDatePicker.getValue().isAfter(currentDate)) {
                 bornDatePicker.setStyle("-fx-background-color: darkred; -fx-text-fill: white");
                 errors++;
@@ -486,7 +490,7 @@ public class ReadersController {
             } else {
                 payPenaltyButton.setDisable(false);
             }
-            if (!readerManager.fetchBooks(selectedReader).isEmpty()) {
+            if (!readerManager.getBooks(selectedReader).isEmpty()) {
                 deleteReaderButton.setDisable(true);
             } else {
                 deleteReaderButton.setDisable(false);

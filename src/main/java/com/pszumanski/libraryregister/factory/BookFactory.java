@@ -1,8 +1,7 @@
-package com.pszumanski.libraryregister.data.factory;
+package com.pszumanski.libraryregister.factory;
 
-import com.pszumanski.libraryregister.data.model.Book;
-import com.pszumanski.libraryregister.service.BookService;
-import lombok.AllArgsConstructor;
+import com.pszumanski.libraryregister.data.Book;
+import com.pszumanski.libraryregister.dao.BookDao;
 import lombok.RequiredArgsConstructor;
 
 import java.time.Year;
@@ -12,7 +11,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class BookFactory implements Factory<Book> {
 
-    private final BookService bookManager;
+    private final BookDao bookManager;
 
     @Override
     public Book create(Map<String, String> attributes) {

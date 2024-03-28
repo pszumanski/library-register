@@ -1,4 +1,4 @@
-package com.pszumanski.libraryregister.data.factory;
+package com.pszumanski.libraryregister.factory;
 
 import java.util.Map;
 

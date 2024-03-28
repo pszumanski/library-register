@@ -1,11 +1,11 @@
 package com.pszumanski.libraryregister.ui.controllers;
 
-import com.pszumanski.libraryregister.data.factory.Factory;
-import com.pszumanski.libraryregister.data.model.Author;
-import com.pszumanski.libraryregister.service.AuthorServiceImpl;
-import com.pszumanski.libraryregister.service.AuthorService;
-import com.pszumanski.libraryregister.service.TimeServiceImpl;
-import com.pszumanski.libraryregister.data.factory.AuthorFactory;
+import com.pszumanski.libraryregister.factory.Factory;
+import com.pszumanski.libraryregister.data.Author;
+import com.pszumanski.libraryregister.dao.AuthorDaoImpl;
+import com.pszumanski.libraryregister.dao.AuthorDao;
+import com.pszumanski.libraryregister.service.TimeService;
+import com.pszumanski.libraryregister.factory.AuthorFactory;
 import com.pszumanski.libraryregister.strategy.authorSearch.AuthorFindByName;
 import com.pszumanski.libraryregister.strategy.authorSearch.AuthorFindByTitle;
 import com.pszumanski.libraryregister.strategy.authorSearch.AuthorSearch;
@@ -29,7 +29,7 @@ public class AuthorsController {
             FxmlUtils.getResourceBundle().getString("searchByName"),
             FxmlUtils.getResourceBundle().getString("searchByTitle")};
     private AuthorSearch searchType;
-    private AuthorService authorManager;
+    private AuthorDao authorManager;
     DateTimeFormatter dateFormat;
 
     private static AuthorsController authorsController;
@@ -83,7 +83,7 @@ public class AuthorsController {
     private void initialize() {
         AuthorsController.authorsController = this;
 
-        authorManager = new AuthorServiceImpl();
+        authorManager = new AuthorDaoImpl();
 
         searchList.getItems().addAll(searchOptions);
         searchList.setValue(searchOptions[0]);
@@ -100,7 +100,7 @@ public class AuthorsController {
         addAuthorDeathDate.setOnKeyTyped(e -> validateAuthor());
 
         dateFormat = DateTimeFormatter.ofPattern("dd-MMM-yyyy");
-        dateField.setText(TimeServiceImpl.getInstance().getDate().format(dateFormat));
+        dateField.setText(TimeService.getInstance().getDate().format(dateFormat));
 
         for (TableColumn<?, ?> column : authorTable.getColumns()) {
             column.setReorderable(false);
@@ -135,7 +135,7 @@ public class AuthorsController {
             this.authorTable.setItems(authors);
             this.authorIdColumn.setCellValueFactory(authorData -> new SimpleIntegerProperty(authorData.getValue().getId()).asObject());
             this.authorNameColumn.setCellValueFactory(authorData -> new ReadOnlyStringWrapper(authorData.getValue().getName()));
-            this.authorTitlesColumn.setCellValueFactory(authorData -> new SimpleIntegerProperty(authorManager.fetchTitles(authorData.getValue()).size()).asObject());
+            this.authorTitlesColumn.setCellValueFactory(authorData -> new SimpleIntegerProperty(authorManager.getTitles(authorData.getValue()).size()).asObject());
             this.authorBornDateColumn.setCellValueFactory(authorData -> new ReadOnlyStringWrapper(authorData.getValue().getBornDate()));
             this.authorDeathDateColumn.setCellValueFactory(authorData -> new ReadOnlyStringWrapper(authorData.getValue().getDeathDate()));
 
@@ -190,7 +190,7 @@ public class AuthorsController {
             loadAuthors();
         }
         if (dateField != null) {
-            dateField.setText(TimeServiceImpl.getInstance().getDate().format(dateFormat));
+            dateField.setText(TimeService.getInstance().getDate().format(dateFormat));
         }
     }
 
@@ -224,7 +224,7 @@ public class AuthorsController {
             }
         }
 
-        int currentYear = TimeServiceImpl.getInstance().getDate().getYear();
+        int currentYear = TimeService.getInstance().getDate().getYear();
         try {
             if (Integer.parseInt(addAuthorBornDate.getText()) > currentYear) {
                 addAuthorBornDate.setStyle("-fx-background-color: darkred; -fx-text-fill: white");
@@ -270,7 +270,7 @@ public class AuthorsController {
         deleteAuthorButton.setDisable(true);
         if (selectedAuthor != null) {
             //TODO: EXTRACT THIS v
-            if (!authorManager.fetchTitles(selectedAuthor).isEmpty()) {
+            if (!authorManager.getTitles(selectedAuthor).isEmpty()) {
             deleteAuthorButton.setText(FxmlUtils.getResourceBundle().getString("authorHasBooks"));
             } else {
                 deleteAuthorButton.setText(FxmlUtils.getResourceBundle().getString("removeAuthor"));
@@ -289,7 +289,7 @@ public class AuthorsController {
             infoAuthorBornDate.setStyle("");
             infoAuthorDeathDate.setText(selectedAuthor.getDeathDate());
             infoAuthorDeathDate.setStyle("");
-            infoAuthorTitlesCount.setText(String.valueOf(authorManager.fetchTitles(selectedAuthor).size()));
+            infoAuthorTitlesCount.setText(String.valueOf(authorManager.getTitles(selectedAuthor).size()));
             infoAuthorTitlesCount.setStyle("");
         } else {
             selectedAuthorField.clear();

@@ -1,11 +1,11 @@
-package com.pszumanski.libraryregister.service;
+package com.pszumanski.libraryregister.dao;
 
-import com.pszumanski.libraryregister.data.model.Author;
+import com.pszumanski.libraryregister.data.Author;
 import com.pszumanski.libraryregister.strategy.authorSearch.AuthorSearch;
 
 import java.util.List;
 
-public interface AuthorService {
+public interface AuthorDao {
 
     List<Author> get();
 
@@ -19,6 +19,6 @@ public interface AuthorService {
 
     void load(List<Author> authors);
 
-    List<String> fetchTitles(Author author);
+    List<String> getTitles(Author author);
 
 }

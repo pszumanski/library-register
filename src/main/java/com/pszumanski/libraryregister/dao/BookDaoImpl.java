@@ -1,7 +1,8 @@
-package com.pszumanski.libraryregister.service;
+package com.pszumanski.libraryregister.dao;
 
-import com.pszumanski.libraryregister.data.model.Book;
-import com.pszumanski.libraryregister.data.model.Reader;
+import com.pszumanski.libraryregister.data.Book;
+import com.pszumanski.libraryregister.data.Reader;
+import com.pszumanski.libraryregister.service.TimeService;
 import com.pszumanski.libraryregister.strategy.bookSearch.BookSearch;
 import lombok.Getter;
 
@@ -9,14 +10,14 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Getter
-public class BookServiceImpl implements BookService {
+public class BookDaoImpl implements BookDao {
 
     private static List<Book> books;
     private BookSearch bookSearch;
 
     @Override
     public List<Book> get() {
-        return BookServiceImpl.books;
+        return BookDaoImpl.books;
     }
 
     @Override
@@ -41,7 +42,7 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public void load(List<Book> books) {
-        BookServiceImpl.books = books;
+        BookDaoImpl.books = books;
     }
 
     @Override
@@ -51,11 +52,11 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public boolean isOverDue(Book book) {
-        return TimeServiceImpl.getInstance().isBefore(book.getDeadline());
+        return TimeService.getInstance().isBefore(book.getDeadline());
     }
 
     @Override
-    public List<String> fetchLanguages() {
+    public List<String> getLanguages() {
         return books.stream()
                 .map(book -> book.getLanguage())
                 .distinct()
@@ -63,7 +64,7 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public List<String> fetchGenres() {
+    public List<String> getGenres() {
         return books.stream()
                 .map(book -> book.getGenre())
                 .distinct()

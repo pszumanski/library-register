@@ -1,8 +1,8 @@
 package com.pszumanski.libraryregister.ui.controllers;
 
 import com.github.spring.boot.javafx.stereotype.ViewController;
-import com.pszumanski.libraryregister.service.FileManagerImpl;
-import com.pszumanski.libraryregister.service.FileManager;
+import com.pszumanski.libraryregister.dao.DatabaseConnectionImpl;
+import com.pszumanski.libraryregister.dao.DatabaseConnection;
 import com.pszumanski.libraryregister.ui.utils.FxmlUtils;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -22,15 +22,15 @@ public class LoadController {
 
     @FXML
     private void load() {
-        FileManager fileManager = FileManagerImpl.getInstance();
-        fileManager.loadDatabase();
+        DatabaseConnection databaseConnection = DatabaseConnectionImpl.getInstance();
+        databaseConnection.loadDatabase();
         switchToMenu();
     }
 
     @FXML
     private void createNew() {
-        FileManager fileManager = FileManagerImpl.getInstance();
-        fileManager.createNew();
+        DatabaseConnection databaseConnection = DatabaseConnectionImpl.getInstance();
+        databaseConnection.createNew();
         switchToMenu();
     }
 

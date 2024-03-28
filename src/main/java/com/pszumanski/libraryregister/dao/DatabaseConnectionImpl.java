@@ -1,29 +1,29 @@
-package com.pszumanski.libraryregister.service;
+package com.pszumanski.libraryregister.dao;
 
-import com.pszumanski.libraryregister.data.model.Author;
-import com.pszumanski.libraryregister.data.model.Book;
-import com.pszumanski.libraryregister.data.model.Reader;
-import com.pszumanski.libraryregister.data.repository.AuthorRepository;
-import com.pszumanski.libraryregister.data.repository.BookRepository;
-import com.pszumanski.libraryregister.data.repository.ReaderRepository;
+import com.pszumanski.libraryregister.data.Author;
+import com.pszumanski.libraryregister.data.Book;
+import com.pszumanski.libraryregister.data.Reader;
+import com.pszumanski.libraryregister.repository.AuthorRepository;
+import com.pszumanski.libraryregister.repository.BookRepository;
+import com.pszumanski.libraryregister.repository.ReaderRepository;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class FileManagerImpl implements FileManager {
+public class DatabaseConnectionImpl implements DatabaseConnection {
 
     private AuthorRepository authorRepository;
     private BookRepository bookRepository;
     private ReaderRepository readerRepository;
-    private final AuthorService authorManager;
-    private final BookService bookManager;
-    private final ReaderService readerManager;
+    private final AuthorDao authorManager;
+    private final BookDao bookManager;
+    private final ReaderDao readerManager;
 
-    private static FileManagerImpl fileManager;
+    private static DatabaseConnectionImpl fileManager;
 
-    public static FileManagerImpl getInstance() {
+    public static DatabaseConnectionImpl getInstance() {
         if (fileManager == null) {
-            fileManager = new FileManagerImpl();
+            fileManager = new DatabaseConnectionImpl();
         }
 
         return fileManager;
@@ -35,10 +35,10 @@ public class FileManagerImpl implements FileManager {
         this.readerRepository = readerRepository;
     }
 
-    private FileManagerImpl() {
-        this.authorManager = new AuthorServiceImpl();
-        this.bookManager = new BookServiceImpl();
-        this.readerManager = new ReaderServiceImpl();
+    private DatabaseConnectionImpl() {
+        this.authorManager = new AuthorDaoImpl();
+        this.bookManager = new BookDaoImpl();
+        this.readerManager = new ReaderDaoImpl();
     }
 
     @Override

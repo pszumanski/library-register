@@ -4,8 +4,8 @@ package com.pszumanski.libraryregister.ui.controllers;
 import atlantafx.base.theme.PrimerDark;
 import atlantafx.base.theme.PrimerLight;
 import com.github.spring.boot.javafx.stereotype.ViewController;
-import com.pszumanski.libraryregister.service.FileManagerImpl;
-import com.pszumanski.libraryregister.service.TimeServiceImpl;
+import com.pszumanski.libraryregister.dao.DatabaseConnectionImpl;
+import com.pszumanski.libraryregister.service.TimeService;
 import com.pszumanski.libraryregister.ui.utils.DialogUtils;
 import com.pszumanski.libraryregister.ui.utils.FxmlUtils;
 import com.pszumanski.libraryregister.ui.utils.NotificationUtils;
@@ -25,7 +25,7 @@ import java.util.Locale;
 @ViewController
 public class MainController {
 
-    private TimeServiceImpl timeService;
+    private TimeService timeService;
 
     private static Stage stage;
     private static final String MAIN_FXML = "/views/main.fxml";
@@ -38,7 +38,7 @@ public class MainController {
     @FXML
     private void initialize() {
         menuButtonsController.setMainController(this);
-        timeService = TimeServiceImpl.getInstance();
+        timeService = TimeService.getInstance();
     }
 
     @FXML
@@ -68,7 +68,7 @@ public class MainController {
     @FXML
     private void chooseDate() {
         LocalDate date = DialogUtils.pickDate();
-        if (date.isBefore(TimeServiceImpl.getInstance().getDate())) {
+        if (date.isBefore(TimeService.getInstance().getDate())) {
             NotificationUtils.notification(FxmlUtils.getResourceBundle().getString("dateNotChanged"),
                     date + " " + FxmlUtils.getResourceBundle().getString("dateNotBefore"));
         } else {
@@ -100,7 +100,7 @@ public class MainController {
     private void exit() {
         switch (DialogUtils.exitConfirmation().get().getButtonData()) {
             case ButtonBar.ButtonData.OK_DONE:
-                FileManagerImpl.getInstance().saveDatabase();
+                DatabaseConnectionImpl.getInstance().saveDatabase();
             case ButtonBar.ButtonData.FINISH:
                 Platform.exit();
                 break;
@@ -116,13 +116,13 @@ public class MainController {
 
     @FXML
     private void load() {
-        FileManagerImpl.getInstance().loadDatabase();
+        DatabaseConnectionImpl.getInstance().loadDatabase();
         refreshAll();
     }
 
     @FXML
     private void save() {
-        FileManagerImpl.getInstance().saveDatabase();
+        DatabaseConnectionImpl.getInstance().saveDatabase();
     }
 
     @FXML

@@ -1,10 +1,10 @@
 package com.pszumanski.libraryregister.strategy.readerFilter;
 
-import com.pszumanski.libraryregister.data.model.Reader;
-import com.pszumanski.libraryregister.service.BookServiceImpl;
-import com.pszumanski.libraryregister.service.BookService;
-import com.pszumanski.libraryregister.service.ReaderServiceImpl;
-import com.pszumanski.libraryregister.service.ReaderService;
+import com.pszumanski.libraryregister.data.Reader;
+import com.pszumanski.libraryregister.dao.BookDaoImpl;
+import com.pszumanski.libraryregister.dao.BookDao;
+import com.pszumanski.libraryregister.dao.ReaderDaoImpl;
+import com.pszumanski.libraryregister.dao.ReaderDao;
 import com.pszumanski.libraryregister.strategy.readerSearch.ReaderFindById;
 
 import java.util.List;
@@ -16,8 +16,8 @@ public class ReaderFilterHasNoBooks implements ReaderFilter {
     @Override
     public List<Reader> filter(List<Reader> readersToFilter) {
         Set<Reader> filteredReaders = new TreeSet<>();
-        BookService bookManager = new BookServiceImpl();
-        ReaderService readerManager = new ReaderServiceImpl();
+        BookDao bookManager = new BookDaoImpl();
+        ReaderDao readerManager = new ReaderDaoImpl();
         readerManager.setSearch(new ReaderFindById());
         bookManager.get().stream()
                 .filter(book -> book.getCurrentReaderId() != null)

@@ -1,7 +1,7 @@
-package com.pszumanski.libraryregister.service;
+package com.pszumanski.libraryregister.dao;
 
-import com.pszumanski.libraryregister.data.model.Book;
-import com.pszumanski.libraryregister.data.model.Reader;
+import com.pszumanski.libraryregister.data.Book;
+import com.pszumanski.libraryregister.data.Reader;
 import com.pszumanski.libraryregister.strategy.bookSearch.BookFindByReaderId;
 import com.pszumanski.libraryregister.strategy.readerSearch.ReaderSearch;
 import lombok.Getter;
@@ -9,14 +9,14 @@ import lombok.Getter;
 import java.util.List;
 
 @Getter
-public class ReaderServiceImpl implements ReaderService {
+public class ReaderDaoImpl implements ReaderDao {
 
     private static List<Reader> readers;
     private ReaderSearch readerSearch;
 
     @Override
     public List<Reader> get() {
-        return ReaderServiceImpl.readers;
+        return ReaderDaoImpl.readers;
     }
 
     @Override
@@ -41,12 +41,12 @@ public class ReaderServiceImpl implements ReaderService {
 
     @Override
     public void load(List<Reader> readers) {
-        ReaderServiceImpl.readers = readers;
+        ReaderDaoImpl.readers = readers;
     }
 
     @Override
-    public List<Book> fetchBooks(Reader reader) {
-        BookServiceImpl bookManager = new BookServiceImpl();
+    public List<Book> getBooks(Reader reader) {
+        BookDaoImpl bookManager = new BookDaoImpl();
         bookManager.setSearch(new BookFindByReaderId());
         return bookManager.search(reader.getId().toString());
     }

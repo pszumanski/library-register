@@ -2,18 +2,54 @@ package com.pszumanski.libraryregister.service;
 
 import java.time.LocalDate;
 
-public interface TimeService {
+public class TimeService {
 
-    public LocalDate getDate();
+    private static TimeService timeService;
+    private LocalDate changedDate;
+    private LocalDate currentDate;
 
-    public void addDay();
+    private TimeService() {
+        currentDate = LocalDate.now();
+        timeService = this;
+    }
 
-    public void addWeek();
+    public static TimeService getInstance() {
+        if (timeService == null) {
+            return new TimeService();
+        }
 
-    public void addMonth();
+        return timeService;
+    }
 
-    public void chooseDate(LocalDate date);
+    public LocalDate getDate() {
+        return currentDate;
+    }
 
-    public boolean isBefore(LocalDate dateToCheck);
+    public void addDay() {
+        changedDate = currentDate.plusDays(1);
+        PenaltyService.calculate(currentDate, changedDate);
+        currentDate = changedDate;
+    }
+
+    public void addWeek() {
+        changedDate = currentDate.plusWeeks(1);
+        PenaltyService.calculate(currentDate, changedDate);
+        currentDate = changedDate;
+    }
+
+    public void addMonth() {
+        changedDate = currentDate.plusMonths(1);
+        PenaltyService.calculate(currentDate, changedDate);
+        currentDate = changedDate;
+    }
+
+    public void chooseDate(LocalDate date) {
+        PenaltyService.calculate(currentDate, date);
+        currentDate = date;
+    }
+
+    public boolean isBefore(LocalDate dateToCheck) {
+        return dateToCheck.isBefore(currentDate);
+    }
 
 }

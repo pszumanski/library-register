@@ -2,19 +2,19 @@ package com.pszumanski.libraryregister.application;
 
 import atlantafx.base.theme.PrimerLight;
 import com.github.spring.boot.javafx.SpringJavaFXApplication;
-import com.pszumanski.libraryregister.service.FileManagerImpl;
-import com.pszumanski.libraryregister.service.FileManager;
-import com.pszumanski.libraryregister.data.repository.AuthorRepository;
-import com.pszumanski.libraryregister.data.repository.BookRepository;
-import com.pszumanski.libraryregister.data.repository.ReaderRepository;
-import com.pszumanski.libraryregister.ui.utils.DialogUtils;
-import com.pszumanski.libraryregister.ui.utils.FxmlUtils;
+import com.pszumanski.libraryregister.repository.AuthorRepository;
+import com.pszumanski.libraryregister.repository.BookRepository;
+import com.pszumanski.libraryregister.repository.ReaderRepository;
+import com.pszumanski.libraryregister.dao.DatabaseConnection;
+import com.pszumanski.libraryregister.dao.DatabaseConnectionImpl;
 import com.pszumanski.libraryregister.ui.controllers.LoadController;
 import com.pszumanski.libraryregister.ui.controllers.MainController;
+import com.pszumanski.libraryregister.ui.utils.AppStarter;
+import com.pszumanski.libraryregister.ui.utils.DialogUtils;
+import com.pszumanski.libraryregister.ui.utils.FxmlUtils;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.Scene;
-import javafx.scene.control.ButtonBar;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
@@ -22,26 +22,25 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Bean;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 import java.util.ResourceBundle;
 
 @SpringBootApplication(scanBasePackages = "com.pszumanski.libraryregister")
-@EntityScan("com.pszumanski.libraryregister.data")
-@EnableJpaRepositories(basePackages = "com.pszumanski.libraryregister.data.repository")
 @Slf4j
 public class LibraryRegisterApplication extends SpringJavaFXApplication {
 
     public static final String LOAD_FXML = "/views/load.fxml";
     public static final String LIBRARY_REGISTER_LOGO_PNG = "/images/libraryIcon.png";
+
     @Autowired
-    AuthorRepository authorRepository;
+    private AuthorRepository authorRepository;
     @Autowired
-    BookRepository bookRepository;
+    private BookRepository bookRepository;
     @Autowired
-    ReaderRepository readerRepository;
+    private ReaderRepository readerRepository;
+    @Autowired
+    private AppStarter appStarter;
 
     public static void main(String[] args) {
         launch(LibraryRegisterApplication.class, args);
@@ -52,14 +51,15 @@ public class LibraryRegisterApplication extends SpringJavaFXApplication {
         return (args) -> {
 
             // Setting up file manager
-            FileManager fileManager = FileManagerImpl.getInstance();
-            fileManager.setRepos(authorRepository, bookRepository, readerRepository);
+            DatabaseConnection databaseConnection = DatabaseConnectionImpl.getInstance();
+            databaseConnection.setRepos(authorRepository, bookRepository, readerRepository);
         };
     }
 
 
     @Override
     public void start(Stage stage) {
+        log.info(String.valueOf(appStarter == null));
         log.info("Started stage loading");
 
         LoadController.setStage(stage);
@@ -77,12 +77,12 @@ public class LibraryRegisterApplication extends SpringJavaFXApplication {
         // Handle exit
         stage.setOnCloseRequest(event -> {
             switch (DialogUtils.exitConfirmation().get().getButtonData()) {
-                case ButtonBar.ButtonData.OK_DONE:
-                    FileManagerImpl.getInstance().saveDatabase();
-                case ButtonBar.ButtonData.FINISH:
+                case OK_DONE:
+                    DatabaseConnectionImpl.getInstance().saveDatabase();
+                case FINISH:
                     Platform.exit();
                     break;
-                case ButtonBar.ButtonData.NO:
+                case NO:
                     event.consume();
                     break;
             }

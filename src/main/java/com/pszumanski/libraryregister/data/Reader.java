@@ -1,4 +1,4 @@
-package com.pszumanski.libraryregister.data.model;
+package com.pszumanski.libraryregister.data;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -8,7 +8,7 @@ import lombok.*;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "readers", schema = "LIBRARY_REGISTER")
+@Table(name = "readers")
 @Getter
 @ToString
 @RequiredArgsConstructor

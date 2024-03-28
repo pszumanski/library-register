@@ -1,9 +1,9 @@
 package com.pszumanski.libraryregister.strategy.bookSearch;
 
-import com.pszumanski.libraryregister.data.model.Author;
-import com.pszumanski.libraryregister.data.model.Book;
-import com.pszumanski.libraryregister.service.AuthorServiceImpl;
-import com.pszumanski.libraryregister.service.BookServiceImpl;
+import com.pszumanski.libraryregister.data.Author;
+import com.pszumanski.libraryregister.data.Book;
+import com.pszumanski.libraryregister.dao.AuthorDaoImpl;
+import com.pszumanski.libraryregister.dao.BookDaoImpl;
 
 import java.util.Arrays;
 import java.util.List;
@@ -13,7 +13,7 @@ public class BookFindByAuthorName implements BookSearch {
     public List<Book> search(String query) {
         List<String> queries = Arrays.stream(query.toLowerCase().split(" ")).toList();
 
-        List<Author> authors = new AuthorServiceImpl().get().stream()
+        List<Author> authors = new AuthorDaoImpl().get().stream()
                 .filter(author -> {
                     String authorName = author.getName().toLowerCase();
                     for (String word: queries) {
@@ -30,7 +30,7 @@ public class BookFindByAuthorName implements BookSearch {
                 .toList();
 
 
-        return new BookServiceImpl().get().stream()
+        return new BookDaoImpl().get().stream()
                 .filter(book -> authorIds.contains(book.getAuthorId()))
                 .toList();
     }

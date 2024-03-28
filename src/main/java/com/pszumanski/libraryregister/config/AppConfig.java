@@ -11,7 +11,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @Configuration
 @ComponentScan("com.pszumanski.libraryregister.ui.utils")
 @EntityScan("com.pszumanski.libraryregister.data")
-@EnableJpaRepositories("com.pszumanski.libraryregister.data.repository")
+@EnableJpaRepositories("com.pszumanski.libraryregister.repository")
 @Slf4j
 public class AppConfig {
 

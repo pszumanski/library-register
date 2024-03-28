@@ -1,8 +1,7 @@
-package com.pszumanski.libraryregister.data.factory;
+package com.pszumanski.libraryregister.factory;
 
-import com.pszumanski.libraryregister.data.model.Reader;
-import com.pszumanski.libraryregister.service.ReaderService;
-import lombok.AllArgsConstructor;
+import com.pszumanski.libraryregister.data.Reader;
+import com.pszumanski.libraryregister.dao.ReaderDao;
 import lombok.RequiredArgsConstructor;
 
 import java.time.LocalDate;
@@ -13,7 +12,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class ReaderFactory implements Factory<Reader> {
 
-    private final ReaderService readerManager;
+    private final ReaderDao readerManager;
 
     @Override
     public Reader create(Map<String, String> attributes) {

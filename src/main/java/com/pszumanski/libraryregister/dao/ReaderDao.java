@@ -1,12 +1,12 @@
-package com.pszumanski.libraryregister.service;
+package com.pszumanski.libraryregister.dao;
 
-import com.pszumanski.libraryregister.data.model.Book;
-import com.pszumanski.libraryregister.data.model.Reader;
+import com.pszumanski.libraryregister.data.Book;
+import com.pszumanski.libraryregister.data.Reader;
 import com.pszumanski.libraryregister.strategy.readerSearch.ReaderSearch;
 
 import java.util.List;
 
-public interface ReaderService {
+public interface ReaderDao {
 
     List<Reader> get();
 
@@ -20,6 +20,6 @@ public interface ReaderService {
 
     void load(List<Reader> readers);
 
-    List<Book> fetchBooks(Reader reader);
+    List<Book> getBooks(Reader reader);
 
 }
