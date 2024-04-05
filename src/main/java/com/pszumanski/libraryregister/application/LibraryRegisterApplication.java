@@ -39,8 +39,6 @@ public class LibraryRegisterApplication extends SpringJavaFXApplication {
     private BookRepository bookRepository;
     @Autowired
     private ReaderRepository readerRepository;
-    @Autowired
-    private AppStarter appStarter;
 
     public static void main(String[] args) {
         launch(LibraryRegisterApplication.class, args);
@@ -59,7 +57,6 @@ public class LibraryRegisterApplication extends SpringJavaFXApplication {
 
     @Override
     public void start(Stage stage) {
-        log.info(String.valueOf(appStarter == null));
         log.info("Started stage loading");
 
         LoadController.setStage(stage);
